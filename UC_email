@@ -1,0 +1,10 @@
+set from = "UC_username"
+set imap_user = "UC_username@mail.uc.edu"
+set imap_pass = "UC_password"
+
+set smtp_url = "smtp://UC_username@mail.uc.edu@pod51000.outlook.com:587/"
+set smtp_pass = "UC_password"
+
+set folder = "imaps://pod51000.outlook.com:993"
+set spoolfile=+INBOX
+
