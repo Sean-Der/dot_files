@@ -17,10 +17,10 @@ while true; do
 done &
 
 cd ~
-xrandr --output LVDS1 --auto --output VGA1 --auto --left-of LVDS1
+xrandr --output LVDS1 --auto --output VGA1 --auto --right-of LVDS1
 xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape' &
 #wmname LG3D &
 xrdb -merge ~/.Xresources &
 unclutter -display :0 -root -idle 1 -jitter 10 -noevents &
-redshift -l 39.2:-84.5 &
+#redshift -l 39.2:-84.5 &
 exec dwm

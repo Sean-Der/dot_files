@@ -7,13 +7,16 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="sdubois"
 
+source ~/.ssh_accounts
+
+#Stop correcting this stuff
+alias aptitude='nocorrect aptitude'
+
 # Aliases
+
 
 #Pure Debian packages
 alias purgepkgs='dpkg --get-selections | grep deinstall | sed "s/deinstall//g" |sudo xargs apt-get remove -y --purge'
-
-#
-source ~/.ssh_accounts
 
 #matlab
 alias matlab='~/Documents/MATLAB/bin/./matlab -glnx86'
