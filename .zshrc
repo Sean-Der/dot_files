@@ -15,20 +15,15 @@ HISTFILE=~/.zsh_history
 autoload -Uz compinit
 compinit
 
-zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete _correct _approximate
-zstyle ':completion:*' format 'Completing %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
+zstyle ':completion:*' menu select=5
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*' menu select=long
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
-zstyle ':completion:*' verbose true
+eval "$(dircolors -b)"
+zstyle ':completion:*:correct:*' insert-unambiguous true 
+zstyle ':completion:*:approximate:'    max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3 )) numeric )' # allow one error for every three characters typed in approximate completer
+zstyle ':completion:*:history-words'   list false                          #
+zstyle ':completion:*:history-words'   menu yes                            # activate menu
+zstyle ':completion:*:history-words'   remove-all-dups yes                 # ignore duplicate entries
+zstyle ':completion:*:history-words'   stop yes                            #
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
@@ -51,6 +46,7 @@ alias androidavd='emulator -avd defaultAVD -no-boot-anim -scale 0.65 -show-kerne
 #Color colour dir listings
 alias ls='ls -F --color=auto' 
 alias ll='ls -lha'
+alias lr='ls -ltr'
 alias l='ls -lh'
 
 #Easy wireless hook function taking down first helps with locked interface on Hibernate
