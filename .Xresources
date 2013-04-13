@@ -27,4 +27,7 @@ urxvt*foreground: White
 urxvt*background: Black
 urxvt*highlightColor: dark green
 urxvt.scrollBar: false
-URxvt*font: xft:Inconsolata:size=10
+URxvt*font: xft:Terminus:size=10
+URxvt*termName: rxvt-unicode-256color
+URxvt*secondaryScroll: true
+URxvt*saveLines: 12000

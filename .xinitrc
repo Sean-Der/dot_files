@@ -1,26 +1,27 @@
 #!/bin/sh
 while true; do
-	batt=$(LC_ALL=C acpi -b)
-	
-	case $batt in
-	*Discharging*)
-		batt="${batt#* * * }"
-		batt="${batt%%, *} "
-		;;
-	*)
-		batt=""
-		;;
-	esac
-	xsetroot -name "$batt$(date +%R)"
+  acpiout=$(LC_ALL=C acpiconf -i batt0) 
+  stat=$(echo $acpiout| awk '{print $44}')
+  batt=$(echo $acpiout| awk '{print $47}')
 
-	sleep 60
+  if [ ! $stat == "discharging" ]
+  then
+    batt=""
+  fi  
+  
+  xsetroot -name "$batt $(date +%R)"
+  sleep 60
 done &
 
 cd ~
-xrandr --output LVDS1 --auto --output VGA1 --auto --right-of LVDS1
-xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape' &
-#wmname LG3D &
+xrandr --output LVDS1 --auto --output VGA1 --auto --left-of LVDS1
+setxkbmap -layout us -variant dvp
+xmodmap -e 'remove Lock = Caps_Lock'
+xmodmap -e 'keysym Caps_Lock = Control_L'
+xmodmap -e 'add Control = Control_L'
+wmname LG3D &
 xrdb -merge ~/.Xresources &
-unclutter -display :0 -root -idle 1 -jitter 10 -noevents &
-#redshift -l 39.2:-84.5 &
+unclutter -idle 2 &
 exec dwm
+
+#redshift -l 39.2:-84.5 &
