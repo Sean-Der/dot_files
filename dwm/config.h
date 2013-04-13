@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const char font[]            = "xft:Inconsolata:size=8";
+static const char font[]            = "xft:Terminus:size=8";
 static const char normbordercolor[] = "#000000";
 static const char normbgcolor[]     = "#000000";
 static const char normfgcolor[]     = "#FFFFFF";
@@ -17,9 +17,7 @@ static const Bool topbar            = True;     /* False means bottom bar */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       False,       -1 },
+    {"None",    NULL,   NULL,   0,  True,   -1}
 };
 
 /* layout(s) */
@@ -29,12 +27,11 @@ static const Bool resizehints = False; /* True means respect size hints in tiled
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile , 0 },    /* first entry is default */
-	{ "><>",      NULL, 1 },    /* no layout function means floating bhavior */
-	{ "[M]",      monocle, 2 },
-	{ "TTT",      bstack, 3 },
-	{ "===",      bstackhoriz, 4},
+	{ "[]=",      tile },    /* first entry is default */
+	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "[M]",      monocle },
 };
+
 
 /* key definitions */
 #define MODKEY Mod4Mask
@@ -53,7 +50,7 @@ static const char *termcmd[]  = { "urxvt", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-    { MODKEY|ShiftMask,             XK_l,      view_adjacent,  { .i = +1 } },
+	{ MODKEY|ShiftMask,             XK_l,      view_adjacent,  { .i = +1 } },
 	{ MODKEY|ShiftMask,             XK_h,      view_adjacent,  { .i = -1 } },
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
