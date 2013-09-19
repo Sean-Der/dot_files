@@ -24,10 +24,13 @@ alias ls='ls -FG'
 alias ll='ls -lha'
 alias lr='ls -ltr'
 alias l='ls -lh'
+alias showLargest='du -a | sort -n -r | less'
 
 alias ncmpcpp='ncmpcpp -h /home/sean/.mpd/socket'
-alias devchrome='chrome --disable-web-security &'
-alias avdstart='emulator -avd DefaultDevice -no-boot-anim -scale 0.65 -show-kernel'
+
+alias mouseDisable='sudo xinput set-prop 7 "Device Enabled" 0'
+alias mouseEnable='sudo xinput set-prop 7 "Device Enabled" 1'
+
 wireless(){
     sudo killall wpa_supplicant
     sudo killall dhclient
@@ -36,7 +39,7 @@ wireless(){
 }
 
 case $TERM in
-    *rxvt*)
+    *xterm*)
         precmd () {{print -Pn "\e]0;%n@%M: %~\a"} 2>/dev/null}
         ;;
 esac
