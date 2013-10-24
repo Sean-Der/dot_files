@@ -3,4 +3,4 @@
 	url = https://github.com/wincent/Command-T.git
 [submodule ".vim/bundle/slimv"]
 	path = .vim/bundle/slimv
-	url = https://github.com/kovisoft/slimv
+	url = https://github.com/kovisoft/slimv.git
