@@ -1,4 +1,4 @@
-colorscheme 256_jungle
+colorscheme vividchalk
 syntax on
 
 set nowrap "line wrapping
@@ -45,11 +45,10 @@ map l <C-w>l
 
 let mapleader=","
 
-nmap <leader>r :Ack <C-R><C-W>
+nmap <leader>r <ESC>:Ack <C-R><C-W> %:p:h
 
 "ctags
 nmap <leader>tc :!ctags-exuberant --extra=+f -R *<CR><CR>
-set tags=tags;
 
 "during split close buffer
 nmap <leader>bd :bn <bar> :bd# <CR>
@@ -60,5 +59,7 @@ noremap <leader>b <Esc>:CommandTBuffer<CR>
 
 "Hitting tab in visual mode fixes indentation on the selected lines
 vmap <Tab> =
+
+set wildignore=*.o,*#,*.fasl
 
 :autocmd BufWritePost *.go :silent Fmt
