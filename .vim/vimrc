@@ -35,6 +35,7 @@ nmap mpd :!ncmpcpp -h /home/sean/.mpd/socket<CR><CR>
 "Leaving modes in Emacs+EVIL feels right
 map <C-g> <Esc>
 map! <C-g> <Esc>
+cmap <C-g> <Esc>
 
 "better window navigation
 map h <C-w>h
@@ -44,21 +45,21 @@ map l <C-w>l
 
 let mapleader=","
 
-nmap <leader>r :Rgrep <CR>
+nmap <leader>r :Ack <C-R><C-W>
 
 "ctags
-nmap <leader>ct :!ctags-exuberant --extra=+f -R *<CR><CR>
-nmap <leader>st :tjump <c-r>=expand("<cword>")<CR><CR>
-nmap <leader>rt <C-t>
+nmap <leader>tc :!ctags-exuberant --extra=+f -R *<CR><CR>
+nmap <leader>tj :tjump <c-r>=expand("<cword>")<CR><CR>
+nmap <leader>tr <C-t>
 
 "during split close buffer
 nmap <leader>bd :bn <bar> :bd# <CR>
 
 "Command T
 noremap <leader>o <Esc>:CommandT<CR>
-noremap <leader>O <Esc>:CommandTFlush<CR>
-noremap <leader>m <Esc>:CommandTBuffer<CR>
+noremap <leader>b <Esc>:CommandTBuffer<CR>
 
-let g:yankring_history_dir = '$HOME/.vim'
+"Hitting tab in visual mode fixes indentation on the selected lines
+vmap <Tab> =
 
 :autocmd BufWritePost *.go :silent Fmt
