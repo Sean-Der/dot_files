@@ -13,3 +13,6 @@
 [submodule ".vim/bundle/ack"]
 	path = .vim/bundle/ack
 	url = https://github.com/mileszs/ack.vim.git
+[submodule ".vim/bundle/jshint"]
+	path = .vim/bundle/jshint
+	url = https://github.com/Shutnik/jshint2.vim.git
