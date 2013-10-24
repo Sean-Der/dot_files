@@ -4,3 +4,6 @@
 [submodule ".vim/bundle/slimv"]
 	path = .vim/bundle/slimv
 	url = https://github.com/kovisoft/slimv.git
+[submodule ".vim/bundle/supertab"]
+	path = .vim/bundle/supertab
+	url = https://github.com/ervandew/supertab.git
