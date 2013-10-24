@@ -45,7 +45,7 @@ map l <C-w>l
 
 let mapleader=","
 
-nmap <leader>r <ESC>:Ack <C-R><C-W> %:p:h
+nmap <leader>r <ESC>:Ack <C-R><C-W>
 
 "ctags
 nmap <leader>tc :!ctags-exuberant --extra=+f -R *<CR><CR>
@@ -61,5 +61,7 @@ noremap <leader>b <Esc>:CommandTBuffer<CR>
 vmap <Tab> =
 
 set wildignore=*.o,*#,*.fasl
+
+set autochdir
 
 :autocmd BufWritePost *.go :silent Fmt
