@@ -22,8 +22,8 @@ set smartcase
 "Tabs
 filetype plugin indent on
 set smartindent
-set tabstop=8
-set shiftwidth=8
+set tabstop=4
+set shiftwidth=4
 set expandtab
 
 "Pathogen
@@ -49,8 +49,7 @@ nmap <leader>r :Ack <C-R><C-W>
 
 "ctags
 nmap <leader>tc :!ctags-exuberant --extra=+f -R *<CR><CR>
-nmap <leader>tj :tjump <c-r>=expand("<cword>")<CR><CR>
-nmap <leader>tr <C-t>
+set tags=tags;
 
 "during split close buffer
 nmap <leader>bd :bn <bar> :bd# <CR>
