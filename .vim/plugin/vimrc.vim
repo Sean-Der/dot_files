@@ -1,10 +1,4 @@
 colorscheme 256_jungle
-"Show tabs broken with tabs + spaces
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=238
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=239
-autocmd VimEnter * IndentGuidesEnable
-
 syntax on
 
 set nowrap "line wrapping
@@ -28,8 +22,8 @@ set smartcase
 "Tabs
 filetype plugin indent on
 set smartindent
-set tabstop=2
-set shiftwidth=2
+set tabstop=8
+set shiftwidth=8
 set expandtab
 
 "Pathogen
@@ -50,10 +44,10 @@ map l <C-w>l
 
 let mapleader=","
 
-nmap <leader>r :Rgrep <CR><CR>
+nmap <leader>r :Rgrep <CR>
 
 "ctags
-nmap <leader>ct :!exctags --extra=+f -R *<CR><CR>
+nmap <leader>ct :!ctags-exuberant --extra=+f -R *<CR><CR>
 nmap <leader>st :tjump <c-r>=expand("<cword>")<CR><CR>
 nmap <leader>rt <C-t>
 
