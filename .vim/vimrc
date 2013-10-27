@@ -14,7 +14,6 @@ set autowrite
 
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 
-set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
 set ignorecase
 set smartcase 
@@ -44,24 +43,30 @@ map k <C-w>k
 map l <C-w>l
 
 let mapleader=","
+let g:slimv_leader="s"
+let g:slimv_repl_syntax="true"
+let g:slimv_repl_simple_eval="true"
+let g:slimv_repl_max_len="25"
+
 
 nmap <leader>r <ESC>:Ack <C-R><C-W>
 
 "ctags
 nmap <leader>tc :!ctags-exuberant --extra=+f -R *<CR><CR>
+set tags=tags;
 
 "during split close buffer
 nmap <leader>bd :bn <bar> :bd# <CR>
 
 "Command T
-noremap <leader>o <Esc>:CommandT<CR>
-noremap <leader>b <Esc>:CommandTBuffer<CR>
+noremap <leader>to <Esc>:CommandT<CR>
+noremap <leader>tb <Esc>:CommandTBuffer<CR>
 
 "Hitting tab in visual mode fixes indentation on the selected lines
 vmap <Tab> =
 
 set wildignore=*.o,*#,*.fasl
 
-set autochdir
-
 :autocmd BufWritePost *.go :silent Fmt
+
+
