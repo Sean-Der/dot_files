@@ -1,4 +1,4 @@
-colorscheme vividchalk
+colorscheme 256_jungle
 syntax on
 
 set nowrap "line wrapping
@@ -11,6 +11,11 @@ set hidden "no nag screens on tag jump
 set nobackup
 set noswapfile
 set autowrite
+
+"Perf improvements
+set nocursorcolumn
+set nocursorline
+syntax sync minlines=256
 
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 
@@ -68,5 +73,3 @@ vmap <Tab> =
 set wildignore=*.o,*#,*.fasl
 
 :autocmd BufWritePost *.go :silent Fmt
-
-
