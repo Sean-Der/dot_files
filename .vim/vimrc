@@ -1,4 +1,4 @@
-colorscheme 256_jungle
+colorscheme vividchalk
 syntax on
 
 set nowrap "line wrapping
@@ -64,12 +64,15 @@ set tags=tags;
 nmap <leader>bd :bn <bar> :bd# <CR>
 
 "Command T
-noremap <leader>to <Esc>:CommandT<CR>
+noremap <leader>to <Esc>:NERDTreeFind<CR>
 noremap <leader>tb <Esc>:CommandTBuffer<CR>
 
 "Hitting tab in visual mode fixes indentation on the selected lines
 vmap <Tab> =
 
 set wildignore=*.o,*#,*.fasl
+
+set wildmenu
+set wildmode=longest,list
 
 :autocmd BufWritePost *.go :silent Fmt
