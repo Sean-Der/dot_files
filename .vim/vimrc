@@ -1,4 +1,5 @@
-colorscheme 256_jungle
+colorscheme vividchalk
+set background=dark
 syntax on
 
 set nowrap "line wrapping
