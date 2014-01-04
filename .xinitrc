@@ -22,6 +22,5 @@ xmodmap -e 'add Control = Control_L'
 wmname LG3D &
 xrdb -merge ~/.Xresources &
 unclutter -idle 2 -noevents &
+redshift &
 exec dwm
-
-#redshift -l 39.2:-84.5 &

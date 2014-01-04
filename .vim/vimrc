@@ -1,5 +1,4 @@
-colorscheme vividchalk
-set background=dark
+colorscheme 256_jungle
 syntax on
 
 set nowrap "line wrapping
@@ -50,15 +49,11 @@ map l <C-w>l
 
 let mapleader=","
 let g:slimv_leader="s"
-let g:slimv_repl_syntax="true"
-let g:slimv_repl_simple_eval="true"
-let g:slimv_repl_max_len="25"
-
 
 nmap <leader>r <ESC>:Ack <C-R><C-W>
 
 "ctags
-nmap <leader>tc :!ctags-exuberant --extra=+f -R *<CR><CR>
+nmap <leader>tc :!exctags --extra=+f -R *<CR><CR>
 set tags=tags;
 
 "during split close buffer
@@ -77,3 +72,4 @@ set wildmenu
 set wildmode=longest,list
 
 :autocmd BufWritePost *.go :silent Fmt
+let jshint2_save = 1
