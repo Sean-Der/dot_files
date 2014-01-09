@@ -49,8 +49,14 @@ map l <C-w>l
 
 let mapleader=","
 let g:slimv_leader="s"
+let g:slimv_repl_split=3
 
 nmap <leader>r <ESC>:Ack <C-R><C-W>
+nmap <leader>o :CtrlP<CR>
+nmap <leader>b :CtrlPBuffer<CR>
+nmap <leader>m :CtrlPMRU<CR>
+
+
 
 "ctags
 nmap <leader>tc :!exctags --extra=+f -R *<CR><CR>
@@ -59,9 +65,6 @@ set tags=tags;
 "during split close buffer
 nmap <leader>bd :bn <bar> :bd# <CR>
 
-"Command T
-noremap <leader>to <Esc>:NERDTreeFind<CR>
-noremap <leader>tb <Esc>:CommandTBuffer<CR>
 
 "Hitting tab in visual mode fixes indentation on the selected lines
 vmap <Tab> =
@@ -73,3 +76,20 @@ set wildmode=longest,list
 
 :autocmd BufWritePost *.go :silent Fmt
 let jshint2_save = 1
+
+let g:syntastic_html_checkers=['validator']
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+nmap <leader>sc <ESC> :SyntasticCheck <CR> :Errors <CR>
+
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#ctags_command = "exctags"
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplete#close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
