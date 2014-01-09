@@ -21,7 +21,7 @@ set backspace=indent,eol,start " allow backspacing over everything in insert mod
 
 set incsearch     " show search matches as you type
 set ignorecase
-set smartcase 
+set smartcase
 
 "Tabs
 filetype plugin indent on
@@ -31,7 +31,7 @@ set shiftwidth=4
 set expandtab
 
 "Pathogen
-call pathogen#infect() 
+call pathogen#infect()
 
 "Create a mapping for easy ncmpcpp access
 nmap mpd :!ncmpcpp -h /home/sean/.mpd/socket<CR><CR>
@@ -74,7 +74,14 @@ set wildignore=*.o,*#,*.fasl
 set wildmenu
 set wildmode=longest,list
 
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#syntastic#enabled = 1
+set laststatus=2
+
+
 :autocmd BufWritePost *.go :silent Fmt
+
 let jshint2_save = 1
 
 let g:syntastic_html_checkers=['validator']

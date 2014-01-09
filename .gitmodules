@@ -37,3 +37,6 @@
 [submodule ".vim/bundle/neocomplete.vim"]
 	path = .vim/bundle/neocomplete.vim
 	url = https://github.com/Shougo/neocomplete.vim.git
+[submodule ".vim/bundle/vim-trailing-whitespace"]
+	path = .vim/bundle/vim-trailing-whitespace
+	url = https://github.com/bronson/vim-trailing-whitespace.git
