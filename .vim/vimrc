@@ -79,7 +79,6 @@ let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 set laststatus=2
 
-
 :autocmd BufWritePost *.go :silent Fmt
 
 let jshint2_save = 1
@@ -100,3 +99,5 @@ function! s:my_cr_function()
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+autocmd VimEnter * nested :TagbarOpen
