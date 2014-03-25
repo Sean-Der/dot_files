@@ -82,12 +82,10 @@ set laststatus=2
 
 :autocmd BufWritePost *.go :silent Fmt
 
-let jshint2_save = 1
-
 let g:syntastic_html_checkers=['validator']
-let g:syntastic_always_populate_loc_list=1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-nmap <leader>sc <ESC> :SyntasticCheck <CR> :Errors <CR>
 
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#ctags_command = "exctags"
