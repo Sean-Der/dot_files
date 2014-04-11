@@ -33,6 +33,7 @@ set expandtab
 
 "Pathogen
 call pathogen#infect()
+Helptags
 
 "Create a mapping for easy ncmpcpp access
 nmap mpd :!ncmpcpp -h /home/sean/.mpd/socket<CR><CR>
@@ -60,7 +61,7 @@ nmap <leader>m :CtrlPMRU<CR>
 
 
 "ctags
-nmap <leader>tc :!exctags --extra=+f -R *<CR><CR>
+nmap <leader>tc :!ctags --extra=+f -R *<CR><CR>
 set tags=tags;
 
 "during split close buffer
@@ -88,7 +89,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 
 let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#ctags_command = "exctags"
+let g:neocomplete#ctags_command = "ctags"
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()

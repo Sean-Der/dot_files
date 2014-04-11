@@ -20,13 +20,11 @@ PROMPT="%{$fg_bold[green]%}%n@%m%{$reset_color%}%\:%{$fg_bold[blue]%}%~%{$reset_
 
 source ~/.ssh_accounts
 
-alias ls='ls -FG' 
+alias ls='ls -FG'
 alias ll='ls -lha'
 alias lr='ls -ltr'
 alias l='ls -lh'
 alias showLargest='du -a | sort -n -r | less'
-
-alias ncmpcpp='ncmpcpp -h /home/sean/.mpd/socket'
 
 alias mouseDisable='sudo xinput set-prop 7 "Device Enabled" 0'
 alias mouseEnable='sudo xinput set-prop 7 "Device Enabled" 1'
