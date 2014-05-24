@@ -1,7 +1,7 @@
 # The following lines were added by compinstall
 
-zstyle ':completion:*' ignored-patterns '*.fasl' completer _expand _complete _ignored _approximate
-zstyle :compinstall filename '/usr/home/sean/.zshrc'
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle :compinstall filename '/home/sdubois/.zshrc'
 
 autoload -Uz compinit
 compinit

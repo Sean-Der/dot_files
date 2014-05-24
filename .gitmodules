@@ -43,6 +43,3 @@
 [submodule ".vim/bundle/vdebug"]
 	path = .vim/bundle/vdebug
 	url = https://github.com/joonty/vdebug.git
-[submodule ".vim/bundle/tern"]
-	path = .vim/bundle/tern
-	url = https://github.com/marijnh/tern_for_vim.git
