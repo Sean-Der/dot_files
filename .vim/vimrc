@@ -18,55 +18,33 @@ set nocursorcolumn
 set nocursorline
 syntax sync minlines=256
 
-set backspace=indent,eol,start " allow backspacing over everything in insert mode
-
 set incsearch     " show search matches as you type
 set ignorecase
 set smartcase
 
 "Tabs
+set autoindent
 filetype plugin indent on
-set smartindent
-set tabstop=4
-set shiftwidth=4
-set expandtab
 
 "Pathogen
 call pathogen#infect()
 Helptags
-
-"Create a mapping for easy ncmpcpp access
-nmap mpd :!ncmpcpp -h /home/sean/.mpd/socket<CR><CR>
 
 "Leaving modes in Emacs+EVIL feels right
 map <C-g> <Esc>
 map! <C-g> <Esc>
 cmap <C-g> <Esc>
 
-"better window navigation
-map h <C-w>h
-map j <C-w>j
-map k <C-w>k
-map l <C-w>l
-
 let mapleader=","
-let g:slimv_leader="s"
-let g:slimv_repl_split=3
 
 nmap <leader>r <ESC>:Ack <C-R><C-W>
 nmap <leader>o :CtrlP<CR>
 nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>m :CtrlPMRU<CR>
 
-
-
 "ctags
 nmap <leader>tc :!ctags --extra=+f -R *<CR><CR>
 set tags=tags;
-
-"during split close buffer
-nmap <leader>db :bn <bar> :bd# <CR>
-
 
 "Hitting tab in visual mode fixes indentation on the selected lines
 vmap <Tab> =
@@ -83,13 +61,10 @@ set laststatus=2
 
 :autocmd BufWritePost *.go :silent Fmt
 
-let g:syntastic_html_checkers=['validator']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 
 let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#ctags_command = "ctags"
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
@@ -100,5 +75,4 @@ endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-autocmd VimEnter * nested :TagbarOpen
-autocmd BufWritePre * :%s/\s\+$//e
+autocmd BufWritePre * :FixWhitespace
