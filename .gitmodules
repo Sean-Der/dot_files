@@ -43,3 +43,6 @@
 [submodule ".vim/bundle/vdebug"]
 	path = .vim/bundle/vdebug
 	url = https://github.com/joonty/vdebug.git
+[submodule ".vim/bundle/matchit"]
+	path = .vim/bundle/matchit
+	url = https://github.com/tmhedberg/matchit.git
