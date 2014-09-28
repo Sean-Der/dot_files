@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const char font[]            = "-*-inconsolata-medium-r-*-*-20-*-*-*-*-*-*-*";
+static const char font[]            = "xft:Inconsolata:pixelsize=20";
 static const char normbordercolor[] = "#000000";
 static const char normbgcolor[]     = "#000000";
 static const char normfgcolor[]     = "#FFFFFF";
