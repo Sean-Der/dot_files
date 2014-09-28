@@ -14,7 +14,7 @@ index 875885b..e47fff6 100644
  static const Bool topbar            = True;     /* False means bottom bar */
  
 diff --git a/dwm.c b/dwm.c
-index f896170..cee73b5 100644
+index f896170..ea3a637 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -56,12 +56,30 @@
@@ -229,16 +229,16 @@ index f896170..cee73b5 100644
  	for(c = m->clients; c; c = c->next) {
  		occ |= c->tags;
  		if(c->isurgent)
-@@ -726,6 +814,9 @@ drawbar(Monitor *m) {
+@@ -722,6 +810,9 @@ drawbar(Monitor *m) {
+ 			x = xx;
+ 			w = m->ww - xx;
+ 		}
++		if(showsystray && m == systraytomon(m)) {
++			x -= getsystraywidth();
++		}
+ 		drw_text(drw, x, 0, w, bh, stext, 0);
  	}
  	else
- 		x = m->ww;
-+	if(showsystray && m == systraytomon(m)) {
-+		x -= getsystraywidth();
-+	}
- 	if((w = x - xx) > bh) {
- 		x = xx;
- 		if(m->sel) {
 @@ -747,6 +838,7 @@ drawbars(void) {
  
  	for(m = mons; m; m = m->next)
