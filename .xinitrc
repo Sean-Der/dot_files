@@ -21,6 +21,7 @@ xmodmap -e 'add Control = Control_L'
 
 xkbset m
 xmodmap -e "keycode 128 = Pointer_Button2"
+xmodmap -e "keycode 212 = Pointer_Button3"
 xbindkeys
 
 wmname LG3D &
