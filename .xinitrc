@@ -14,12 +14,19 @@ while true; do
 done &
 
 cd ~
-xrandr --output LVDS1 --auto --output HDMI1 --auto --left-of LVDS1
 setxkbmap -layout us -variant dvp
 xmodmap -e 'remove Lock = Caps_Lock'
 xmodmap -e 'keysym Caps_Lock = Control_L'
 xmodmap -e 'add Control = Control_L'
+
+xkbset m
+xmodmap -e "keycode 128 = Pointer_Button2"
+xbindkeys
+
 wmname LG3D &
+nm-applet &
 unclutter -idle 2 -noevents &
-redshift &
 exec dwm
+
+#xrandr --output LVDS1 --auto --output HDMI1 --auto --left-of LVDS1
+#redshift &

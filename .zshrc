@@ -28,6 +28,7 @@ alias showLargest='du -a | sort -n -r | less'
 
 alias mouseDisable='sudo xinput set-prop 7 "Device Enabled" 0'
 alias mouseEnable='sudo xinput set-prop 7 "Device Enabled" 1'
+alias ncmpcpp='ncmpcpp -h /home/sean/.mpd/socket'
 
 wireless(){
     sudo killall wpa_supplicant
