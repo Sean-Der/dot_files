@@ -225,15 +225,6 @@ index cee73b5..96e3c55 100644
 
  #include "drw.h"
  #include "util.h"
-@@ -165,6 +166,8 @@ typedef struct {
- } Rule;
-
- /* function declarations */
-+void shiftview(const Arg *arg);
-+
- static void applyrules(Client *c);
- static Bool applysizehints(Client *c, int *x, int *y, int *w, int *h, Bool interact);
- static void arrange(Monitor *m);
 @@ -587,7 +590,7 @@ clientmessage(XEvent *e) {
  			XSelectInput(dpy, c->win, StructureNotifyMask | PropertyChangeMask | ResizeRedirectMask);
  			XReparentWindow(dpy, c->win, systray->win, 0, 0);

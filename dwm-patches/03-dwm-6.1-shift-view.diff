@@ -2,6 +2,15 @@ diff --git a/dwm.c b/dwm.c
 index cee73b5..96e3c55 100644
 --- a/dwm.c
 +++ b/dwm.c
+@@ -165,6 +166,8 @@ typedef struct {
+ } Rule;
+
+ /* function declarations */
++void shiftview(const Arg *arg);
++
+ static void applyrules(Client *c);
+ static Bool applysizehints(Client *c, int *x, int *y, int *w, int *h, Bool interact);
+ static void arrange(Monitor *m);
 @@ -2390,6 +2393,26 @@ zoom(const Arg *arg) {
  	pop(c);
  }
