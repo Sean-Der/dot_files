@@ -78,3 +78,5 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd BufWritePre * :FixWhitespace
 
 let g:tmuxcomplete#trigger = ''
+
+so $HOME/.vim/vimrc_private
