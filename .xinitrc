@@ -1,10 +1,10 @@
 #!/bin/sh
 while true; do
-  acpiout=$(LC_ALL=C acpiconf -i batt0)
-  stat=$(echo $acpiout| awk '{print $44}')
-  batt=$(echo $acpiout| awk '{print $47}')
+  acpiout=$(LC_ALL=C acpi -b)
+  stat=$(echo $acpiout| awk '{print $3}' | sed '$s/,$//')
+  batt=$(echo $acpiout| awk '{print $4}' | sed '$s/,$//')
 
-  if [ ! $stat == "discharging" ]
+  if [ ! $stat = "Discharging" ]
   then
     batt=""
   fi
@@ -19,9 +19,9 @@ xmodmap -e 'remove Lock = Caps_Lock'
 xmodmap -e 'keysym Caps_Lock = Control_L'
 xmodmap -e 'add Control = Control_L'
 
-xkbset m
 xmodmap -e "keycode 128 = Pointer_Button2"
 xmodmap -e "keycode 212 = Pointer_Button3"
+xkbset m
 xbindkeys
 
 wmname LG3D &
