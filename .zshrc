@@ -30,13 +30,6 @@ alias mouseDisable='sudo xinput set-prop 7 "Device Enabled" 0'
 alias mouseEnable='sudo xinput set-prop 7 "Device Enabled" 1'
 alias ncmpcpp='ncmpcpp -h /home/sean/.mpd/socket'
 
-wireless(){
-    sudo killall wpa_supplicant
-    sudo killall dhclient
-	sudo wpa_supplicant -B -c /etc/wpa_supplicant.conf -i wlan0
-	sudo dhclient wlan0
-}
-
 case $TERM in
     *xterm*)
         precmd () {{print -Pn "\e]0;%n@%M: %~\a"} 2>/dev/null}
