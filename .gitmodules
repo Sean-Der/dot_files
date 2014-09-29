@@ -49,9 +49,3 @@
 [submodule ".vim/bundle/tmux-complete.vim"]
 	path = .vim/bundle/tmux-complete.vim
 	url = git://github.com/wellle/tmux-complete.vim.git
-[submodule "dwm"]
-	path = dwm
-	url = git://git.suckless.org/dwm
-[submodule "dmenu"]
-	path = dmenu
-	url = git://git.suckless.org/dmenu
