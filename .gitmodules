@@ -1,9 +1,6 @@
 [submodule ".vim/bundle/slimv"]
 	path = .vim/bundle/slimv
 	url = https://github.com/kovisoft/slimv.git
-[submodule ".vim/bundle/golang"]
-	path = .vim/bundle/golang
-	url = https://github.com/jnwhiteh/vim-golang.git
 [submodule ".vim/bundle/ack"]
 	path = .vim/bundle/ack
 	url = https://github.com/mileszs/ack.vim.git
@@ -55,3 +52,6 @@
 [submodule "dmenu"]
 	path = dmenu
 	url = git://git.suckless.org/dmenu
+[submodule ".vim/bundle/vim-go"]
+	path = .vim/bundle/vim-go
+	url = https://github.com/fatih/vim-go.git
