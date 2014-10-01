@@ -21,6 +21,7 @@ xmodmap -e 'add Control = Control_L'
 
 xmodmap -e "keycode 128 = Pointer_Button2"
 xmodmap -e "keycode 212 = Pointer_Button3"
+xkbset exp -m
 xkbset m
 xbindkeys
 
@@ -29,6 +30,7 @@ eval $(/usr/bin/killall ssh-agent; /usr/bin/ssh-agent)
 wmname LG3D &
 nm-applet &
 unclutter -idle 2 -noevents &
+mpd
 exec dwm
 
 #xrandr --output LVDS1 --auto --output HDMI1 --auto --left-of LVDS1
