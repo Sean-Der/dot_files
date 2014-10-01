@@ -59,8 +59,6 @@ let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 set laststatus=2
 
-:autocmd BufWritePost *.go :silent Fmt
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 
