@@ -21,8 +21,8 @@ xmodmap -e 'add Control = Control_L'
 
 xmodmap -e "keycode 128 = Pointer_Button2"
 xmodmap -e "keycode 212 = Pointer_Button3"
-xkbset exp -m
 xkbset m
+xkbset exp \=m
 xbindkeys
 
 eval $(/usr/bin/killall ssh-agent; /usr/bin/ssh-agent)
