@@ -18,8 +18,6 @@ unsetopt beep
 autoload -U colors && colors
 PROMPT="%{$fg_bold[green]%}%n@%m%{$reset_color%}%\:%{$fg_bold[blue]%}%~%{$reset_color%}%(!.#.$) "
 
-source ~/.ssh_accounts
-
 alias ls='ls -FG'
 alias ll='ls -lha'
 alias lr='ls -ltr'
@@ -29,6 +27,8 @@ alias showLargest='du -a | sort -n -r | less'
 alias mouseDisable='sudo xinput set-prop 7 "Device Enabled" 0'
 alias mouseEnable='sudo xinput set-prop 7 "Device Enabled" 1'
 alias ncmpcpp='ncmpcpp -h /home/sean/.mpd/socket'
+
+source ~/.ssh_accounts
 
 case $TERM in
     *xterm*)
