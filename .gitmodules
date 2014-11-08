@@ -58,3 +58,9 @@
 [submodule ".vim/bundle/vim-sleuth"]
 	path = .vim/bundle/vim-sleuth
 	url = git://github.com/tpope/vim-sleuth.git
+[submodule ".vim/bundle/ultisnips.git"]
+	path = .vim/bundle/ultisnips.git
+	url = https://github.com/SirVer/ultisnips.git
+[submodule ".vim/bundle/vim-snippets.git"]
+	path = .vim/bundle/vim-snippets.git
+	url = https://github.com/honza/vim-snippets.git

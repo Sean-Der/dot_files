@@ -63,11 +63,8 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 
 let g:neocomplete#enable_at_startup = 1
-" <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  "return neocomplete#close_popup() . "\<CR>"
-  " For no inserting <CR> key.
   return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
@@ -76,5 +73,8 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd BufWritePre * :FixWhitespace
 
 let g:tmuxcomplete#trigger = ''
+
+let g:UltiSnipsExpandTrigger="<C-a>"
+let g:UltiSnipsJumpForwardTrigger="<C-a>"
 
 so $HOME/.vim/vimrc_private
