@@ -42,6 +42,9 @@ nmap <leader>o :CtrlP<CR>
 nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>m :CtrlPMRU<CR>
 
+nmap <leader>s <ESC>:Scratch <CR>
+let g:scratch_autohide=1
+
 "ctags
 nmap <leader>tc :!ctags --extra=+f -R *<CR><CR>
 set tags=tags;
