@@ -67,3 +67,6 @@
 [submodule ".vim/bundle/vim-mustache-handlebars"]
 	path = .vim/bundle/vim-mustache-handlebars
 	url = https://github.com/mustache/vim-mustache-handlebars.git
+[submodule ".vim/bundle/vim-javascript.vim"]
+	path = .vim/bundle/vim-javascript.vim
+	url = git@github.com:pangloss/vim-javascript.git
