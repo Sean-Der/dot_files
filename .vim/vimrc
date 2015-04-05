@@ -37,13 +37,23 @@ cmap <C-g> <Esc>
 
 let mapleader=","
 
-nmap <leader>r <ESC>:Ag <C-R><C-W>
-nmap <leader>g <ESC>:Ggrep <C-R><C-W>
-autocmd QuickFixCmdPost *grep* cwindow
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <leader>o :<C-u>Unite -buffer-name=files   -start-insert file_rec/async:!<cr>
+nnoremap <leader>m :<C-u>Unite -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>b :<C-u>Unite -buffer-name=buffer  -quick-match  buffer<cr>
+nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
 
-nmap <leader>o :CtrlP<CR>
-nmap <leader>b :CtrlPBuffer<CR>
-nmap <leader>m :CtrlPMRU<CR>
+
+let g:unite_source_grep_command = 'ag'
+let g:unite_source_grep_default_opts = '-inH -r --vimgrep'
+nnoremap <leader>r :<C-u>Unite -buffer-name=ag      grep:.<cr>
+
+
+"nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+"nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+
+
 
 "ctags
 nmap <leader>tc :!ctags --extra=+f -R *<CR><CR>
