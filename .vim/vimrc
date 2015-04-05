@@ -47,7 +47,7 @@ call unite#custom#profile('default', 'context',
 nnoremap <leader>o :<C-u>Unite -buffer-name=files  -start-insert file_rec/async:!<cr>
 nnoremap <leader>m :<C-u>Unite -buffer-name=mru    -start-insert file_mru<cr>
 nnoremap <leader>b :<C-u>Unite -buffer-name=buffer -quick-match  buffer<cr>
-nnoremap <leader>t :<C-u>Unite -buffer-name=tags    -start-insert tag<cr>
+nnoremap <leader>t :<C-u>Unite -buffer-name=tags                 tag<cr>
 
 let g:unite_source_history_yank_enable = 1
 nnoremap <leader>y :<C-u>Unite -buffer-name=yank   history/yank<cr>
@@ -60,7 +60,7 @@ endif
 nnoremap <leader>r :<C-u>:Unite -auto-resize -no-quit -no-empty -keep-focus grep:.<cr>
 
 "ctags
-nmap <leader>tc :!ctags --extra=+f -R *<CR><CR>
+nmap <leader>ct :!ctags --extra=+f -R *<CR><CR>
 set tags=tags;
 
 "Hitting tab in visual mode fixes indentation on the selected lines
