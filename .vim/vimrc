@@ -83,7 +83,7 @@ endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-autocmd BufWritePre * :FixWhitespace
+autocmd BufWritePre * :%s/\s\+$//e
 
 let g:tmuxcomplete#trigger = ''
 
