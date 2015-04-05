@@ -37,23 +37,27 @@ cmap <C-g> <Esc>
 
 let mapleader=","
 
-let g:unite_source_history_yank_enable = 1
+
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap <leader>o :<C-u>Unite -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <leader>m :<C-u>Unite -buffer-name=mru     -start-insert file_mru<cr>
-nnoremap <leader>b :<C-u>Unite -buffer-name=buffer  -quick-match  buffer<cr>
-nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
+call unite#custom#profile('default', 'context',
+  \{
+    \ 'direction': 'botright',
+  \ })
 
+nnoremap <leader>o :<C-u>Unite -buffer-name=files  -start-insert file_rec/async:!<cr>
+nnoremap <leader>m :<C-u>Unite -buffer-name=mru    -start-insert file_mru<cr>
+nnoremap <leader>b :<C-u>Unite -buffer-name=buffer -quick-match  buffer<cr>
 
-let g:unite_source_grep_command = 'ag'
-let g:unite_source_grep_default_opts = '-inH -r --vimgrep'
-nnoremap <leader>r :<C-u>Unite -buffer-name=ag      grep:.<cr>
+let g:unite_source_history_yank_enable = 1
+nnoremap <leader>y :<C-u>Unite -buffer-name=yank   history/yank<cr>
 
+if executable('ag')
+  let g:unite_source_grep_command='ag'
+  let g:unite_source_grep_default_opts='--hidden --nocolor --nogroup -S'
+  let g:unite_source_grep_recursive_opt=''
+endif
 
-"nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-"nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
-
-
+nnoremap <leader>r :<C-u>:Unite -auto-resize -no-quit -no-empty -keep-focus grep:.<cr>
 
 "ctags
 nmap <leader>tc :!ctags --extra=+f -R *<CR><CR>
