@@ -37,8 +37,8 @@ cmap <C-g> <Esc>
 
 let mapleader=","
 
-nmap <leader>r <ESC>:Ag <C-R><C-W>
-nmap <leader>g <ESC>:Ggrep <C-R><C-W>
+nmap <leader>r <ESC>:Ag
+nmap <leader>g <ESC>:Ggrep
 autocmd QuickFixCmdPost *grep* cwindow
 
 nmap <leader>o :CtrlP<CR>
@@ -79,5 +79,7 @@ let g:tmuxcomplete#trigger = ''
 
 let g:UltiSnipsExpandTrigger="<C-a>"
 let g:UltiSnipsJumpForwardTrigger="<C-a>"
+
+nmap <leader>p <Plug>yankstack_substitute_older_paste
 
 so $HOME/.vim/vimrc_private
