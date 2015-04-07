@@ -1,9 +1,15 @@
 [submodule ".vim/bundle/slimv"]
 	path = .vim/bundle/slimv
 	url = https://github.com/kovisoft/slimv.git
+[submodule ".vim/bundle/nerdtree"]
+	path = .vim/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
 [submodule ".vim/bundle/vim-surround"]
 	path = .vim/bundle/vim-surround
 	url = https://github.com/tpope/vim-surround.git
+[submodule ".vim/bundle/ctrlp.vim"]
+	path = .vim/bundle/ctrlp.vim
+	url = https://github.com/kien/ctrlp.vim.git
 [submodule ".vim/bundle/vim-gitgutter"]
 	path = .vim/bundle/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
@@ -15,13 +21,16 @@
 	url = https://github.com/bling/vim-airline
 [submodule ".vim/bundle/vim-fugitive"]
 	path = .vim/bundle/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
+	url = git://github.com/tpope/vim-fugitive.git
 [submodule ".vim/bundle/vim-togglelist"]
 	path = .vim/bundle/vim-togglelist
 	url = https://github.com/milkypostman/vim-togglelist.git
 [submodule ".vim/bundle/neocomplete.vim"]
 	path = .vim/bundle/neocomplete.vim
 	url = https://github.com/Shougo/neocomplete.vim.git
+[submodule ".vim/bundle/vim-trailing-whitespace"]
+	path = .vim/bundle/vim-trailing-whitespace
+	url = https://github.com/bronson/vim-trailing-whitespace.git
 [submodule ".vim/bundle/vdebug"]
 	path = .vim/bundle/vdebug
 	url = https://github.com/joonty/vdebug.git
@@ -30,7 +39,7 @@
 	url = https://github.com/tmhedberg/matchit.git
 [submodule ".vim/bundle/tmux-complete.vim"]
 	path = .vim/bundle/tmux-complete.vim
-	url = https://github.com/wellle/tmux-complete.vim.git
+	url = git://github.com/wellle/tmux-complete.vim.git
 [submodule "dwm"]
 	path = dwm
 	url = git://git.suckless.org/dwm
@@ -40,9 +49,12 @@
 [submodule ".vim/bundle/vim-go"]
 	path = .vim/bundle/vim-go
 	url = https://github.com/fatih/vim-go.git
+[submodule ".vim/bundle/ag.vim"]
+	path = .vim/bundle/ag.vim
+	url = https://github.com/rking/ag.vim.git
 [submodule ".vim/bundle/vim-sleuth"]
 	path = .vim/bundle/vim-sleuth
-	url = https://github.com/tpope/vim-sleuth.git
+	url = git://github.com/tpope/vim-sleuth.git
 [submodule ".vim/bundle/ultisnips.git"]
 	path = .vim/bundle/ultisnips.git
 	url = https://github.com/SirVer/ultisnips.git
@@ -58,15 +70,3 @@
 [submodule ".vim/bundle/vim-javascript.vim"]
 	path = .vim/bundle/vim-javascript.vim
 	url = git@github.com:pangloss/vim-javascript.git
-[submodule ".vim/bundle/unite.vim"]
-	path = .vim/bundle/unite.vim
-	url = https://github.com/Shougo/unite.vim.git
-[submodule ".vim/bundle/vimproc.vim"]
-	path = .vim/bundle/vimproc.vim
-	url = https://github.com/Shougo/vimproc.vim.git
-[submodule ".vim/bundle/neomru.vim"]
-	path = .vim/bundle/neomru.vim
-	url = https://github.com/Shougo/neomru.vim.git
-[submodule ".vim/bundle/unite-tag"]
-	path = .vim/bundle/unite-tag
-	url = https://github.com/tsukkee/unite-tag.git
