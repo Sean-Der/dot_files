@@ -80,6 +80,7 @@ let g:tmuxcomplete#trigger = ''
 let g:UltiSnipsExpandTrigger="<C-a>"
 let g:UltiSnipsJumpForwardTrigger="<C-a>"
 
-nmap <leader>p <Plug>yankstack_substitute_older_paste
+nmap <leader>n <Plug>yankstack_substitute_older_paste
+nmap <leader>p <Plug>yankstack_substitute_newer_paste
 
 so $HOME/.vim/vimrc_private
