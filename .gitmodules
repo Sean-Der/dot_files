@@ -64,3 +64,6 @@
 [submodule ".vim/bundle/vim-yankstack"]
 	path = .vim/bundle/vim-yankstack
 	url = https://github.com/maxbrunsfeld/vim-yankstack.git
+[submodule ".vim/bundle/vim-surround"]
+	path = .vim/bundle/vim-surround
+	url = git@github.com:tpope/vim-surround.git
