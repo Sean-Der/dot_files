@@ -5,8 +5,6 @@ set nowrap "line wrapping
 set title "set the term title
 set showcmd "show cur command
 set showmatch "show matching bracket
-set hidden "no nag screens on tag jump
-set nocompatible
 
 "Better file handling
 set nobackup
@@ -66,17 +64,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:ycm_register_as_syntastic_checker = 0
 
-"let g:neocomplete#enable_at_startup = 1
-"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"function! s:my_cr_function()
-"  return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-"endfunction
-"" <TAB>: completion.
-"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
 autocmd BufWritePre * :FixWhitespace
 
-let g:tmuxcomplete#trigger = ''
+let g:tmuxcomplete#trigger = 'omnifunc'
 
 let g:UltiSnipsExpandTrigger="<C-a>"
 let g:UltiSnipsJumpForwardTrigger="<C-a>"
