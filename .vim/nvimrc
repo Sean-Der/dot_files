@@ -64,14 +64,15 @@ set laststatus=2
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
+let g:ycm_register_as_syntastic_checker = 0
 
-let g:neocomplete#enable_at_startup = 1
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"let g:neocomplete#enable_at_startup = 1
+"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"function! s:my_cr_function()
+"  return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+"endfunction
+"" <TAB>: completion.
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 autocmd BufWritePre * :FixWhitespace
 
@@ -84,4 +85,4 @@ call yankstack#setup()
 nmap <leader>n <Plug>yankstack_substitute_older_paste
 nmap <leader>p <Plug>yankstack_substitute_newer_paste
 
-so $HOME/.vim/vimrc_private
+so $HOME/.nvim/nvimrc_private

@@ -23,6 +23,7 @@ alias ll='ls -lha'
 alias lr='ls -ltr'
 alias l='ls -lh'
 alias showLargest='du -a | sort -n -r | less'
+alias vim='nvim'
 
 alias mouseDisable='sudo xinput set-prop 7 "Device Enabled" 0'
 alias mouseEnable='sudo xinput set-prop 7 "Device Enabled" 1'
