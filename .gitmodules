@@ -19,9 +19,6 @@
 [submodule ".vim/bundle/vim-togglelist"]
 	path = .vim/bundle/vim-togglelist
 	url = https://github.com/milkypostman/vim-togglelist.git
-[submodule ".vim/bundle/neocomplete.vim"]
-	path = .vim/bundle/neocomplete.vim
-	url = https://github.com/Shougo/neocomplete.vim.git
 [submodule ".vim/bundle/vim-trailing-whitespace"]
 	path = .vim/bundle/vim-trailing-whitespace
 	url = https://github.com/bronson/vim-trailing-whitespace.git
@@ -67,3 +64,6 @@
 [submodule ".vim/bundle/vim-surround"]
 	path = .vim/bundle/vim-surround
 	url = git@github.com:tpope/vim-surround.git
+[submodule ".vim/bundle/YouCompleteMe"]
+	path = .vim/bundle/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git
