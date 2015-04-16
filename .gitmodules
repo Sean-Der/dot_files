@@ -1,69 +1,69 @@
 [submodule ".nvim/bundle/slimv"]
 	path = .nvim/bundle/slimv
 	url = https://github.com/kovisoft/slimv.git
-[submodule ".nvim/bundle/ctrlp.nvim"]
-	path = .nvim/bundle/ctrlp.nvim
-	url = https://github.com/kien/ctrlp.nvim.git
-[submodule ".nvim/bundle/nvim-gitgutter"]
-	path = .nvim/bundle/nvim-gitgutter
-	url = https://github.com/airblade/nvim-gitgutter.git
+[submodule ".nvim/bundle/ctrlp.vim"]
+	path = .nvim/bundle/ctrlp.vim
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule ".nvim/bundle/vim-gitgutter"]
+	path = .nvim/bundle/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
 [submodule ".nvim/bundle/syntastic"]
 	path = .nvim/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
-[submodule ".nvim/bundle/nvim-airline"]
-	path = .nvim/bundle/nvim-airline
-	url = https://github.com/bling/nvim-airline
-[submodule ".nvim/bundle/nvim-fugitive"]
-	path = .nvim/bundle/nvim-fugitive
-	url = git://github.com/tpope/nvim-fugitive.git
-[submodule ".nvim/bundle/nvim-togglelist"]
-	path = .nvim/bundle/nvim-togglelist
-	url = https://github.com/milkypostman/nvim-togglelist.git
-[submodule ".nvim/bundle/nvim-trailing-whitespace"]
-	path = .nvim/bundle/nvim-trailing-whitespace
-	url = https://github.com/bronson/nvim-trailing-whitespace.git
+[submodule ".nvim/bundle/vim-airline"]
+	path = .nvim/bundle/vim-airline
+	url = https://github.com/bling/vim-airline
+[submodule ".nvim/bundle/vim-fugitive"]
+	path = .nvim/bundle/vim-fugitive
+	url = git://github.com/tpope/vim-fugitive.git
+[submodule ".nvim/bundle/vim-togglelist"]
+	path = .nvim/bundle/vim-togglelist
+	url = https://github.com/milkypostman/vim-togglelist.git
+[submodule ".nvim/bundle/vim-trailing-whitespace"]
+	path = .nvim/bundle/vim-trailing-whitespace
+	url = https://github.com/bronson/vim-trailing-whitespace.git
 [submodule ".nvim/bundle/vdebug"]
 	path = .nvim/bundle/vdebug
 	url = https://github.com/joonty/vdebug.git
-[submodule ".nvim/bundle/tmux-complete.nvim"]
-	path = .nvim/bundle/tmux-complete.nvim
-	url = git://github.com/wellle/tmux-complete.nvim.git
+[submodule ".nvim/bundle/tmux-complete.vim"]
+	path = .nvim/bundle/tmux-complete.vim
+	url = git://github.com/wellle/tmux-complete.vim.git
 [submodule "dwm"]
 	path = dwm
 	url = git://git.suckless.org/dwm
 [submodule "dmenu"]
 	path = dmenu
 	url = git://git.suckless.org/dmenu
-[submodule ".nvim/bundle/nvim-go"]
-	path = .nvim/bundle/nvim-go
-	url = https://github.com/fatih/nvim-go.git
-[submodule ".nvim/bundle/ag.nvim"]
-	path = .nvim/bundle/ag.nvim
-	url = https://github.com/rking/ag.nvim.git
-[submodule ".nvim/bundle/nvim-sleuth"]
-	path = .nvim/bundle/nvim-sleuth
-	url = git://github.com/tpope/nvim-sleuth.git
+[submodule ".nvim/bundle/vim-go"]
+	path = .nvim/bundle/vim-go
+	url = https://github.com/fatih/vim-go.git
+[submodule ".nvim/bundle/ag.vim"]
+	path = .nvim/bundle/ag.vim
+	url = https://github.com/rking/ag.vim.git
+[submodule ".nvim/bundle/vim-sleuth"]
+	path = .nvim/bundle/vim-sleuth
+	url = git://github.com/tpope/vim-sleuth.git
 [submodule ".nvim/bundle/ultisnips.git"]
 	path = .nvim/bundle/ultisnips.git
 	url = https://github.com/SirVer/ultisnips.git
-[submodule ".nvim/bundle/nvim-snippets.git"]
-	path = .nvim/bundle/nvim-snippets.git
-	url = https://github.com/honza/nvim-snippets.git
-[submodule ".nvim/bundle/nvim-jsx"]
-	path = .nvim/bundle/nvim-jsx
-	url = https://github.com/mxw/nvim-jsx.git
-[submodule ".nvim/bundle/nvim-mustache-handlebars"]
-	path = .nvim/bundle/nvim-mustache-handlebars
-	url = https://github.com/mustache/nvim-mustache-handlebars.git
-[submodule ".nvim/bundle/nvim-javascript.nvim"]
-	path = .nvim/bundle/nvim-javascript.nvim
-	url = git@github.com:pangloss/nvim-javascript.git
-[submodule ".nvim/bundle/nvim-yankstack"]
-	path = .nvim/bundle/nvim-yankstack
-	url = https://github.com/maxbrunsfeld/nvim-yankstack.git
-[submodule ".nvim/bundle/nvim-surround"]
-	path = .nvim/bundle/nvim-surround
-	url = git@github.com:tpope/nvim-surround.git
+[submodule ".nvim/bundle/vim-snippets.git"]
+	path = .nvim/bundle/vim-snippets.git
+	url = https://github.com/honza/vim-snippets.git
+[submodule ".nvim/bundle/vim-jsx"]
+	path = .nvim/bundle/vim-jsx
+	url = https://github.com/mxw/vim-jsx.git
+[submodule ".nvim/bundle/vim-mustache-handlebars"]
+	path = .nvim/bundle/vim-mustache-handlebars
+	url = https://github.com/mustache/vim-mustache-handlebars.git
+[submodule ".nvim/bundle/vim-javascript.vim"]
+	path = .nvim/bundle/vim-javascript.vim
+	url = git@github.com:pangloss/vim-javascript.git
+[submodule ".nvim/bundle/vim-yankstack"]
+	path = .nvim/bundle/vim-yankstack
+	url = https://github.com/maxbrunsfeld/vim-yankstack.git
+[submodule ".nvim/bundle/vim-surround"]
+	path = .nvim/bundle/vim-surround
+	url = git@github.com:tpope/vim-surround.git
 [submodule ".nvim/bundle/YouCompleteMe"]
 	path = .nvim/bundle/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git

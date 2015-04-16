@@ -1,22 +1,18 @@
-# The following lines were added by compinstall
-
 zstyle ':completion:*' completer _expand _complete _ignored _approximate
-zstyle :compinstall filename '/home/sdubois/.zshrc'
 
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
-# Lines configured by zsh-newuser-install
+
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 setopt autocd
 unsetopt beep
-# End of lines configured by zsh-newuser-install
-#
 
 autoload -U colors && colors
 PROMPT="%{$fg_bold[green]%}%n@%m%{$reset_color%}%\:%{$fg_bold[blue]%}%~%{$reset_color%}%(!.#.$) "
+
+export TERM=xterm-256color
 
 alias ls='ls -FG'
 alias ll='ls -lha'
