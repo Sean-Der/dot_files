@@ -1,13 +1,11 @@
-"pactl set-sink-volume 1 +10%"
-	XF86AudioRaiseVolume
+"mixer vol -5"
+	XF86Back
 
-"pactl set-sink-volume 1 -- -10%"
-	XF86AudioLowerVolume
+"mixer vol +5"
+	XF86Forward
 
-"xbacklight -inc 10"
-	XF86MonBrightnessUp
+"echo 'previous' | nc -U ~/.mpd/socket"
+	XF86AudioPrev
 
-"xbacklight -dec 10"
-	XF86MonBrightnessDown
-
-
+"echo 'next' | nc -U ~/.mpd/socket"
+	XF86AudioNext
