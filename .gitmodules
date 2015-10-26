@@ -61,9 +61,6 @@
 [submodule ".nvim/bundle/vim-yankstack"]
 	path = .nvim/bundle/vim-yankstack
 	url = https://github.com/maxbrunsfeld/vim-yankstack.git
-[submodule ".nvim/bundle/vim-surround"]
-	path = .nvim/bundle/vim-surround
-	url = git@github.com:tpope/vim-surround.git
 [submodule ".nvim/bundle/YouCompleteMe"]
 	path = .nvim/bundle/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git

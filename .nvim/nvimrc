@@ -19,6 +19,7 @@ syntax sync minlines=256
 set incsearch     " show search matches as you type
 set ignorecase
 set smartcase
+set mouse=""
 
 "Tabs
 set autoindent
@@ -32,6 +33,8 @@ Helptags
 map <C-g> <Esc>
 map! <C-g> <Esc>
 cmap <C-g> <Esc>
+imap <C-g> <Esc>
+tmap <C-g> <C-\><C-n>
 
 let mapleader=","
 
