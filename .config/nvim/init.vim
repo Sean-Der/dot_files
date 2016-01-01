@@ -78,4 +78,4 @@ call yankstack#setup()
 nmap <leader>n <Plug>yankstack_substitute_older_paste
 nmap <leader>p <Plug>yankstack_substitute_newer_paste
 
-so $HOME/.nvim/nvimrc_private
+so $HOME/.config/nvim/init_private.vim

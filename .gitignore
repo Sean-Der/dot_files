@@ -1,2 +1,2 @@
-.nvim/nvimrc_private
-.nvim/.netrwhist
+.config/nvim/init_private.vim
+.config/nvim/.netrwhist
