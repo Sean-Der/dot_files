@@ -31,9 +31,6 @@
 [submodule "dwm"]
 	path = dwm
 	url = git://git.suckless.org/dwm
-[submodule "dmenu"]
-	path = dmenu
-	url = git://git.suckless.org/dmenu
 [submodule ".config/nvim/bundle/vim-go"]
 	path = .config/nvim/bundle/vim-go
 	url = https://github.com/fatih/vim-go.git
