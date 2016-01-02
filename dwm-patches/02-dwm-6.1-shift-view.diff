@@ -1,0 +1,52 @@
+diff --git a/config.def.h b/config.def.h
+index 8393a58..821d85d 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -63,6 +63,8 @@ static const char *termcmd[]  = { "st", NULL };
+ 
+ static Key keys[] = {
+ 	/* modifier                     key        function        argument */
++	{ MODKEY|ShiftMask,             XK_l,      shiftview,      { .i = +1 } },
++	{ MODKEY|ShiftMask,             XK_h,      shiftview,      { .i = -1 } },
+ 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+ 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+ 	{ MODKEY,                       XK_b,      togglebar,      {0} },
+diff --git a/dwm.c b/dwm.c
+index cf0b3a9..c2bf6a6 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -166,6 +166,7 @@ struct Systray {
+ };
+ 
+ /* function declarations */
++static void shiftview(const Arg *arg);
+ static void applyrules(Client *c);
+ static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
+ static void arrange(Monitor *m);
+@@ -2463,6 +2464,26 @@ zoom(const Arg *arg)
+ 	pop(c);
+ }
+ 
++/** Function to shift the current view to the left/right
++ *
++ * @param: "arg->i" stores the number of tags to shift right (positive value)
++ *          or left (negative value)
++ */
++void
++shiftview(const Arg *arg) {
++	Arg shifted;
++
++	if(arg->i > 0) // left circular shift
++		shifted.ui = (selmon->tagset[selmon->seltags] << arg->i)
++		   | (selmon->tagset[selmon->seltags] >> (LENGTH(tags) - arg->i));
++
++	else // right circular shift
++		shifted.ui = selmon->tagset[selmon->seltags] >> (- arg->i)
++		   | selmon->tagset[selmon->seltags] << (LENGTH(tags) + arg->i);
++
++	view(&shifted);
++}
++
+ int
+ main(int argc, char *argv[])
+ {
