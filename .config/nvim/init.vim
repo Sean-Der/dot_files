@@ -78,4 +78,6 @@ call yankstack#setup()
 nmap <leader>n <Plug>yankstack_substitute_older_paste
 nmap <leader>p <Plug>yankstack_substitute_newer_paste
 
+au BufRead,BufNewFile *.gcov            set filetype=gcov
+
 so $HOME/.config/nvim/init_private.vim
