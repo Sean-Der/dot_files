@@ -61,3 +61,6 @@
 [submodule ".config/nvim/bundle/YouCompleteMe"]
 	path = .config/nvim/bundle/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule ".config/nvim/bundle/gcov.vim"]
+	path = .config/nvim/bundle/gcov.vim
+	url = https://github.com/vim-scripts/gcov.vim.git
