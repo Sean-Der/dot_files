@@ -38,9 +38,7 @@ tmap <C-g> <C-\><C-n>
 
 let mapleader=","
 
-nmap <leader>r <ESC>:Ag
-nmap <leader>g <ESC>:Ggrep
-autocmd QuickFixCmdPost *grep* cwindow
+nmap <leader>r <ESC>:Grepper<CR>
 
 nmap <leader>o :CtrlP<CR>
 nmap <leader>b :CtrlPBuffer<CR>

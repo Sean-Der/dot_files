@@ -61,3 +61,6 @@
 [submodule ".config/nvim/bundle/gcov.vim"]
 	path = .config/nvim/bundle/gcov.vim
 	url = https://github.com/vim-scripts/gcov.vim.git
+[submodule ".config/nvim/bundle/vim-grepper"]
+	path = .config/nvim/bundle/vim-grepper
+	url = https://github.com/mhinz/vim-grepper.git
