@@ -34,9 +34,6 @@
 [submodule ".config/nvim/bundle/vim-go"]
 	path = .config/nvim/bundle/vim-go
 	url = https://github.com/fatih/vim-go.git
-[submodule ".config/nvim/bundle/ag.vim"]
-	path = .config/nvim/bundle/ag.vim
-	url = https://github.com/rking/ag.vim.git
 [submodule ".config/nvim/bundle/vim-sleuth"]
 	path = .config/nvim/bundle/vim-sleuth
 	url = git://github.com/tpope/vim-sleuth.git
