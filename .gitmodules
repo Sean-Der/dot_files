@@ -64,3 +64,6 @@
 [submodule ".config/nvim/bundle/vim-grepper"]
 	path = .config/nvim/bundle/vim-grepper
 	url = https://github.com/mhinz/vim-grepper.git
+[submodule ".config/nvim/bundle/vim-clang-format"]
+	path = .config/nvim/bundle/vim-clang-format
+	url = https://github.com/rhysd/vim-clang-format.git
