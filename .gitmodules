@@ -19,42 +19,21 @@
 [submodule ".config/nvim/bundle/vim-trailing-whitespace"]
 	path = .config/nvim/bundle/vim-trailing-whitespace
 	url = https://github.com/bronson/vim-trailing-whitespace.git
-[submodule ".config/nvim/bundle/vdebug"]
-	path = .config/nvim/bundle/vdebug
-	url = https://github.com/joonty/vdebug.git
-[submodule ".config/nvim/bundle/tmux-complete.vim"]
-	path = .config/nvim/bundle/tmux-complete.vim
-	url = git://github.com/wellle/tmux-complete.vim.git
 [submodule "dwm"]
 	path = dwm
 	url = git://git.suckless.org/dwm
 [submodule ".config/nvim/bundle/vim-go"]
 	path = .config/nvim/bundle/vim-go
 	url = https://github.com/fatih/vim-go.git
-[submodule ".config/nvim/bundle/vim-sleuth"]
-	path = .config/nvim/bundle/vim-sleuth
-	url = git://github.com/tpope/vim-sleuth.git
 [submodule ".config/nvim/bundle/ultisnips.git"]
 	path = .config/nvim/bundle/ultisnips.git
 	url = https://github.com/SirVer/ultisnips.git
 [submodule ".config/nvim/bundle/vim-snippets.git"]
 	path = .config/nvim/bundle/vim-snippets.git
 	url = https://github.com/honza/vim-snippets.git
-[submodule ".config/nvim/bundle/vim-jsx"]
-	path = .config/nvim/bundle/vim-jsx
-	url = https://github.com/mxw/vim-jsx.git
-[submodule ".config/nvim/bundle/vim-mustache-handlebars"]
-	path = .config/nvim/bundle/vim-mustache-handlebars
-	url = https://github.com/mustache/vim-mustache-handlebars.git
-[submodule ".config/nvim/bundle/vim-javascript.vim"]
-	path = .config/nvim/bundle/vim-javascript.vim
-	url = git@github.com:pangloss/vim-javascript.git
 [submodule ".config/nvim/bundle/vim-yankstack"]
 	path = .config/nvim/bundle/vim-yankstack
 	url = https://github.com/maxbrunsfeld/vim-yankstack.git
-[submodule ".config/nvim/bundle/YouCompleteMe"]
-	path = .config/nvim/bundle/YouCompleteMe
-	url = https://github.com/Valloric/YouCompleteMe.git
 [submodule ".config/nvim/bundle/gcov.vim"]
 	path = .config/nvim/bundle/gcov.vim
 	url = https://github.com/vim-scripts/gcov.vim.git
