@@ -7,9 +7,6 @@
 [submodule ".config/nvim/bundle/vim-gitgutter"]
 	path = .config/nvim/bundle/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
-[submodule ".config/nvim/bundle/syntastic"]
-	path = .config/nvim/bundle/syntastic
-	url = https://github.com/scrooloose/syntastic.git
 [submodule ".config/nvim/bundle/vim-airline"]
 	path = .config/nvim/bundle/vim-airline
 	url = https://github.com/bling/vim-airline
