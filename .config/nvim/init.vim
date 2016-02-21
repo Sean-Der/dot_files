@@ -58,12 +58,13 @@ set wildmode=longest,list
 
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#whitespace#enabled = 1
-let g:airline#extensions#syntastic#enabled = 1
 set laststatus=2
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:ycm_register_as_syntastic_checker = 0
+autocmd! BufWritePost * Neomake
+let g:neomake_open_list = 2
+let g:neomake_warning_sign = {'text': '⚠>', 'texthl': 'NeomakeErrorMsg'}
+let g:neomake_error_sign = {'text': '✖', 'texthl': 'NeomakeErrorMsg'}
+hi NeomakeErrorMsg guifg=#d70000 guibg=#8a8a8a guisp=#8a8a8a gui=NONE ctermfg=160 ctermbg=233 cterm=NONE
 
 autocmd BufWritePre * :FixWhitespace
 
@@ -76,7 +77,7 @@ call yankstack#setup()
 nmap <leader>n <Plug>yankstack_substitute_older_paste
 nmap <leader>p <Plug>yankstack_substitute_newer_paste
 
-au BufRead,BufNewFile *.gcov            set filetype=gcov
+au BufRead,BufNewFile *.gcov set filetype=gcov
 hi gcovNotExecuted ctermfg=124 ctermbg=NONE cterm=NONE
 hi gcovExecuted ctermfg=28 ctermbg=NONE cterm=NONE
 hi gcovNoCode ctermfg=102 ctermbg=NONE cterm=NONE

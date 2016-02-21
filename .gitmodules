@@ -64,3 +64,6 @@
 [submodule ".config/nvim/bundle/vim-clang-format"]
 	path = .config/nvim/bundle/vim-clang-format
 	url = https://github.com/rhysd/vim-clang-format.git
+[submodule ".config/nvim/bundle/neomake"]
+	path = .config/nvim/bundle/neomake
+	url = https://github.com/benekastah/neomake.git
