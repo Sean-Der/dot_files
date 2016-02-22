@@ -62,16 +62,16 @@ set laststatus=2
 
 autocmd! BufWritePost * Neomake
 let g:neomake_open_list = 2
-let g:neomake_warning_sign = {'text': '⚠>', 'texthl': 'NeomakeErrorMsg'}
+let g:neomake_warning_sign = {'text': '⚠>', 'texthl': 'NeomakeWarningMsg'}
+hi NeomakeWarningMsg guifg=#d70000 guibg=#8a8a8a guisp=#8a8a8a gui=NONE ctermfg=100 ctermbg=233 cterm=NONE
 let g:neomake_error_sign = {'text': '✖', 'texthl': 'NeomakeErrorMsg'}
 hi NeomakeErrorMsg guifg=#d70000 guibg=#8a8a8a guisp=#8a8a8a gui=NONE ctermfg=160 ctermbg=233 cterm=NONE
 
 autocmd BufWritePre * :FixWhitespace
 
-let g:tmuxcomplete#trigger = 'omnifunc'
-
 let g:UltiSnipsExpandTrigger="<C-a>"
 let g:UltiSnipsJumpForwardTrigger="<C-a>"
+set completeopt=menu,preview
 
 call yankstack#setup()
 nmap <leader>n <Plug>yankstack_substitute_older_paste
@@ -81,5 +81,7 @@ au BufRead,BufNewFile *.gcov set filetype=gcov
 hi gcovNotExecuted ctermfg=124 ctermbg=NONE cterm=NONE
 hi gcovExecuted ctermfg=28 ctermbg=NONE cterm=NONE
 hi gcovNoCode ctermfg=102 ctermbg=NONE cterm=NONE
+
+let g:deoplete#enable_at_startup = 1
 
 so $HOME/.config/nvim/init_private.vim
