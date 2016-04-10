@@ -84,4 +84,6 @@ hi gcovNoCode ctermfg=102 ctermbg=NONE cterm=NONE
 
 let g:deoplete#enable_at_startup = 1
 
+nmap <F8> :TagbarToggle<CR>
+
 so $HOME/.config/nvim/init_private.vim
