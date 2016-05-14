@@ -1,8 +1,8 @@
 "mixer vol -5"
-	XF86Back
+	XF86AudioLowerVolume
 
 "mixer vol +5"
-	XF86Forward
+	XF86AudioRaiseVolume
 
 "echo 'previous' | nc -U ~/.mpd/socket"
 	XF86AudioPrev
