@@ -20,10 +20,11 @@ xmodmap -e 'keysym Caps_Lock = Control_L'
 xmodmap -e 'add Control = Control_L'
 xset b off
 xbindkeys
-xrandr --output LVDS1 --auto --output VGA1 --auto --above LVDS1
+xrandr --output LVDS1 --auto --output DP1 --auto --left-of LVDS1
 eval $(/usr/bin/killall ssh-agent; /usr/bin/ssh-agent)
 wmname LG3D &
 unclutter -idle 2 -noevents &
+xautolock -time 10 -locker slock &
+clipit &
+gtk-redshift &
 exec dwm
-
-#redshift &
