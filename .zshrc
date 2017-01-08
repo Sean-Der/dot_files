@@ -12,8 +12,6 @@ unsetopt beep
 autoload -U colors && colors
 PROMPT="%{$fg_bold[green]%}%n@%m%{$reset_color%}%\:%{$fg_bold[blue]%}%~%{$reset_color%}%(!.#.$) "
 
-export TERM=xterm-256color
-
 alias ls='ls -FG'
 alias ll='ls -lha'
 alias lr='ls -ltr'
@@ -26,8 +24,12 @@ alias mouseEnable='sudo xinput set-prop 7 "Device Enabled" 1'
 
 source ~/.ssh_accounts
 
-case $TERM in
-    *xterm*)
-        precmd () {{print -Pn "\e]0;%n@%M: %~\a"} 2>/dev/null}
-        ;;
-esac
+precmd () {
+    {print -Pn "\e]0;%n@%M: %~\a"} 2>/dev/null
+}
+
+if [[ $TMUX == "" ]]; then
+    export TERM=xterm-256color
+else
+    export TERM=screen-256color
+fi
