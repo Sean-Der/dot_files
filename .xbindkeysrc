@@ -1,7 +1,10 @@
-"mixer vol -5"
+"pamixer -t"
+	XF86AudioMute
+
+"pamixer -d 5"
 	XF86AudioLowerVolume
 
-"mixer vol +5"
+"pamixer -i 5"
 	XF86AudioRaiseVolume
 
 "echo 'previous' | nc -U ~/.mpd/socket"
