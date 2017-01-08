@@ -16,14 +16,9 @@ set nocursorcolumn
 set nocursorline
 syntax sync minlines=256
 
-set incsearch     " show search matches as you type
 set ignorecase
 set smartcase
 set mouse=""
-
-"Tabs
-set autoindent
-filetype plugin indent on
 
 "Pathogen
 call pathogen#infect()
@@ -53,8 +48,7 @@ vmap <Tab> =
 
 set wildignore=*.o,*#,*.fasl
 
-set wildmenu
-set wildmode=longest,list
+set wildmode=longest,list,full
 
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#whitespace#enabled = 1
@@ -85,5 +79,8 @@ hi gcovNoCode ctermfg=102 ctermbg=NONE cterm=NONE
 let g:deoplete#enable_at_startup = 1
 
 nmap <F8> :TagbarToggle<CR>
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 so $HOME/.config/nvim/init_private.vim
