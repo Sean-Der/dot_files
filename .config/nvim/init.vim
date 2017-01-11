@@ -5,6 +5,7 @@ set nowrap "line wrapping
 set title "set the term title
 set showcmd "show cur command
 set showmatch "show matching bracket
+set autochdir "\:e is relative to current file
 
 "Better file handling
 set nobackup
