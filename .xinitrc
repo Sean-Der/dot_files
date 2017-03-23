@@ -1,27 +1,4 @@
 #!/usr/bin/env bash
-while true; do
-  acpiout=$(LC_ALL=C acpi -b)
-  stat=$(echo $acpiout| awk '{print $3}' | sed '$s/,$//')
-  batt=$(echo $acpiout| awk '{print $4}' | sed '$s/,$//')
-  time=$(date +%R)
-  email=$(/home/sean/bin/email)
-
-  if [ $email != 0 ]; then
-    email=`echo -e "\x04✉ $email\x01|"`
-  else
-    email="✉ $email |"
-  fi
-
-  if [ $stat == "Discharging" ]; then
-    batt=`echo -e "\x03⚡ $batt\x01|  "`
-  else
-    batt=" ⚡ $batt | "
-  fi
-
-  xsetroot -name "$email$batt$time "
-  sleep 60
-done &
-
 cd ~
 setxkbmap -layout us -variant dvp
 xmodmap -e 'remove Lock = Caps_Lock'
@@ -39,6 +16,4 @@ mpd &
 nm-applet &
 pasystray &
 dunst &
-compton --backend glx --vsync opengl-swc &
-hsetroot -solid "#000000"
-exec dwm
+exec i3

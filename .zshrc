@@ -18,6 +18,8 @@ alias lr='ls -ltr'
 alias l='ls -lh'
 alias showLargest='du -a | sort -n -r | less'
 alias vim='nvim'
+alias fixMic='while sleep 0.1; do pacmd set-source-volume alsa_input.pci-0000_00_1b.0.analog-stereo 35000; done'
+EDITOR=nvim
 
 alias mouseDisable='sudo xinput set-prop 7 "Device Enabled" 0'
 alias mouseEnable='sudo xinput set-prop 7 "Device Enabled" 1'
@@ -27,7 +29,6 @@ source ~/.ssh_accounts
 precmd () {
     {print -Pn "\e]0;%n@%M: %~\a"} 2>/dev/null
 }
-
 if [[ $TMUX == "" ]]; then
     export TERM=xterm-256color
 else

@@ -17,6 +17,8 @@ set nocursorcolumn
 set nocursorline
 syntax sync minlines=256
 
+set fillchars=diff:·
+
 set ignorecase
 set smartcase
 set mouse=""
