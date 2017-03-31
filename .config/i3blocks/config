@@ -1,0 +1,26 @@
+command=/usr/share/i3blocks/$BLOCK_NAME
+separator_block_width=15
+markup=none
+
+[email]
+command=/home/sean/bin/email
+markup=pango
+interval=60
+
+[iface]
+color=#00FF00
+interval=10
+
+[wifi]
+interval=10
+
+[load_average]
+interval=10
+
+[battery]
+label=⚡
+interval=60
+
+[time]
+command=date '+%Y-%m-%d %H:%M:%S'
+interval=5

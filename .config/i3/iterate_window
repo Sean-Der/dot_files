@@ -1,0 +1,71 @@
+#!/usr/bin/env python
+
+import json
+import subprocess
+import sys
+import os
+
+def command_output(cmd):
+    output = []
+    if (cmd):
+        p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        for line in p.stdout.readlines():
+            output.append(line.rstrip())
+    return output
+
+def output_to_dict(output_list):
+    output_string = ""
+    for line in output_list:
+        output_string += line
+    return json.loads(output_string)
+
+def active_workspace(workspace_list):
+    for workspace in workspace_list:
+        if workspace["focused"]:
+            return workspace["name"]
+
+def find_windows(tree_dict, window_list, active_workspace, in_active_workspace):
+    if in_active_workspace == False and tree_dict.has_key("name") and tree_dict["name"] == active_workspace:
+        in_active_workspace = True
+
+    if (tree_dict.has_key("nodes") and len(tree_dict["nodes"]) > 0):
+        for node in tree_dict["nodes"]:
+            find_windows(node, window_list, active_workspace, in_active_workspace)
+    else:
+        if (tree_dict["layout"] != "dockarea" and not
+            (isinstance(tree_dict["name"], (str, unicode)) and tree_dict["name"].startswith("i3bar for output")) and not
+            tree_dict["window"] == None and
+            in_active_workspace):
+                window_list.append(tree_dict)
+
+    return window_list
+
+def main(do_next):
+    workspace = active_workspace(output_to_dict(command_output("i3-msg -t get_workspaces")))
+    window_list = find_windows(output_to_dict(command_output("i3-msg -t get_tree")), [], workspace, False)
+
+    if do_next:
+        next_index = -1
+        for i in range(len(window_list)):
+            if (window_list[i]["focused"] == True):
+                next_index = i + 1
+                break
+    else:
+        next_index = len(window_list)
+        for i in range(len(window_list)-1, -1, -1):
+            if (window_list[i]["focused"] == True):
+                next_index = i - 1
+                break
+
+    if next_index == -1 or next_index == len(window_list):
+        if do_next:
+            next_id = window_list[0]["window"]
+        else:
+            next_id = window_list[len(window_list) - 1]["window"]
+    else:
+        next_id = window_list[next_index]["window"]
+
+    os.system("i3-msg [id=\"%d\"] focus" % next_id)
+
+if __name__ == "__main__":
+    main(len(sys.argv) == 2 and sys.argv[1] == 'next')
