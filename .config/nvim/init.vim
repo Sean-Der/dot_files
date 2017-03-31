@@ -16,6 +16,7 @@ set autowrite
 set nocursorcolumn
 set nocursorline
 syntax sync minlines=256
+set guioptions=M
 
 set fillchars=diff:·
 
@@ -23,9 +24,27 @@ set ignorecase
 set smartcase
 set mouse=""
 
-"Pathogen
-call pathogen#infect()
-Helptags
+call plug#begin('~/.config/nvim/plugged')
+  Plug 'airblade/vim-gitgutter'
+  Plug 'benekastah/neomake'
+  Plug 'bling/vim-airline'
+  Plug 'bronson/vim-trailing-whitespace'
+  Plug 'ervandew/supertab'
+  Plug 'fatih/vim-go', { 'for': 'go' }
+  Plug 'honza/vim-snippets'
+  Plug 'kovisoft/slimv', { 'for': 'lisp' }
+  Plug 'kien/ctrlp.vim'
+  Plug 'maxbrunsfeld/vim-yankstack'
+  Plug 'mhinz/vim-grepper'
+  Plug 'milkypostman/vim-togglelist'
+  Plug 'majutsushi/tagbar'
+  Plug 'rhysd/vim-clang-format'
+  Plug 'SirVer/ultisnips'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-sleuth'
+  Plug 'vim-scripts/gcov.vim'
+call plug#end()
 
 "Leaving modes in Emacs+EVIL feels right
 map <C-g> <Esc>
@@ -50,7 +69,6 @@ set tags=tags;
 vmap <Tab> =
 
 set wildignore=*.o,*#,*.fasl
-
 set wildmode=longest,list,full
 
 let g:airline#extensions#branch#enabled = 1
@@ -85,5 +103,3 @@ nmap <F8> :TagbarToggle<CR>
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-
-so $HOME/.config/nvim/init_private.vim
