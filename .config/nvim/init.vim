@@ -12,14 +12,6 @@ set nobackup
 set noswapfile
 set autowrite
 
-"Perf improvements
-set nocursorcolumn
-set nocursorline
-syntax sync minlines=256
-set guioptions=M
-
-set fillchars=diff:·
-
 set ignorecase
 set smartcase
 set mouse=""
@@ -29,7 +21,6 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'benekastah/neomake'
   Plug 'bling/vim-airline'
   Plug 'bronson/vim-trailing-whitespace'
-  Plug 'ervandew/supertab'
   Plug 'fatih/vim-go', { 'for': 'go' }
   Plug 'honza/vim-snippets'
   Plug 'kovisoft/slimv', { 'for': 'lisp' }
@@ -37,13 +28,13 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'maxbrunsfeld/vim-yankstack'
   Plug 'mhinz/vim-grepper'
   Plug 'milkypostman/vim-togglelist'
-  Plug 'majutsushi/tagbar'
   Plug 'rhysd/vim-clang-format'
+  Plug 'rust-lang/rust.vim', { 'for': 'rust' }
   Plug 'SirVer/ultisnips'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-sleuth'
-  Plug 'vim-scripts/gcov.vim'
+  Plug 'vim-scripts/gcov.vim' , { 'for': 'gcov' }
 call plug#end()
 
 "Leaving modes in Emacs+EVIL feels right
@@ -70,27 +61,29 @@ vmap <Tab> =
 
 set wildignore=*.o,*#,*.fasl
 set wildmode=longest,list,full
+set completeopt=menu,preview
 
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
 set laststatus=2
 
 autocmd! BufWritePost * Neomake
 let g:neomake_open_list = 2
 let g:neomake_warning_sign = {'text': '⚠>', 'texthl': 'NeomakeWarningMsg'}
-hi NeomakeWarningMsg guifg=#d70000 guibg=#8a8a8a guisp=#8a8a8a gui=NONE ctermfg=100 ctermbg=233 cterm=NONE
 let g:neomake_error_sign = {'text': '✖', 'texthl': 'NeomakeErrorMsg'}
 hi NeomakeErrorMsg guifg=#d70000 guibg=#8a8a8a guisp=#8a8a8a gui=NONE ctermfg=160 ctermbg=233 cterm=NONE
+hi NeomakeWarningMsg guifg=#d70000 guibg=#8a8a8a guisp=#8a8a8a gui=NONE ctermfg=100 ctermbg=233 cterm=NONE
 
 autocmd BufWritePre * :FixWhitespace
 
 let g:UltiSnipsExpandTrigger="<C-a>"
-let g:UltiSnipsJumpForwardTrigger="<C-a>"
 set completeopt=menu,preview
 
 call yankstack#setup()
-nmap <leader>n <Plug>yankstack_substitute_older_paste
-nmap <leader>p <Plug>yankstack_substitute_newer_paste
+nmap <C-n> <Plug>yankstack_substitute_newer_paste
+vmap <C-n> <Plug>yankstack_substitute_newer_paste
 
 au BufRead,BufNewFile *.gcov set filetype=gcov
 hi gcovNotExecuted ctermfg=124 ctermbg=NONE cterm=NONE
@@ -99,7 +92,4 @@ hi gcovNoCode ctermfg=102 ctermbg=NONE cterm=NONE
 
 let g:deoplete#enable_at_startup = 1
 
-nmap <F8> :TagbarToggle<CR>
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
+let g:rustfmt_autosave = 1
