@@ -24,7 +24,9 @@ EDITOR=nvim
 alias mouseDisable='sudo xinput set-prop 7 "Device Enabled" 0'
 alias mouseEnable='sudo xinput set-prop 7 "Device Enabled" 1'
 
-source ~/.ssh_accounts
+if [ -f ~/.ssh_accounts ]; then
+  source ~/.ssh_accounts
+fi
 
 precmd () {
     {print -Pn "\e]0;%n@%M: %~\a"} 2>/dev/null
