@@ -28,6 +28,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'maxbrunsfeld/vim-yankstack'
   Plug 'mhinz/vim-grepper'
   Plug 'milkypostman/vim-togglelist'
+  Plug 'neovim/node-host', { 'do': 'npm install' }
   Plug 'rhysd/vim-clang-format'
   Plug 'rust-lang/rust.vim', { 'for': 'rust' }
   Plug 'SirVer/ultisnips'
@@ -35,6 +36,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-sleuth'
   Plug 'vim-scripts/gcov.vim' , { 'for': 'gcov' }
+  Plug 'vimlab/mdown.vim', { 'do': 'npm install' }
 call plug#end()
 
 "Leaving modes in Emacs+EVIL feels right
@@ -51,6 +53,7 @@ nmap <leader>r <ESC>:Grepper<CR>
 nmap <leader>o :CtrlP<CR>
 nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>m :CtrlPMRU<CR>
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
 "ctags
 nmap <leader>tc :!ctags --extra=+f -R *<CR><CR>
