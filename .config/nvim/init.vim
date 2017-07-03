@@ -21,7 +21,6 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'benekastah/neomake'
   Plug 'bling/vim-airline'
   Plug 'bronson/vim-trailing-whitespace'
-  Plug 'fatih/vim-go', { 'for': 'go' }
   Plug 'honza/vim-snippets'
   Plug 'kovisoft/slimv', { 'for': 'lisp' }
   Plug 'kien/ctrlp.vim'
@@ -30,7 +29,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'milkypostman/vim-togglelist'
   Plug 'neovim/node-host', { 'do': 'npm install' }
   Plug 'rhysd/vim-clang-format'
-  Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+  Plug 'sheerun/vim-polyglot'
   Plug 'SirVer/ultisnips'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'tpope/vim-fugitive'
@@ -83,10 +82,6 @@ autocmd BufWritePre * :FixWhitespace
 
 let g:UltiSnipsExpandTrigger="<C-a>"
 set completeopt=menu,preview
-
-call yankstack#setup()
-nmap <C-n> <Plug>yankstack_substitute_newer_paste
-vmap <C-n> <Plug>yankstack_substitute_newer_paste
 
 au BufRead,BufNewFile *.gcov set filetype=gcov
 hi gcovNotExecuted ctermfg=124 ctermbg=NONE cterm=NONE
