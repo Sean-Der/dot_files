@@ -1,0 +1,21 @@
+[user]
+	name = Sean DuBois
+	email = sean@siobud.com
+[core]
+	editor = nvim
+[alias]
+	ap = add --patch
+	dc = diff --cached
+
+	unstage = reset HEAD
+
+	l = log --graph --decorate
+	lg = log --decorate -p
+	# commits in short form
+	ls = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+	# commits showing changed files
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+
+	la = "!git config -l | grep alias | cut -c 7-"
+[color]
+    ui = true
