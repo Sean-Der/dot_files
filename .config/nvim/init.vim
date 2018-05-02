@@ -17,20 +17,19 @@ set smartcase
 set mouse=""
 
 call plug#begin('~/.config/nvim/plugged')
+  Plug 'fatih/vim-go'
   Plug 'airblade/vim-gitgutter'
   Plug 'benekastah/neomake'
   Plug 'bling/vim-airline'
   Plug 'bronson/vim-trailing-whitespace'
-  Plug 'honza/vim-snippets'
+  Plug 'ekalinin/Dockerfile.vim'
   Plug 'kovisoft/slimv', { 'for': 'lisp' }
   Plug 'kien/ctrlp.vim'
-  Plug 'maxbrunsfeld/vim-yankstack'
   Plug 'mhinz/vim-grepper'
   Plug 'milkypostman/vim-togglelist'
   Plug 'neovim/node-host', { 'do': 'npm install' }
   Plug 'rhysd/vim-clang-format'
   Plug 'sheerun/vim-polyglot'
-  Plug 'SirVer/ultisnips'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-sleuth'
@@ -58,9 +57,6 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 nmap <leader>tc :!ctags --extra=+f -R *<CR><CR>
 set tags=tags;
 
-"Hitting tab in visual mode fixes indentation on the selected lines
-vmap <Tab> =
-
 set wildignore=*.o,*#,*.fasl
 set wildmode=longest,list,full
 set completeopt=menu,preview
@@ -80,14 +76,6 @@ hi NeomakeWarningMsg guifg=#d70000 guibg=#8a8a8a guisp=#8a8a8a gui=NONE ctermfg=
 
 autocmd BufWritePre * :FixWhitespace
 
-let g:UltiSnipsExpandTrigger="<C-a>"
-set completeopt=menu,preview
-
 au BufRead,BufNewFile *.gcov set filetype=gcov
-hi gcovNotExecuted ctermfg=124 ctermbg=NONE cterm=NONE
-hi gcovExecuted ctermfg=28 ctermbg=NONE cterm=NONE
-hi gcovNoCode ctermfg=102 ctermbg=NONE cterm=NONE
 
-let g:deoplete#enable_at_startup = 1
-
-let g:rustfmt_autosave = 1
+autocmd BufEnter * :syntax sync fromstart

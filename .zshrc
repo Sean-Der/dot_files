@@ -16,23 +16,11 @@ alias ls='ls -FG'
 alias ll='ls -lha'
 alias lr='ls -ltr'
 alias l='ls -lh'
-alias showLargest='du -a | sort -n -r | less'
-alias vim='nvim'
-alias fixMic='while sleep 0.1; do pacmd set-source-volume alsa_input.pci-0000_00_1b.0.analog-stereo 35000; done'
+alias showLargest='du -a --max-depth=1 | sort -n -r | less'
 EDITOR=nvim
 
 alias mouseDisable='sudo xinput set-prop 7 "Device Enabled" 0'
 alias mouseEnable='sudo xinput set-prop 7 "Device Enabled" 1'
-
-if [ -f ~/.ssh_accounts ]; then
-  source ~/.ssh_accounts
-fi
-
-precmd () {
-    {print -Pn "\e]0;%n@%M: %~\a"} 2>/dev/null
-}
-if [[ $TMUX == "" ]]; then
-    export TERM=xterm-256color
-else
-    export TERM=screen-256color
-fi
+alias shares='cd /home/sean/Documents/Programming/Infiniscene/shares'
+export PATH=$PATH:~/bin
+export GOPATH=~/Documents/Programming/Go/Code

@@ -55,3 +55,4 @@ endif
 
 let g:neomake_rust_cargo_maker_loaded = 1
 let g:neomake_rust_enabled_makers = ['cargo']
+let g:rustfmt_autosave = 1
