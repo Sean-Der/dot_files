@@ -21,6 +21,5 @@ EDITOR=nvim
 
 alias mouseDisable='sudo xinput set-prop 7 "Device Enabled" 0'
 alias mouseEnable='sudo xinput set-prop 7 "Device Enabled" 1'
-alias shares='cd /home/sean/Documents/Programming/Infiniscene/shares'
 export PATH=$PATH:~/bin
 export GOPATH=~/Documents/Programming/Go/Code
