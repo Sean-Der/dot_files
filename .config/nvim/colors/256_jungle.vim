@@ -7,6 +7,7 @@ endif
 
 set t_Co=256
 let g:colors_name = "256_jungle"
+set background=dark
 
 "hi IncSearch -- no settings --
 "hi WildMenu -- no settings --

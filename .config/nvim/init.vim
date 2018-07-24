@@ -11,20 +11,18 @@ endfunction
 call plug#begin('~/.config/nvim/plugged')
   Plug 'fatih/vim-go'
   Plug 'airblade/vim-gitgutter'
-  Plug 'benekastah/neomake'
-  Plug 'bling/vim-airline'
+  Plug 'w0rp/ale'
+  Plug 'itchyny/lightline.vim'
   Plug 'bronson/vim-trailing-whitespace'
   Plug 'ekalinin/Dockerfile.vim'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'maxbrunsfeld/vim-yankstack'
   Plug 'milkypostman/vim-togglelist'
-  Plug 'neovim/node-host', { 'do': 'npm install' }
-  Plug 'sean-der/vim-clang-format'
+  Plug 'rhysd/vim-clang-format'
   Plug 'sheerun/vim-polyglot'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'tpope/vim-fugitive'
-  Plug 'tpope/vim-sleuth'
   Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 call plug#end()
 
@@ -65,6 +63,7 @@ command! -bang -nargs=* Rg
 let mapleader=","
 
 nmap <leader>o :Files<CR>
+nmap <leader>e :Ex<CR>
 nmap <leader>m :History<CR>
 nmap <leader>t :Tags<CR>
 nmap <leader>r <ESC>:Rg<CR>
@@ -77,18 +76,12 @@ set wildignore=*.o,*#,*.fasl
 set wildmode=longest,list,full
 set completeopt=menu,preview
 
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#whitespace#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-set laststatus=2
+let g:indent_guides_enable_on_vim_startup = 1
 
-autocmd! BufWritePost * Neomake
-let g:neomake_open_list = 2
-let g:neomake_warning_sign = {'text': '⚠>', 'texthl': 'NeomakeWarningMsg'}
-let g:neomake_error_sign = {'text': '✖', 'texthl': 'NeomakeErrorMsg'}
-hi NeomakeErrorMsg guifg=#d70000 guibg=#8a8a8a guisp=#8a8a8a gui=NONE ctermfg=160 ctermbg=233 cterm=NONE
-hi NeomakeWarningMsg guifg=#d70000 guibg=#8a8a8a guisp=#8a8a8a gui=NONE ctermfg=100 ctermbg=233 cterm=NONE
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+let g:ale_open_list = 1
+let g:ale_lint_on_text_changed = 'never'
 
 autocmd BufWritePre * :FixWhitespace
 
