@@ -43,7 +43,8 @@ set autowrite
 set ignorecase
 set smartcase
 set mouse=""
-
+set inccommand=nosplit
+set termguicolors
 
 "Leaving modes in Emacs+EVIL feels right
 map <C-g> <Esc>
