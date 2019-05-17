@@ -19,7 +19,5 @@ alias l='ls -lh'
 alias showLargest='du -a --max-depth=1 | sort -n -r | less'
 EDITOR=nvim
 
-alias mouseDisable='sudo xinput set-prop 7 "Device Enabled" 0'
-alias mouseEnable='sudo xinput set-prop 7 "Device Enabled" 1'
 export PATH=$PATH:~/bin
 export GOPATH=~/Documents/Programming/Go/Code
