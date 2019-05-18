@@ -1,4 +1,5 @@
 set tabstop=4
 let g:go_fmt_command = "goimports"
-let g:syntastic_always_populate_loc_list = 2
-let g:syntastic_auto_loc_list = 0
+let g:ale_linters = {'go': ['golangci-lint']}
+let g:ale_go_golangci_lint_package = 1
+let g:ale_go_golangci_lint_options = '--fast'
