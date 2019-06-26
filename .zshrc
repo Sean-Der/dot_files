@@ -6,7 +6,7 @@ compinit
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-setopt autocd
+setopt autocd autopushd pushdignoredups
 unsetopt beep
 
 autoload -U colors && colors
