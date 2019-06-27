@@ -16,7 +16,8 @@ alias ls='ls -FG'
 alias ll='ls -lha'
 alias lr='ls -ltr'
 alias l='ls -lh'
-alias showLargest='du -a --max-depth=1 | sort -n -r | less'
+alias showLargest='du -a | sort -n -r | less'
+alias vim=nvim
 EDITOR=nvim
 
 export PATH=$PATH:~/bin
