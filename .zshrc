@@ -20,5 +20,4 @@ alias showLargest='du -a | sort -n -r | less'
 alias vim=nvim
 EDITOR=nvim
 
-export PATH=$PATH:~/bin
-export GOPATH=~/Documents/Programming/Go/Code
+export PATH="$HOME/.cargo/bin:$PATH:$HOME/go/bin:$HOME/bin"
