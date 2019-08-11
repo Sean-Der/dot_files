@@ -21,3 +21,4 @@ alias vim=nvim
 EDITOR=nvim
 
 export PATH="$HOME/.cargo/bin:$PATH:$HOME/go/bin:$HOME/bin"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
