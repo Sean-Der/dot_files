@@ -1,13 +1,3 @@
-function! BuildComposer(info)
-  if a:info.status != 'unchanged' || a:info.force
-    if has('nvim')
-      !cargo build --release
-    else
-      !cargo build --release --no-default-features --features json-rpc
-    endif
-  endif
-endfunction
-
 call plug#begin('~/.config/nvim/plugged')
   Plug 'fatih/vim-go'
   Plug 'airblade/vim-gitgutter'
@@ -23,7 +13,8 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'sheerun/vim-polyglot'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'tpope/vim-fugitive'
-  Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+  Plug 'preservim/tagbar'
 call plug#end()
 
 colorscheme 256_jungle
@@ -53,14 +44,6 @@ cmap <C-g> <Esc>
 imap <C-g> <Esc>
 tmap <C-g> <C-\><C-n>
 
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-
 let mapleader=","
 
 nmap <leader>o :Files<CR>
@@ -84,6 +67,8 @@ let g:ale_sign_warning = '⚠'
 let g:ale_open_list = 1
 let g:ale_lint_on_text_changed = 'never'
 
-autocmd BufWritePre * :FixWhitespace
+let g:fzf_layout = { 'down': '~40%' }
+let g:tagbar_position = 'below'
 
+autocmd BufWritePre * :FixWhitespace
 autocmd BufEnter * :syntax sync fromstart
