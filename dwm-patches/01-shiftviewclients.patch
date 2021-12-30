@@ -1,0 +1,34 @@
+diff --git a/dwm.c b/dwm.c
+index a96f33c..3917e7c 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -204,6 +204,7 @@ static void setlayout(const Arg *arg);
+ static void setmfact(const Arg *arg);
+ static void setup(void);
+ static void seturgent(Client *c, int urg);
++static void shiftview(const Arg *arg);
+ static void showhide(Client *c);
+ static void sigchld(int unused);
+ static void spawn(const Arg *arg);
+@@ -2130,6 +2131,21 @@ zoom(const Arg *arg)
+ 	pop(c);
+ }
+ 
++void
++shiftview(const Arg *arg) {
++	Arg shifted;
++
++	if(arg->i > 0) // left circular shift
++		shifted.ui = (selmon->tagset[selmon->seltags] << arg->i)
++		   | (selmon->tagset[selmon->seltags] >> (LENGTH(tags) - arg->i));
++
++	else // right circular shift
++		shifted.ui = selmon->tagset[selmon->seltags] >> (- arg->i)
++		   | selmon->tagset[selmon->seltags] << (LENGTH(tags) + arg->i);
++
++	view(&shifted);
++}
++
+ int
+ main(int argc, char *argv[])
+ {
