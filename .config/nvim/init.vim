@@ -47,6 +47,7 @@ tmap <C-g> <C-\><C-n>
 let mapleader=","
 
 nmap <leader>o :Files<CR>
+nmap <leader>g :GFiles<CR>
 nmap <leader>e :Ex<CR>
 nmap <leader>m :History<CR>
 nmap <leader>t :Tags<CR>
@@ -62,7 +63,7 @@ set completeopt=menu,preview
 
 let g:indent_guides_enable_on_vim_startup = 1
 
-let g:ale_sign_error = '✖'
+let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠'
 let g:ale_open_list = 1
 let g:ale_lint_on_text_changed = 'never'
