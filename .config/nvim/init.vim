@@ -51,6 +51,7 @@ nmap <leader>g :GFiles<CR>
 nmap <leader>e :Ex<CR>
 nmap <leader>m :History<CR>
 nmap <leader>t :Tags<CR>
+nmap <leader>g :GFiles<CR>
 nmap <leader>r <ESC>:Rg<CR>
 
 "ctags
