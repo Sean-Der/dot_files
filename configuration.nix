@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -40,8 +40,6 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    configure = {
-    };
   };
 
   nixpkgs = {
@@ -129,6 +127,11 @@
     };
 
     programs = {
+      neovim = {
+        enable = true;
+        extraConfig = lib.fileContents .config/nvim/init.vim;
+      };
+
       git = {
         enable = true;
         userName  = "Sean DuBois";
