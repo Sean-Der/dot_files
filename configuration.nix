@@ -91,16 +91,16 @@
       docker-compose
       dosbox-staging
       dunst
-      gcc
-      go
-      git
-      htop
       ffmpeg
-      mpv
-      neofetch
+      gcc
+      git
+      go
+      htop
       inconsolata
+      mpv
       mutt
       ncmpcpp
+      neofetch
       nodejs
       pavucontrol
       pulsemixer
@@ -110,6 +110,7 @@
       soulseekqt
       st
       timidity
+      universal-ctags
       yt-dlp
       zathura
     ];
