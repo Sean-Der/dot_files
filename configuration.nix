@@ -7,7 +7,7 @@
        <home-manager/nixos>
     ];
 
-  system.stateVersion = "unstable"; 
+  system.stateVersion = "unstable";
 
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
@@ -35,6 +35,9 @@
 
   programs.fish.enable = true;
 
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.allowReboot = true;
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -57,8 +60,8 @@
             dwm-patches/04-fullscreen.patch
           ];
 
-	  configFile = super.writeText "config.h" (builtins.readFile ./dwm-patches/config.h);
-	  postPatch = "${oldAttrs.postPatch}\n cp ${configFile} config.h";
+          configFile = super.writeText "config.h" (builtins.readFile ./dwm-patches/config.h);
+          postPatch = "${oldAttrs.postPatch}\n cp ${configFile} config.h";
         });
 
 
@@ -67,8 +70,8 @@
             st-patches/01-scrollback.diff
           ];
 
-	  configFile = super.writeText "config.h" (builtins.readFile ./st-patches/config.h);
-	  postPatch = "${oldAttrs.postPatch}\n cp ${configFile} config.h";
+          configFile = super.writeText "config.h" (builtins.readFile ./st-patches/config.h);
+          postPatch = "${oldAttrs.postPatch}\n cp ${configFile} config.h";
         });
 
       })
@@ -81,6 +84,7 @@
     homeMode = "750";
     extraGroups = [ "audio" "wheel" "docker" ];
     packages = with pkgs; [
+      acpi
       arandr
       brave
       dmenu
@@ -111,6 +115,16 @@
     ];
   };
 
+  systemd.user.services.dwmstatus = {
+    enable = true;
+    description = "Set DWM Status via xsetroot";
+    serviceConfig.PassEnvironment = "DISPLAY";
+    script = ''
+      ${pkgs.bash}/bin/bash /home/sean/workspaces/dot_files/set-dwm-status.sh
+    '';
+    wantedBy = [ "multi-user.target" ];
+  };
+
   home-manager.users.sean = { pkgs, ... }: {
     home = {
       stateVersion = "22.11";
@@ -120,16 +134,21 @@
         PATH = "~/.cargo/bin:~/go/bin:~/bin:$PATH";
       };
       file = {
-      	".ncmpcpp" = {
-	  source = ./.ncmpcpp;
-	};
+        ".ncmpcpp" = {
+          source = ./.ncmpcpp;
+        };
+      };
+      file = {
+        ".config/dosbox" = {
+          source = ./.config/dosbox;
+        };
       };
     };
 
     programs = {
       neovim = {
         enable = true;
-        extraConfig = lib.fileContents .config/nvim/init.vim;
+        extraConfig = lib.fileContents .config/nvim/config.vim;
       };
 
       git = {
@@ -140,7 +159,7 @@
 
       tmux = {
         enable = true;
-	shell = ''${pkgs.fish}/bin/fish'';
+        shell = ''${pkgs.fish}/bin/fish'';
       };
 
       fish = {
@@ -198,6 +217,11 @@
         type "pulse"
         name "My PulseAudio"
         server "127.0.0.1"
+      }
+
+      decoder {
+        plugin "fluidsynth"
+        soundfont "/home/sean/Music/MIDI/ESFM.sf2"
       }
     '';
   };
