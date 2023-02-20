@@ -25,29 +25,33 @@
   };
 
   sound.enable = true;
-  hardware.pulseaudio = {
-    enable = true;
-    support32Bit = true;
-    extraConfig = "load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1";
+  hardware = {
+    pulseaudio = {
+      enable = true;
+      support32Bit = true;
+      extraConfig = "load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1";
+    };
+    opengl.enable = true;
   };
-  hardware.opengl.enable = true;
 
   virtualisation.docker = {
     enable = true;
     liveRestore = false;
   };
 
-  programs.fish.enable = true;
+  programs = {
+    fish.enable = true;
+
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+    };
+  };
 
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
-
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-  };
 
   nixpkgs = {
     config = {

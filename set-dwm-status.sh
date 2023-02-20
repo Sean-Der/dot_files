@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+PATH=$PATH:"/etc/profiles/per-user/sean/bin/:/run/current-system/sw/bin/"
+
 while true; do
   acpiout=$(LC_ALL=C acpi -b)
   stat=$(echo $acpiout| awk '{print $3}' | sed '$s/,$//')
