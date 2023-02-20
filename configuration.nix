@@ -31,7 +31,10 @@
       support32Bit = true;
       extraConfig = "load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1";
     };
-    opengl.enable = true;
+    opengl = {
+      enable = true;
+      driSupport32Bit = true;
+    };
   };
 
   virtualisation.docker = {
@@ -100,6 +103,7 @@
       dosbox-staging
       dunst
       ffmpeg
+      file
       gcc
       git
       go
