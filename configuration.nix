@@ -30,8 +30,12 @@
     support32Bit = true;
     extraConfig = "load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1";
   };
+  hardware.opengl.enable = true;
 
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    liveRestore = false;
+  };
 
   programs.fish.enable = true;
 
@@ -112,6 +116,7 @@
       timidity
       universal-ctags
       yt-dlp
+      wineWowPackages.stable
       zathura
     ];
   };
@@ -135,8 +140,8 @@
         PATH = "~/.cargo/bin:~/go/bin:~/bin:$PATH";
       };
       file = {
-        ".ncmpcpp" = {
-          source = ./.ncmpcpp;
+        ".config/ncmpcpp" = {
+          source = ./.config/ncmpcpp;
         };
       };
       file = {
@@ -192,12 +197,13 @@
     layout = "us";
     xkbVariant = "dvp";
     xkbOptions = "ctrl:nocaps";
+    videoDrivers = [ "nvidia" ];
     libinput.enable = true;
     windowManager.dwm.enable = true;
     displayManager = {
-      setupCommands = ''
-        ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off --output DP-2 --auto
-      '';
+      # setupCommands = ''
+      #   ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off --output DP-2 --auto
+      # '';
       lightdm.background = "#000000";
     };
     xautolock = {
@@ -207,6 +213,12 @@
       notifier =
         ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
     };
+    deviceSection = ''
+      Driver         "nvidia"
+      BusID          "PCI:2@0:0:0"
+      Option         "AllowEmptyInitialConfiguration"
+      Option         "AllowExternalGpus" "True"
+    '';
   };
 
   users.users.mpd.extraGroups = [ "users" ];
