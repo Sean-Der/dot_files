@@ -29,7 +29,8 @@
     pulseaudio = {
       enable = true;
       support32Bit = true;
-      extraConfig = "load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1";
+      extraConfig = "load-module module-native-protocol-unix auth-anonymous=1";
+      systemWide = true;
     };
     opengl = {
       enable = true;
@@ -90,7 +91,7 @@
   users.users.sean = {
     isNormalUser = true;
     homeMode = "750";
-    extraGroups = [ "audio" "wheel" "docker" ];
+    extraGroups = [ "audio" "wheel" "docker" "pulse-access" ];
     packages = with pkgs; [
       acpi
       arandr
@@ -225,7 +226,7 @@
     '';
   };
 
-  users.users.mpd.extraGroups = [ "users" ];
+  users.users.mpd.extraGroups = [ "users" "pulse-access"];
   services.mpd = {
     enable = true;
     musicDirectory = "/home/sean/Music";
@@ -233,7 +234,6 @@
       audio_output {
         type "pulse"
         name "My PulseAudio"
-        server "127.0.0.1"
       }
 
       decoder {
