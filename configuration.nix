@@ -43,8 +43,6 @@
   };
 
   programs = {
-    fish.enable = true;
-
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -91,7 +89,6 @@
 
   users.users.sean = {
     isNormalUser = true;
-    shell = pkgs.fish;
     homeMode = "750";
     extraGroups = [ "audio" "wheel" "docker" ];
     packages = with pkgs; [
@@ -121,6 +118,7 @@
       slack
       soulseekqt
       st
+      sxiv
       timidity
       universal-ctags
       yt-dlp
@@ -167,22 +165,8 @@
         extraConfig = lib.fileContents .config/nvim/config.vim;
       };
 
-      git = {
+      bash = {
         enable = true;
-        userName  = "Sean DuBois";
-        userEmail = "sean@siobud.com";
-      };
-
-      tmux = {
-        enable = true;
-        shell = ''${pkgs.fish}/bin/fish'';
-      };
-
-      fish = {
-        enable = true;
-        interactiveShellInit = ''
-          set fish_greeting
-        '';
         shellAliases = {
           vim         = "nvim";
           ls          = "ls -FG";
@@ -191,6 +175,16 @@
           l           = "ls -lh";
           showLargest = "du -a | sort -n -r | less";
         };
+      };
+
+      git = {
+        enable = true;
+        userName  = "Sean DuBois";
+        userEmail = "sean@siobud.com";
+      };
+
+      tmux = {
+        enable = true;
       };
     };
   };
