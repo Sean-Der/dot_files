@@ -124,7 +124,9 @@
       timidity
       universal-ctags
       yt-dlp
+      winetricks
       wineWowPackages.stable
+      unzip
       zathura
     ];
   };
