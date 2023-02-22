@@ -18,6 +18,6 @@ while true; do
 
   time=$(date +%R)
   setroot=$(echo -e "${batt_escape} ⚡ ${batt} \x01| ${time}")
-  xsetroot -name "$setroot"
+  xsetroot -name "$setroot" -d :0
   sleep 60
 done

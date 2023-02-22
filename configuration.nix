@@ -1,6 +1,8 @@
 { config, pkgs, lib, ... }:
 
-{
+let
+  enableNvidia = false;
+in {
   imports =
     [
       /etc/nixos/hardware-configuration.nix
@@ -29,7 +31,6 @@
     pulseaudio = {
       enable = true;
       support32Bit = true;
-      extraConfig = "load-module module-native-protocol-unix auth-anonymous=1";
       systemWide = true;
     };
     opengl = {
@@ -50,10 +51,16 @@
       viAlias = true;
       vimAlias = true;
     };
+    bash = {
+      promptInit = ''
+        PROMPT_COLOR="1;31m"
+        ((UID)) && PROMPT_COLOR="1;32m"
+        PS1="\[\033[$PROMPT_COLOR\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\\$\[\033[0m\] "
+      '';
+    };
   };
 
   system.autoUpgrade.enable = true;
-  system.autoUpgrade.allowReboot = true;
 
   nixpkgs = {
     config = {
@@ -133,11 +140,10 @@
   systemd.user.services.dwmstatus = {
     enable = true;
     description = "Set DWM Status via xsetroot";
-    serviceConfig.PassEnvironment = "DISPLAY";
     script = ''
       ${pkgs.bash}/bin/bash /home/sean/workspaces/dot_files/set-dwm-status.sh
     '';
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = [ "default.target" ];
   };
 
   home-manager.users.sean = { pkgs, ... }: {
@@ -197,18 +203,19 @@
   ];
 
   services.openssh.enable = true;
-  services.xserver = {
+  services.xserver =  {
     enable = true;
     layout = "us";
     xkbVariant = "dvp";
     xkbOptions = "ctrl:nocaps";
-    videoDrivers = [ "nvidia" ];
     libinput.enable = true;
     windowManager.dwm.enable = true;
     displayManager = {
-      # setupCommands = ''
-      #   ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off --output DP-2 --auto
-      # '';
+      setupCommands =
+      if enableNvidia then
+        ""
+      else
+        "${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off --output DP-2 --auto";
       lightdm.background = "#000000";
     };
     xautolock = {
@@ -217,13 +224,21 @@
       locker = ''${pkgs.lightdm}/bin/dm-tool lock'';
       notifier =
         ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
-    };
-    deviceSection = ''
-      Driver         "nvidia"
-      BusID          "PCI:2@0:0:0"
-      Option         "AllowEmptyInitialConfiguration"
-      Option         "AllowExternalGpus" "True"
-    '';
+      };
+    videoDrivers = if enableNvidia then
+     ["nvidia"]
+    else
+     [];
+    deviceSection =
+    if enableNvidia then
+      ''
+        Driver         "nvidia"
+        BusID          "PCI:2@0:0:0"
+        Option         "AllowEmptyInitialConfiguration"
+        Option         "AllowExternalGpus" "True"
+      ''
+    else
+      "";
   };
 
   users.users.mpd.extraGroups = [ "users" "pulse-access"];
