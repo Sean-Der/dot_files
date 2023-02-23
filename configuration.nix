@@ -56,7 +56,6 @@ in {
         PROMPT_COLOR="1;31m"
         ((UID)) && PROMPT_COLOR="1;32m"
         PS1="\[\033[$PROMPT_COLOR\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\\$\[\033[0m\] "
-        source ~/.fzf.bash
       '';
     };
   };
@@ -102,8 +101,10 @@ in {
     extraGroups = [ "audio" "wheel" "docker" "pulse-access" ];
     packages = with pkgs; [
       acpi
+      autocutsel
       arandr
       brave
+      clang-tools
       dmenu
       docker-compose
       dosbox-staging
@@ -112,6 +113,7 @@ in {
       file
       gcc
       git
+      gnumake
       go
       htop
       inconsolata
@@ -123,6 +125,7 @@ in {
       pavucontrol
       pulsemixer
       ripgrep
+      rustup
       scrot
       slack
       soulseekqt
@@ -130,21 +133,12 @@ in {
       sxiv
       timidity
       universal-ctags
-      yt-dlp
-      winetricks
-      wineWowPackages.stable
       unzip
+      wineWowPackages.stable
+      winetricks
+      yt-dlp
       zathura
     ];
-  };
-
-  systemd.user.services.dwmstatus = {
-    enable = true;
-    description = "Set DWM Status via xsetroot";
-    script = ''
-      ${pkgs.bash}/bin/bash /home/sean/workspaces/dot_files/set-dwm-status.sh
-    '';
-    wantedBy = [ "default.target" ];
   };
 
   home-manager.users.sean = { pkgs, ... }: {
@@ -183,6 +177,9 @@ in {
           l           = "ls -lh";
           showLargest = "du -a | sort -n -r | less";
         };
+        initExtra = ''
+          source ~/.fzf.bash
+        '';
       };
 
       git = {
@@ -217,6 +214,11 @@ in {
         ""
       else
         "${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off --output DP-2 --auto";
+      sessionCommands = ''
+        ${pkgs.autocutsel}/bin/autocutsel -s PRIMARY &
+        ${pkgs.autocutsel}/bin/autocutsel -s CLIPBOARD &
+        ${pkgs.bash}/bin/bash /home/sean/workspaces/dot_files/set-dwm-status.sh &
+      '';
       lightdm.background = "#000000";
     };
     xautolock = {
