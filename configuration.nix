@@ -198,6 +198,7 @@ in {
     tmux
     psmisc
     libnotify
+    lightlocker
   ];
 
   services.openssh.enable = true;
@@ -218,16 +219,18 @@ in {
         ${pkgs.autocutsel}/bin/autocutsel -s PRIMARY &
         ${pkgs.autocutsel}/bin/autocutsel -s CLIPBOARD &
         ${pkgs.bash}/bin/bash /home/sean/workspaces/dot_files/set-dwm-status.sh &
+        light-locker &
       '';
       lightdm.background = "#000000";
     };
     xautolock = {
       enable = true;
       enableNotifier = true;
-      locker = ''${pkgs.lightdm}/bin/dm-tool lock'';
+      locker = "${pkgs.lightlocker}/bin/light-locker-command -l";
+      nowlocker = "${pkgs.lightlocker}/bin/light-locker-command -l";
       notifier =
         ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
-      };
+    };
     videoDrivers = if enableNvidia then
      ["nvidia"]
     else
@@ -288,4 +291,6 @@ in {
   services.redshift = {
     enable = true;
   };
+
+  services.tlp.enable = true;
 }
