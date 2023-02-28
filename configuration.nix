@@ -78,6 +78,9 @@ in {
   };
 
   programs = {
+    slock = {
+      enable = true;
+    };
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -234,7 +237,7 @@ in {
     tmux
     psmisc
     libnotify
-    lightlocker
+    slock
   ];
 
   services.openssh.enable = true;
@@ -245,6 +248,7 @@ in {
     xkbOptions = "ctrl:nocaps";
     libinput.enable = true;
     windowManager.dwm.enable = true;
+
     displayManager = {
       setupCommands =
       if enableNvidia then
@@ -255,18 +259,22 @@ in {
         ${pkgs.autocutsel}/bin/autocutsel -s PRIMARY &
         ${pkgs.autocutsel}/bin/autocutsel -s CLIPBOARD &
         ${pkgs.bash}/bin/bash /home/sean/workspaces/dot_files/set-dwm-status.sh &
-        light-locker &
       '';
       lightdm.background = "#000000";
     };
+
     xautolock = {
       enable = true;
       enableNotifier = true;
-      locker = "${pkgs.lightlocker}/bin/light-locker-command -l";
-      nowlocker = "${pkgs.lightlocker}/bin/light-locker-command -l";
-      notifier =
-        ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
+      locker = let cmd = pkgs.writeScript "lock" ''
+        ${pkgs.dunst}/bin/dunstctl set-paused true
+        /run/wrappers/bin/slock
+        ${pkgs.dunst}/bin/dunstctl set-paused false
+      '';
+      in ''${pkgs.bash}/bin/bash -c "${cmd} & ${pkgs.coreutils}/bin/sleep 0.5 && ${pkgs.xorg.xset}/bin/xset dpms force off"'';
+      notifier = ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
     };
+
     videoDrivers = if enableNvidia then
      ["nvidia"]
     else
