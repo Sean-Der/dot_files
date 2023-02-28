@@ -11,13 +11,46 @@ in {
 
   system.stateVersion = "unstable";
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub = {
+    device = "/dev/sda";
+    enable = true;
+    version = 2;
+  };
 
-  networking.hostName = "SeanLaptop";
-  networking.networkmanager.enable = true;
-  networking.firewall.enable = false;
+  networking = {
+    hostName = "SeanLaptop";
+    nameservers = [ "1.1.1.1" "1.0.0.1" ];
+    firewall.enable = false;
+
+    networkmanager = {
+      enable = true;
+      dispatcherScripts = [
+        {
+          source = pkgs.writeText "disableWifiOnOthernet" ''
+            #!/usr/bin/env ${pkgs.bash}/bin/bash
+              enable_disable_wifi ()
+              {
+                  result=$(${pkgs.networkmanager}/bin/nmcli dev | grep "ethernet" | grep -w "connected")
+                  if [ -n "$result" ]; then
+                      ${pkgs.networkmanager}/bin/nmcli radio wifi off
+                  else
+                      ${pkgs.networkmanager}/bin/nmcli radio wifi on
+                  fi
+              }
+
+              if [ "$2" = "up" ]; then
+                  enable_disable_wifi
+              fi
+
+              if [ "$2" = "down" ]; then
+                  enable_disable_wifi
+              fi
+          '';
+          type = "basic";
+        }
+      ];
+    };
+  };
 
   time.timeZone = "America/New_York";
 
@@ -186,6 +219,9 @@ in {
         enable = true;
         userName  = "Sean DuBois";
         userEmail = "sean@siobud.com";
+        extraConfig = {
+          url."ssh://git@github.com/".insteadOf = "https://github.com/";
+        };
       };
 
       tmux = {
