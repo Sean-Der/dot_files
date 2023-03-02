@@ -17,6 +17,13 @@ in {
     version = 2;
   };
 
+  systemd.targets = {
+    sleep.enable = false;
+    suspend.enable = false;
+    hibernate.enable = false;
+    hybrid-sleep.enable = false;
+  };
+
   networking = {
     hostName = "SeanLaptop";
     nameservers = [ "1.1.1.1" "1.0.0.1" ];
