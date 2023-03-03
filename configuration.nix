@@ -24,6 +24,8 @@ in {
     hybrid-sleep.enable = false;
   };
 
+  services.logind.lidSwitch = "ignore";
+
   networking = {
     hostName = "SeanLaptop";
     nameservers = [ "1.1.1.1" "1.0.0.1" ];
@@ -71,7 +73,6 @@ in {
     pulseaudio = {
       enable = true;
       support32Bit = true;
-      systemWide = true;
     };
     opengl = {
       enable = true;
@@ -140,7 +141,6 @@ in {
 
   users.users.sean = {
     isNormalUser = true;
-    homeMode = "750";
     extraGroups = [ "audio" "wheel" "docker" "pulse-access" ];
     packages = with pkgs; [
       acpi
@@ -204,6 +204,24 @@ in {
       };
     };
 
+    services = {
+      mpd = {
+        enable = true;
+        musicDirectory = "/home/sean/Music";
+        extraConfig = ''
+          audio_output {
+            type "pulse"
+            name "My PulseAudio"
+          }
+
+          decoder {
+            plugin "fluidsynth"
+            soundfont "/home/sean/Music/MIDI/ESFM.sf2"
+          }
+        '';
+      };
+    };
+
     programs = {
       neovim = {
         enable = true;
@@ -247,7 +265,11 @@ in {
     slock
   ];
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings.X11Forwarding = true;
+  };
+
   services.xserver =  {
     enable = true;
     layout = "us";
@@ -296,23 +318,6 @@ in {
       ''
     else
       "";
-  };
-
-  users.users.mpd.extraGroups = [ "users" "pulse-access"];
-  services.mpd = {
-    enable = true;
-    musicDirectory = "/home/sean/Music";
-    extraConfig = ''
-      audio_output {
-        type "pulse"
-        name "My PulseAudio"
-      }
-
-      decoder {
-        plugin "fluidsynth"
-        soundfont "/home/sean/Music/MIDI/ESFM.sf2"
-      }
-    '';
   };
 
   services.avahi = {
