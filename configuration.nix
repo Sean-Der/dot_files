@@ -283,7 +283,12 @@ in {
       if enableNvidia then
         ""
       else
-        "${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off --output DP-2 --auto";
+        ''
+          ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off
+          ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off
+          ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-3 --auto
+          ${pkgs.xorg.xrandr}/bin/xrandr --output DP-2 --auto --right-of HDMI-3
+        '';
       sessionCommands = ''
         ${pkgs.autocutsel}/bin/autocutsel -s PRIMARY &
         ${pkgs.autocutsel}/bin/autocutsel -s CLIPBOARD &
