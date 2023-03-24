@@ -33,6 +33,7 @@ in {
 
     networkmanager = {
       enable = true;
+      connectionConfig."connection.mdns" = 2;
       dispatcherScripts = [
         {
           source = pkgs.writeText "disableWifiOnOthernet" ''
@@ -144,8 +145,8 @@ in {
     extraGroups = [ "audio" "wheel" "docker" "pulse-access" ];
     packages = with pkgs; [
       acpi
-      autocutsel
       arandr
+      autocutsel
       brave
       clang-tools
       dmenu
@@ -160,6 +161,7 @@ in {
       go
       htop
       inconsolata
+      lutris
       mpv
       mutt
       ncmpcpp
@@ -177,8 +179,6 @@ in {
       timidity
       universal-ctags
       unzip
-      wineWowPackages.stable
-      winetricks
       yt-dlp
       zathura
     ];
@@ -332,6 +332,7 @@ in {
       workstation = true;
     };
   };
+  services.resolved.enable = true;
 
   services.unclutter = {
     enable = true;
