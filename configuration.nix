@@ -100,7 +100,7 @@ in {
       promptInit = ''
         PROMPT_COLOR="1;31m"
         ((UID)) && PROMPT_COLOR="1;32m"
-        PS1="\[\033[$PROMPT_COLOR\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\\$\[\033[0m\] "
+        PS1="\[\033[$PROMPT_COLOR\]\u@\h\[$(tput sgr0)\]:\[$(tput sgr0)\]\[\033[38;5;33m\]\w\[$(tput sgr0)\]\\$\[$(tput sgr0)\] "
       '';
     };
   };
