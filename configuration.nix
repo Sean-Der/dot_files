@@ -216,6 +216,11 @@ in {
           source = ./.config/dosbox;
         };
       };
+      file = {
+        ".inputrc" = {
+          source = ./.inputrc;
+        };
+      };
     };
 
     services = {
