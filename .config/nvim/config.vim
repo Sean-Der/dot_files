@@ -1,9 +1,8 @@
 call plug#begin('~/.config/nvim/plugged')
   Plug 'fatih/vim-go'
   Plug 'airblade/vim-gitgutter'
-  Plug 'w0rp/ale'
+"  Plug 'w0rp/ale'
   Plug 'itchyny/lightline.vim'
-  Plug 'bronson/vim-trailing-whitespace'
   Plug 'ekalinin/Dockerfile.vim'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
@@ -72,5 +71,5 @@ let g:ale_lint_on_text_changed = 'never'
 let g:fzf_layout = { 'down': '~40%' }
 let g:tagbar_position = 'below'
 
-autocmd BufWritePre * :FixWhitespace
+"autocmd BufWritePre * :FixWhitespace
 autocmd BufEnter * :syntax sync fromstart
