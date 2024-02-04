@@ -9,12 +9,11 @@ in {
        <home-manager/nixos>
     ];
 
-  system.stateVersion = "unstable";
+  system.stateVersion = "23.11";
 
   boot.loader.grub = {
     device = "/dev/sda";
     enable = true;
-    version = 2;
   };
 
   systemd.targets = {
@@ -81,12 +80,23 @@ in {
     };
   };
 
-  virtualisation.docker = {
-    enable = true;
-    liveRestore = false;
+  virtualisation = {
+    docker = {
+      enable = true;
+      liveRestore = false;
+    };
+    libvirtd = {
+      enable = true;
+    };
+    spiceUSBRedirection = {
+      enable = true;
+    };
   };
 
   programs = {
+    dconf = {
+      enable = true;
+    };
     slock = {
       enable = true;
     };
@@ -142,24 +152,28 @@ in {
 
   users.users.sean = {
     isNormalUser = true;
-    extraGroups = [ "audio" "wheel" "docker" "pulse-access" ];
+    extraGroups = [ "audio" "wheel" "docker" "pulse-access" "libvirtd"];
     packages = with pkgs; [
       acpi
       arandr
       autocutsel
       brave
       clang-tools
+      cmake
       dmenu
       docker-compose
       dosbox-staging
       dunst
       ffmpeg
       file
+      flatpak-builder
+      firefox
       gcc
+      gdb
       git
       gnumake
       go
-      htop
+      btop
       inconsolata
       lutris
       mpv
@@ -186,7 +200,7 @@ in {
 
   home-manager.users.sean = { pkgs, ... }: {
     home = {
-      stateVersion = "22.11";
+      stateVersion = "23.11";
       sessionVariables = {
         EDITOR = "nvim";
         LANG = "en_US.UTF-8";
@@ -263,6 +277,7 @@ in {
     psmisc
     libnotify
     slock
+    virt-manager
   ];
 
   services.openssh = {
@@ -272,11 +287,14 @@ in {
 
   services.xserver =  {
     enable = true;
-    layout = "us";
-    xkbVariant = "dvp";
-    xkbOptions = "ctrl:nocaps";
     libinput.enable = true;
     windowManager.dwm.enable = true;
+
+    xkb = {
+      layout = "us";
+      variant = "dvp";
+      options = "ctrl:nocaps";
+    };
 
     displayManager = {
       setupCommands =
@@ -327,7 +345,6 @@ in {
 
   services.avahi = {
     enable = true;
-    nssmdns = true;
     publish = {
       enable = true;
       addresses = true;
@@ -355,4 +372,14 @@ in {
   };
 
   services.tlp.enable = true;
+
+  xdg.portal = {
+    config.common.default = "*";
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-kde
+      xdg-desktop-portal-gtk
+    ];
+  };
+  services.flatpak.enable = true;
 }
