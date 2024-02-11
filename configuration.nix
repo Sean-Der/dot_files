@@ -27,7 +27,6 @@ in {
 
   networking = {
     hostName = "SeanLaptop";
-    nameservers = [ "1.1.1.1" "1.0.0.1" ];
     firewall.enable = false;
 
     networkmanager = {
@@ -158,23 +157,22 @@ in {
       arandr
       autocutsel
       brave
+      btop
       clang-tools
-      cmake
+      discord
       dmenu
       docker-compose
       dosbox-staging
       dunst
       ffmpeg
       file
-      flatpak-builder
       firefox
+      flatpak-builder
       gcc
       gdb
       git
       gnumake
       go
-      btop
-      inconsolata
       lutris
       mpv
       mutt
@@ -190,6 +188,7 @@ in {
       soulseekqt
       st
       sxiv
+      thunderbird
       timidity
       universal-ctags
       unzip
@@ -197,6 +196,10 @@ in {
       zathura
     ];
   };
+
+  fonts.packages = with pkgs; [
+    inconsolata
+  ];
 
   home-manager.users.sean = { pkgs, ... }: {
     home = {
@@ -268,6 +271,7 @@ in {
         userEmail = "sean@siobud.com";
         extraConfig = {
           url."ssh://git@github.com/".insteadOf = "https://github.com/";
+          pull.rebase = true;
         };
       };
 
