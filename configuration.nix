@@ -156,7 +156,6 @@ in {
       acpi
       arandr
       autocutsel
-      brave
       btop
       clang-tools
       discord
@@ -175,7 +174,7 @@ in {
       go
       lutris
       mpv
-      mutt
+      neomutt
       ncmpcpp
       neofetch
       nodejs
@@ -189,10 +188,11 @@ in {
       st
       sxiv
       thunderbird
-      timidity
       universal-ctags
+      ungoogled-chromium
       unzip
       yt-dlp
+      xsel
       zathura
     ];
   };
