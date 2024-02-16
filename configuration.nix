@@ -1,8 +1,5 @@
 { config, pkgs, lib, ... }:
-
-let
-  enableNvidia = false;
-in {
+{
   imports =
     [
       /etc/nixos/hardware-configuration.nix
@@ -163,7 +160,7 @@ in {
       docker-compose
       dosbox-staging
       dunst
-      ffmpeg
+      ffmpeg_5-full
       file
       firefox
       flatpak-builder
@@ -306,16 +303,12 @@ in {
     };
 
     displayManager = {
-      setupCommands =
-      if enableNvidia then
-        ""
-      else
-        ''
-          ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off
-          ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off
-          ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-3 --auto
-          ${pkgs.xorg.xrandr}/bin/xrandr --output DP-2 --auto --right-of HDMI-3
-        '';
+      setupCommands = ''
+        ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off
+        ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off
+        ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-3 --auto
+        ${pkgs.xorg.xrandr}/bin/xrandr --output DP-2 --auto --right-of HDMI-3
+      '';
       sessionCommands = ''
         ${pkgs.autocutsel}/bin/autocutsel -s PRIMARY &
         ${pkgs.autocutsel}/bin/autocutsel -s CLIPBOARD &
@@ -335,21 +328,6 @@ in {
       in ''${pkgs.bash}/bin/bash -c "${cmd} & ${pkgs.coreutils}/bin/sleep 0.5 && ${pkgs.xorg.xset}/bin/xset dpms force off"'';
       notifier = ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
     };
-
-    videoDrivers = if enableNvidia then
-     ["nvidia"]
-    else
-     [];
-    deviceSection =
-    if enableNvidia then
-      ''
-        Driver         "nvidia"
-        BusID          "PCI:2@0:0:0"
-        Option         "AllowEmptyInitialConfiguration"
-        Option         "AllowExternalGpus" "True"
-      ''
-    else
-      "";
   };
 
   services.avahi = {
