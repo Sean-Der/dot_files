@@ -8,9 +8,13 @@
 
   system.stateVersion = "23.11";
 
-  boot.loader.grub = {
-    device = "/dev/sda";
-    enable = true;
+  boot = {
+    loader.grub = {
+      device = "/dev/sda";
+      enable = true;
+    };
+
+    kernelParams = [ "mitigations=off" ];
   };
 
   systemd.targets = {
@@ -154,7 +158,8 @@
       arandr
       autocutsel
       btop
-      clang-tools
+      clang
+      clang-tools_16
       discord
       dmenu
       docker-compose
@@ -269,6 +274,7 @@
         extraConfig = {
           url."ssh://git@github.com/".insteadOf = "https://github.com/";
           pull.rebase = true;
+          push.autoSetupRemote = true;
         };
       };
 
