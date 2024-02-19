@@ -4,8 +4,8 @@ let
   stable = import <nixos> {};
 in
 pkgs.mkShell {
-	buildInputs = [
-	  stable.openssl
+  buildInputs = [
+    stable.openssl
     stable.alsa-lib
     stable.cmake
     stable.curl

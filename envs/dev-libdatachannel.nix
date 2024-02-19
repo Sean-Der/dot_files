@@ -3,8 +3,8 @@ let
   stable = import <nixos> {};
 in
 pkgs.mkShell {
-	nativeBuildInputs = [
-	  stable.openssl
+  nativeBuildInputs = [
+    stable.openssl
     stable.pkg-config
     stable.cmake
     stable.ccache
