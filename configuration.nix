@@ -175,6 +175,7 @@
       gnumake
       go
       lutris
+      mage
       mpv
       neomutt
       ncmpcpp
@@ -255,6 +256,7 @@
       bash = {
         enable = true;
         shellAliases = {
+          mutt        = "neomutt";
           vim         = "nvim";
           ls          = "ls -FG";
           ll          = "ls -lha";
@@ -309,12 +311,12 @@
     };
 
     displayManager = {
-      setupCommands = ''
-        ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off
-        ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off
-        ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-3 --auto
-        ${pkgs.xorg.xrandr}/bin/xrandr --output DP-2 --auto --right-of HDMI-3
-      '';
+      #setupCommands = ''
+      #  ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off
+      #  ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off
+      #  ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-3 --auto
+      #  ${pkgs.xorg.xrandr}/bin/xrandr --output DP-2 --auto --right-of HDMI-3
+      #'';
       sessionCommands = ''
         ${pkgs.autocutsel}/bin/autocutsel -s PRIMARY &
         ${pkgs.autocutsel}/bin/autocutsel -s CLIPBOARD &
@@ -365,6 +367,11 @@
   };
 
   services.tlp.enable = true;
+
+  services.redis.servers."redis" = {
+    enable = true;
+    port = 6379;
+  };
 
   xdg.portal = {
     config.common.default = "*";
