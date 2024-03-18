@@ -311,13 +311,8 @@
     };
 
     displayManager = {
-      #setupCommands = ''
-      #  ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off
-      #  ${pkgs.xorg.xrandr}/bin/xrandr --output LVDS-1 --off
-      #  ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-3 --auto
-      #  ${pkgs.xorg.xrandr}/bin/xrandr --output DP-2 --auto --right-of HDMI-3
-      #'';
       sessionCommands = ''
+        ${pkgs.xorg.xsetroot}/bin/xsetroot -solid black
         ${pkgs.autocutsel}/bin/autocutsel -s PRIMARY &
         ${pkgs.autocutsel}/bin/autocutsel -s CLIPBOARD &
         ${pkgs.bash}/bin/bash /home/sean/workspaces/dot_files/set-dwm-status.sh &
@@ -366,7 +361,26 @@
     enable = true;
   };
 
-  services.tlp.enable = true;
+  services.tlp = {
+    enable = true;
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+      CPU_MIN_PERF_ON_AC = 0;
+      CPU_MAX_PERF_ON_AC = 100;
+      CPU_MIN_PERF_ON_BAT = 0;
+      CPU_MAX_PERF_ON_BAT = 20;
+
+      START_CHARGE_THRESH_BAT0 = 20; # 20 and bellow it starts to charge
+      STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
+
+     };
+   };
+
 
   services.redis.servers."redis" = {
     enable = true;

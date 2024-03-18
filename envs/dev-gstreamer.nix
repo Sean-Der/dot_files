@@ -3,7 +3,7 @@ let
   unstable = import <nixos-unstable> {};
 in
 pkgs.mkShell {
-  nativeBuildInputs = [
+  buildInputs = [
     unstable.gst_all_1.gst-libav
     unstable.gst_all_1.gst-plugins-bad
     unstable.gst_all_1.gst-plugins-base
@@ -13,5 +13,7 @@ pkgs.mkShell {
     unstable.gst_all_1.gst-vaapi
     unstable.gst_all_1.gstreamer
     unstable.libnice
+    unstable.glib.dev
+    unstable.pkg-config
   ];
 }
