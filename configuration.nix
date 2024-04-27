@@ -156,10 +156,11 @@
     packages = with pkgs; [
       acpi
       arandr
+      autorandr
       autocutsel
       btop
       clang
-      clang-tools_16
+      clang-tools_17
       discord
       dmenu
       docker-compose
