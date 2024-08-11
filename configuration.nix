@@ -24,6 +24,13 @@
     hybrid-sleep.enable = false;
   };
 
+  nix.optimise.automatic = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
+
   services.logind.lidSwitch = "ignore";
 
   networking = {
