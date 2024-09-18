@@ -6,7 +6,7 @@
        <home-manager/nixos>
     ];
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 
   boot = {
     loader.grub = {
@@ -173,7 +173,7 @@
       docker-compose
       dosbox-staging
       dunst
-      ffmpeg_5-full
+      ffmpeg_6-full
       file
       firefox
       flatpak-builder
@@ -182,7 +182,6 @@
       git
       gnumake
       go
-      lutris
       mage
       mpv
       neomutt
@@ -214,7 +213,7 @@
 
   home-manager.users.sean = { pkgs, ... }: {
     home = {
-      stateVersion = "23.11";
+      stateVersion = "24.05";
       sessionVariables = {
         EDITOR = "nvim";
         LANG = "en_US.UTF-8";
@@ -309,7 +308,6 @@
 
   services.xserver =  {
     enable = true;
-    libinput.enable = true;
     windowManager.dwm.enable = true;
 
     xkb = {
@@ -403,5 +401,8 @@
       xdg-desktop-portal-gtk
     ];
   };
+
   services.flatpak.enable = true;
+
+  services.libinput.enable = true;
 }

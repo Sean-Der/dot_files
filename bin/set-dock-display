@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
 xrandr --output LVDS-1 --off
+sleep 2
+xrandr --output DP-2 --off
+sleep 2
 xrandr --output HDMI-3 --auto
+sleep 2
 xrandr --output DP-2 --auto --right-of HDMI-3

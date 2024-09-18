@@ -59,8 +59,9 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_black, "-nf", col_white, "-sb", col_green, "-sf", col_white, NULL };
-static const char *clipmenucmd[] = { "clipmenu", "-fn", dmenufont, "-nb", col_black, "-nf", col_white, "-sb", col_green, "-sf", col_white, NULL };
+static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_white, "-sb", col_green, "-sf", col_white, NULL };
+static const char *clipmenucmd[] = { "clipmenu", "-m", dmenumon,"-fn", dmenufont, "-nb", col_black, "-nf", col_white, "-sb", col_green, "-sf", col_white, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *upvol[]      = { "pactl",   "set-sink-volume", "0",      "+5%",      NULL };
 static const char *downvol[]    = { "pactl",   "set-sink-volume", "0",      "-5%",      NULL };
@@ -110,7 +111,7 @@ static Key keys[] = {
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-static Button buttons[] = {
+static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
