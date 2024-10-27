@@ -60,11 +60,13 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_white, "-sb", col_green, "-sf", col_white, NULL };
+static const char *dmenucmd[]    = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_white, "-sb", col_green, "-sf", col_white, NULL };
 static const char *clipmenucmd[] = { "clipmenu", "-m", dmenumon,"-fn", dmenufont, "-nb", col_black, "-nf", col_white, "-sb", col_green, "-sf", col_white, NULL };
-static const char *termcmd[]  = { "st", NULL };
-static const char *upvol[]      = { "pactl",   "set-sink-volume", "0",      "+5%",      NULL };
-static const char *downvol[]    = { "pactl",   "set-sink-volume", "0",      "-5%",      NULL };
+static const char *termcmd[]     = { "st", NULL };
+static const char *upvol[]       = { "pactl",   "set-sink-volume", "0",      "+5%",      NULL };
+static const char *downvol[]     = { "pactl",   "set-sink-volume", "0",      "-5%",      NULL };
+static const char *prevsong[]    = { "mpc", "prev", NULL };
+static const char *nextsong[]    = { "mpc", "next", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -95,8 +97,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ 0,                            XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
-	{ 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
+	{ MODKEY|ControlMask,           XK_Left,   spawn,          {.v = prevsong } },
+	{ MODKEY|ControlMask,           XK_Right,   spawn,          {.v = nextsong } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -107,6 +109,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ 0,                            XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
+	{ 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
 };
 
 /* button definitions */

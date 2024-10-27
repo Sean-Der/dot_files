@@ -8,20 +8,20 @@
 
   system.stateVersion = "24.05";
 
+  security.protectKernelImage = false;
+
   boot = {
     loader.grub = {
       device = "/dev/sda";
       enable = true;
     };
 
-    kernelParams = [ "mitigations=off" ];
-  };
-
-  systemd.targets = {
-    sleep.enable = false;
-    suspend.enable = false;
-    hibernate.enable = false;
-    hybrid-sleep.enable = false;
+    kernelParams = [ "mitigations=off"];
+    initrd = {
+      postDeviceCommands = lib.mkAfter ''
+        echo 8:2 > /sys/power/resume
+      '';
+    };
   };
 
   nix.optimise.automatic = true;
@@ -77,6 +77,10 @@
 
   sound.enable = true;
   hardware = {
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
     pulseaudio = {
       enable = true;
       support32Bit = true;
@@ -91,12 +95,6 @@
     docker = {
       enable = true;
       liveRestore = false;
-    };
-    libvirtd = {
-      enable = true;
-    };
-    spiceUSBRedirection = {
-      enable = true;
     };
   };
 
@@ -159,12 +157,12 @@
 
   users.users.sean = {
     isNormalUser = true;
-    extraGroups = [ "audio" "wheel" "docker" "pulse-access" "libvirtd"];
+    extraGroups = [ "audio" "wheel" "docker" "pulse-access"];
     packages = with pkgs; [
       acpi
       arandr
-      autorandr
       autocutsel
+      autorandr
       btop
       clang
       clang-tools_17
@@ -183,10 +181,11 @@
       gnumake
       go
       mage
+      mpc-cli
       mpv
-      neomutt
       ncmpcpp
       neofetch
+      neomutt
       nodejs
       pavucontrol
       pulsemixer
@@ -197,12 +196,14 @@
       soulseekqt
       st
       sxiv
+      tcpdump
       thunderbird
-      universal-ctags
       ungoogled-chromium
+      universal-ctags
       unzip
-      yt-dlp
+      wireshark
       xsel
+      yt-dlp
       zathura
     ];
   };
@@ -248,7 +249,7 @@
 
           decoder {
             plugin "fluidsynth"
-            soundfont "/home/sean/Music/MIDI/ESFM.sf2"
+            soundfont "/home/sean/Music/MIDI/OPL3.sf2"
           }
         '';
       };
@@ -298,7 +299,6 @@
     psmisc
     libnotify
     slock
-    virt-manager
   ];
 
   services.openssh = {
@@ -387,6 +387,12 @@
      };
    };
 
+  # services.cron = {
+  #   enable = true;
+  #   systemCronJobs = [
+  #     "0 1 * * *      root    systemctl hibernate"
+  #   ];
+  # };
 
   services.redis.servers."redis" = {
     enable = true;
@@ -405,4 +411,6 @@
   services.flatpak.enable = true;
 
   services.libinput.enable = true;
+
+  services.blueman.enable = true;
 }
