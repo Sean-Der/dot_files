@@ -8,8 +8,6 @@
 
   system.stateVersion = "24.05";
 
-  security.protectKernelImage = false;
-
   boot = {
     loader.grub = {
       device = "/dev/sda";
@@ -94,7 +92,7 @@
   virtualisation = {
     docker = {
       enable = true;
-      liveRestore = false;
+      enableOnBoot = false;
     };
   };
 
@@ -299,6 +297,7 @@
     psmisc
     libnotify
     slock
+    tailscale
   ];
 
   services.openssh = {
@@ -387,24 +386,23 @@
      };
    };
 
-  # services.cron = {
-  #   enable = true;
-  #   systemCronJobs = [
-  #     "0 1 * * *      root    systemctl hibernate"
-  #   ];
-  # };
-
-  services.redis.servers."redis" = {
+  services.cron = {
     enable = true;
-    port = 6379;
+    systemCronJobs = [
+      "0 1 * * *      root    systemctl hibernate"
+    ];
   };
+
+  # services.redis.servers."redis" = {
+  #   enable = true;
+  #   port = 6379;
+  # };
 
   xdg.portal = {
     config.common.default = "*";
     enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-kde
-      xdg-desktop-portal-gtk
     ];
   };
 
@@ -413,4 +411,6 @@
   services.libinput.enable = true;
 
   services.blueman.enable = true;
+
+  services.tailscale.enable = true;
 }
