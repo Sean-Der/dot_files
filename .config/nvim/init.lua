@@ -29,32 +29,39 @@ require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   { 'lewis6991/gitsigns.nvim',
     config = function()
-      require('gitsigns').setup()
-
-
+      local signs = {
+          add          = { text = '+' },
+          change       = { text = '~' },
+          delete       = { text = '-' },
+          topdelete    = { text = '-' },
+          changedelete = { text = '~' },
+          untracked    = { text = '┆' },
+        }
+      require('gitsigns').setup({signs = signs, signs_staged = signs})
     end
   },
-  { 'nvim-telescope/telescope.nvim',  -- Search
-    branch = '0.1.x', 
-    dependencies = { 'nvim-lua/plenary.nvim' },
+  { 'ibhagwan/fzf-lua',  -- Search
     config = function()
-      require('telescope').setup {
-        defaults = {
-          mappings = {
-            i = {
-              ["<C-g>"] = { "<esc>", type = "command" },
-              ['<C-g>'] = require("telescope.actions").close,
-            },
-          },
-        },
-      }
+      require("fzf-lua").setup({ keymap = { builtin = { true, ["<C-g>"] = "hide" } } })
 
-      local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>g', builtin.live_grep)
-      vim.keymap.set('n', '<leader>o', builtin.find_files)
-      vim.keymap.set('n', '<leader>s', builtin.grep_string)
-      vim.keymap.set('n', '<leader>m', builtin.oldfiles)
-      vim.keymap.set('n', '<leader>r', builtin.registers)
+      local fzf = require 'fzf-lua'
+      vim.keymap.set('n', '<leader>g', fzf.live_grep)
+      vim.keymap.set('n', '<leader>o', fzf.files)
+      vim.keymap.set('n', '<leader>s', fzf.grep_cword)
+      vim.keymap.set('n', '<leader>m', fzf.oldfiles)
+      vim.keymap.set('n', '<leader>r', fzf.registers)
+    end
+  },
+  { 'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = function()
+      local configs = require('nvim-treesitter.configs')
+      configs.setup({
+        ensure_installed = {'c', 'c', 'cpp', 'go', 'html', 'lua', 'python', 'vim', 'vimdoc'},
+        sync_install = false,
+        highlight = { enable = true },
+        indent = { enable = true },
+      })
     end
   }
- })
+})
