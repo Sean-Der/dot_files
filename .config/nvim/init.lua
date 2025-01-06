@@ -4,6 +4,7 @@ vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
 vim.opt.wrap = false
+vim.opt.mouse = ''
 
 -- Case-insensitive searching
 vim.opt.ignorecase = true
@@ -42,7 +43,7 @@ require('lazy').setup({
   },
   { 'ibhagwan/fzf-lua',  -- Search
     config = function()
-      require("fzf-lua").setup({ keymap = { builtin = { true, ["<C-g>"] = "hide" } } })
+      require('fzf-lua').setup({ keymap = { builtin = { true, ['<C-g>'] = 'hide' } } })
 
       local fzf = require 'fzf-lua'
       vim.keymap.set('n', '<leader>g', fzf.live_grep)
@@ -55,13 +56,85 @@ require('lazy').setup({
   { 'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     config = function()
-      local configs = require('nvim-treesitter.configs')
-      configs.setup({
+      require('nvim-treesitter.configs').setup({
         ensure_installed = {'c', 'c', 'cpp', 'go', 'html', 'lua', 'python', 'vim', 'vimdoc'},
         sync_install = false,
         highlight = { enable = true },
         indent = { enable = true },
       })
     end
-  }
+  },
+  { 'neovim/nvim-lspconfig',
+    config = function()
+      require('lspconfig').gopls.setup({
+        settings = {
+          gopls = {
+            analyses = {
+              unusedparams = true,
+            },
+            staticcheck = true,
+            gofumpt = true,
+          },
+        },
+      })
+
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = '*.go',
+        callback = function()
+          local params = vim.lsp.util.make_range_params()
+          params.context = {only = {'source.organizeImports'}}
+          local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params)
+          for cid, res in pairs(result or {}) do
+            for _, r in pairs(res.result or {}) do
+              if r.edit then
+                local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or 'utf-16'
+                vim.lsp.util.apply_workspace_edit(r.edit, enc)
+              end
+            end
+          end
+          vim.lsp.buf.format({async = false})
+        end
+      })
+    end
+  },
+  { 'mfussenegger/nvim-lint',
+    lazy = true,
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+        local lint = require('lint')
+        lint.linters_by_ft = {
+            go = { 'golangcilint' },
+        }
+
+        local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
+
+        vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
+            group = lint_augroup,
+            callback = function()
+                lint.try_lint()
+            end,
+        })
+    end,
+  },
+  { 'stevearc/conform.nvim',
+    config = function()
+      require('conform').setup({
+        formatters_by_ft = {
+          ['*'] = { 'trim_whitespace' },
+        },
+        format_on_save = {
+          lsp_fallback = true,
+          async = false,
+          timeout_ms = 500,
+        },
+      })
+    end
+  },
+  { 'folke/trouble.nvim',
+    opts = {
+      modes = {
+        diagnostics = { auto_open = true, auto_close = true },
+      },
+    }
+  },
 })
