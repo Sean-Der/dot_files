@@ -129,9 +129,16 @@ require('lazy').setup({
     end
   },
   { 'folke/trouble.nvim',
+    cmd = "Trouble",
+    keys = {
+      {
+        "<leader>d",
+        "<cmd>Trouble diagnostics toggle<cr>",
+      },
+    },
     opts = {
       modes = {
-        diagnostics = { auto_open = true, auto_close = true },
+        diagnostics = { auto_close = true },
       },
     }
   },
