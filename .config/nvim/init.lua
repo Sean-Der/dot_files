@@ -88,14 +88,31 @@ require('lazy').setup({
       local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
       cmp.setup({
+        completion = {
+          autocomplete = false,
+        },
         sources = {
           { name = 'path' },
           { name = 'nvim_lsp' },
           { name = 'buffer',  keyword_length = 2 },
         },
         mapping = cmp.mapping.preset.insert({
-          ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-          ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+          ['<C-n>'] = function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            else
+              cmp.mapping.complete()(fallback)
+              cmp.select_next_item({ count = 0 })
+            end
+          end,
+          ['<C-p>'] = function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            else
+              cmp.mapping.complete()(fallback)
+              cmp.select_prev_item({ count = 0 })
+            end
+          end,
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
         }),
       })
@@ -123,8 +140,17 @@ require('lazy').setup({
     config = function()
       require('conform').setup({
         formatters_by_ft = {
+          go = { "goimports", "gofmt" },
+          python = { "ruff" , "isort"},
           ['*'] = { 'trim_whitespace' },
         },
+      })
+
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*",
+        callback = function(args)
+          require("conform").format({ bufnr = args.buf })
+        end,
       })
     end
   },
@@ -141,5 +167,11 @@ require('lazy').setup({
         diagnostics = { auto_close = true },
       },
     }
+  },
+  { "iamcco/markdown-preview.nvim",
+    ft = { "markdown" },
+    config = function()
+      vim.fn["mkdp#util#install"]()
+    end,
   },
 })
