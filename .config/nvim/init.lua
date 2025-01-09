@@ -20,6 +20,9 @@ vim.opt.signcolumn = 'yes'
 vim.keymap.set({'n', 'i', 'v', 'x', '!'}, '<C-g>', '<Esc>')
 vim.keymap.set('t', '<C-g>', '<C-\\><C-n>')
 
+-- Don't yank on paste
+vim.keymap.set("x", "p", "P", { silent = true })
+
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local out = vim.fn.system {'git', 'clone', '--filter=blob:none', '--branch=stable', 'https://github.com/folke/lazy.nvim.git', lazypath}
