@@ -1,19 +1,19 @@
 { pkgs ? import <nixpkgs> {} }:
 let
-  unstable = import <nixos-unstable> {};
+  stable = import <nixos> {};
 in
 pkgs.mkShell {
-  buildInputs = [
-    unstable.gst_all_1.gst-libav
-    unstable.gst_all_1.gst-plugins-bad
-    unstable.gst_all_1.gst-plugins-base
-    unstable.gst_all_1.gst-plugins-good
-    unstable.gst_all_1.gst-plugins-rs
-    unstable.gst_all_1.gst-plugins-ugly
-    unstable.gst_all_1.gst-vaapi
-    unstable.gst_all_1.gstreamer
-    unstable.libnice
-    unstable.glib.dev
-    unstable.pkg-config
+  nativeBuildInputs = [
+    stable.gst_all_1.gst-libav
+    stable.gst_all_1.gst-plugins-bad
+    stable.gst_all_1.gst-plugins-base
+    stable.gst_all_1.gst-plugins-good
+    stable.gst_all_1.gst-plugins-rs
+    stable.gst_all_1.gst-plugins-ugly
+    stable.gst_all_1.gst-vaapi
+    stable.gst_all_1.gstreamer
+    stable.libnice
+    stable.glib.dev
+    stable.pkg-config
   ];
 }

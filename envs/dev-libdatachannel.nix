@@ -21,3 +21,4 @@ pkgs.mkShell {
 
 # cmake -B build -DUSE_GNUTLS=0 -DUSE_NICE=0 -DCMAKE_INSTALL_PREFIX:PATH=`pwd`/install -DCMAKE_BUILD_TYPE=Debug -G Ninja
 # cmake --build build -j$(nproc)
+# cmake --install build --prefix install

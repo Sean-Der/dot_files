@@ -6,7 +6,7 @@
        <home-manager/nixos>
     ];
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
 
   boot = {
     loader.grub = {
@@ -29,7 +29,7 @@
     options = "--delete-older-than 7d";
   };
 
-  services.logind.lidSwitch = "ignore";
+  services.logind.settings.Login.HandleLidSwitch = "ignore";
 
   networking = {
     hostName = "SeanLaptop";
@@ -68,24 +68,18 @@
 
   time.timeZone = "America/New_York";
 
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+  };
+
   console = {
     keyMap = "dvorak-programmer";
   };
 
-  sound.enable = true;
   hardware = {
     bluetooth = {
       enable = true;
       powerOnBoot = true;
-    };
-    pulseaudio = {
-      enable = true;
-      support32Bit = true;
-    };
-    opengl = {
-      enable = true;
-      driSupport32Bit = true;
     };
   };
 
@@ -122,11 +116,14 @@
 
   nixpkgs = {
     config = {
-      pulseaudio = true;
       allowUnfree = true;
     };
     overlays = [ (self: super:
       {
+        libsForQt5 = (super.libsForQt5 or {}) // {
+          fcitx5-with-addons = super.kdePackages.fcitx5-with-addons;
+        };
+
         dwm = super.dwm.overrideAttrs (oldAttrs: rec {
           patches = [
             dwm-patches/01-shiftviewclients.patch
@@ -154,8 +151,9 @@
   };
 
   users.users.sean = {
+    linger = true;
     isNormalUser = true;
-    extraGroups = [ "audio" "wheel" "docker" "pulse-access"];
+    extraGroups = [ "audio" "wheel" "docker"];
     packages = with pkgs; [
       acpi
       arandr
@@ -191,7 +189,6 @@
       rustup
       scrot
       slack
-      soulseekqt
       st
       sxiv
       tcpdump
@@ -206,12 +203,12 @@
     ];
   };
 
-  fonts.packages = with pkgs; [
-    inconsolata
-  ];
+  fonts.packages = [pkgs.inconsolata];
 
+  home-manager.useGlobalPkgs = true;
   home-manager.users.sean = { pkgs, ... }: {
     home = {
+      enableNixpkgsReleaseCheck = false;
       stateVersion = "24.05";
       sessionVariables = {
         EDITOR = "nvim";
@@ -222,13 +219,9 @@
         ".config/ncmpcpp" = {
           source = ./.config/ncmpcpp;
         };
-      };
-      file = {
         ".config/dosbox" = {
           source = ./.config/dosbox;
         };
-      };
-      file = {
         ".inputrc" = {
           source = ./.inputrc;
         };
@@ -241,13 +234,13 @@
         musicDirectory = "/home/sean/Music";
         extraConfig = ''
           audio_output {
-            type "pulse"
-            name "My PulseAudio"
+            type "pipewire"
+            name "My PipeWire Output"
           }
 
           decoder {
             plugin "fluidsynth"
-            soundfont "/home/sean/Music/MIDI/OPL3.sf2"
+            soundfont "/home/sean/Music/MIDI/ESFM.sf2"
           }
         '';
       };
@@ -256,7 +249,7 @@
     programs = {
       neovim = {
         enable = true;
-        extraConfig = lib.fileContents .config/nvim/config.vim;
+        extraLuaConfig = lib.fileContents .config/nvim/init.lua;
       };
 
       bash = {
@@ -351,10 +344,8 @@
   };
   services.resolved.enable = true;
 
-  services.unclutter = {
+  services.xbanish = {
     enable = true;
-    timeout = 2;
-    extraOptions = [ "noevents" ];
   };
 
   services.clipmenu = {
@@ -393,16 +384,11 @@
     ];
   };
 
-  # services.redis.servers."redis" = {
-  #   enable = true;
-  #   port = 6379;
-  # };
-
   xdg.portal = {
     config.common.default = "*";
     enable = true;
     extraPortals = with pkgs; [
-      xdg-desktop-portal-kde
+      kdePackages.xdg-desktop-portal-kde
     ];
   };
 
@@ -413,4 +399,12 @@
   services.blueman.enable = true;
 
   services.tailscale.enable = true;
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 }

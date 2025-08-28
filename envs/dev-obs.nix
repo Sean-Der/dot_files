@@ -1,7 +1,6 @@
 { pkgs ? import <nixpkgs> {} }:
 let
-  unstable = import <nixos-unstable> {};
-  stable = import <nixos> {};
+  unstable = import <nixos> {};
 in
 pkgs.mkShell {
   buildInputs = [
