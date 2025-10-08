@@ -162,7 +162,6 @@
       btop
       clang
       clang-tools_17
-      discord
       dmenu
       docker-compose
       dosbox-staging
@@ -196,6 +195,7 @@
       ungoogled-chromium
       universal-ctags
       unzip
+      vesktop
       wireshark
       xsel
       yt-dlp
@@ -213,7 +213,7 @@
       sessionVariables = {
         EDITOR = "nvim";
         LANG = "en_US.UTF-8";
-        PATH = "~/.cargo/bin:~/go/bin:~/bin:$PATH";
+        PATH = "${config.users.users.sean.home}/.cargo/bin:${config.users.users.sean.home}/go/bin:${config.users.users.sean.home}/bin:$PATH";
       };
       file = {
         ".config/ncmpcpp" = {
@@ -377,13 +377,6 @@
      };
    };
 
-  services.cron = {
-    enable = true;
-    systemCronJobs = [
-      "0 1 * * *      root    systemctl hibernate"
-    ];
-  };
-
   xdg.portal = {
     config.common.default = "*";
     enable = true;
@@ -399,6 +392,8 @@
   services.blueman.enable = true;
 
   services.tailscale.enable = true;
+
+  services.preload.enable = true;
 
   security.rtkit.enable = true;
   services.pipewire = {
