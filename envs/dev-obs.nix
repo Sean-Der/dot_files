@@ -25,7 +25,7 @@ pkgs.mkShell {
     unstable.websocketpp
     unstable.asio
     unstable.x264
-    unstable.xorg.libX11
+    unstable.libX11
     unstable.srt
     unstable.librist
     unstable.libva

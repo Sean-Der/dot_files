@@ -6,7 +6,7 @@
        <home-manager/nixos>
     ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
   boot = {
     loader.grub = {
@@ -161,7 +161,7 @@
       autorandr
       btop
       clang
-      clang-tools_17
+      discord
       dmenu
       docker-compose
       dosbox-staging
@@ -173,13 +173,14 @@
       gcc
       gdb
       git
+      gemini-cli
       gnumake
       go
       mage
-      mpc-cli
+      mpc
       mpv
       ncmpcpp
-      neofetch
+      fastfetch
       neomutt
       nodejs
       pavucontrol
@@ -270,9 +271,11 @@
 
       git = {
         enable = true;
-        userName  = "Sean DuBois";
-        userEmail = "sean@siobud.com";
-        extraConfig = {
+        settings = {
+          user = {
+            name  = "Sean DuBois";
+            email = "sean@siobud.com";
+          };
           url."ssh://git@github.com/".insteadOf = "https://github.com/";
           pull.rebase = true;
           push.autoSetupRemote = true;
@@ -310,7 +313,7 @@
 
     displayManager = {
       sessionCommands = ''
-        ${pkgs.xorg.xsetroot}/bin/xsetroot -solid black
+        ${pkgs.xsetroot}/bin/xsetroot -solid black
         ${pkgs.autocutsel}/bin/autocutsel -s PRIMARY &
         ${pkgs.autocutsel}/bin/autocutsel -s CLIPBOARD &
         ${pkgs.bash}/bin/bash /home/sean/workspaces/dot_files/set-dwm-status.sh &
@@ -326,7 +329,7 @@
         /run/wrappers/bin/slock
         ${pkgs.dunst}/bin/dunstctl set-paused false
       '';
-      in ''${pkgs.bash}/bin/bash -c "${cmd} & ${pkgs.coreutils}/bin/sleep 0.5 && ${pkgs.xorg.xset}/bin/xset dpms force off"'';
+      in ''${pkgs.bash}/bin/bash -c "${cmd} & ${pkgs.coreutils}/bin/sleep 0.5 && ${pkgs.xset}/bin/xset dpms force off"'';
       notifier = ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
     };
   };
@@ -392,8 +395,6 @@
   services.blueman.enable = true;
 
   services.tailscale.enable = true;
-
-  services.preload.enable = true;
 
   security.rtkit.enable = true;
   services.pipewire = {
