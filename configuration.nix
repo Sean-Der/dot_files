@@ -6,7 +6,7 @@
        <home-manager/nixos>
     ];
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 
   boot = {
     loader.grub = {
@@ -16,9 +16,12 @@
 
     kernelParams = [ "mitigations=off"];
     initrd = {
-      postDeviceCommands = lib.mkAfter ''
-        echo 8:2 > /sys/power/resume
-      '';
+      systemd.services.resume-config = {
+        description = "Set the resume device";
+        wantedBy = [ "initrd.target" ];
+        serviceConfig.Type = "oneshot";
+        script = "echo 8:2 > /sys/power/resume";
+      };
     };
   };
 
@@ -102,6 +105,7 @@
       defaultEditor = true;
       viAlias = true;
       vimAlias = true;
+      package = pkgs.neovim-unwrapped;
     };
     bash = {
       promptInit = ''
@@ -210,7 +214,7 @@
   home-manager.users.sean = { pkgs, ... }: {
     home = {
       enableNixpkgsReleaseCheck = false;
-      stateVersion = "24.05";
+      stateVersion = "26.05";
       sessionVariables = {
         EDITOR = "nvim";
         LANG = "en_US.UTF-8";
@@ -250,7 +254,8 @@
     programs = {
       neovim = {
         enable = true;
-        extraLuaConfig = lib.fileContents .config/nvim/init.lua;
+        package = pkgs.neovim-unwrapped;
+        initLua = lib.fileContents .config/nvim/init.lua;
       };
 
       bash = {
