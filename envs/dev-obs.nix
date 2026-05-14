@@ -20,7 +20,7 @@ pkgs.mkShell {
     unstable.pkg-config
     unstable.python3
     unstable.qt6.qt3d
-    unstable.swig4
+    unstable.swig
     unstable.udev
     unstable.websocketpp
     unstable.asio
@@ -36,6 +36,8 @@ pkgs.mkShell {
     unstable.uthash
     unstable.qrcodegencpp
     unstable.mbedtls
+    unstable.simde
+    unstable.kdePackages.extra-cmake-modules
   ];
 }
 
