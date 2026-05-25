@@ -97,15 +97,11 @@
   programs = {
     foot = {
       enable = true;
+      theme = "iterm";
 
       settings = {
         main = {
           font = "Inconsolata:pixelsize=14:antialias=true:autohint=true";
-        };
-
-        colors = {
-          background = "000000";
-          foreground = "ffffff";
         };
       };
     };
@@ -141,7 +137,7 @@
         };
 
         dwl = super.dwl.overrideAttrs (oldAttrs: rec {
-          #prePatch = "cp ${./config.h} config.h";
+          prePatch = "cp ${./dwl-patches/config.h} config.h";
           patches = [ ];
         });
       })
@@ -278,14 +274,15 @@
   };
 
   environment.systemPackages = with pkgs; [
-    tmux
-    psmisc
+    dwl
+    foot
     libnotify
+    psmisc
     tailscale
+    tmux
     wayland
     wayland-utils
-    foot
-    dwl
+    wmenu
   ];
 
   services.openssh = {
