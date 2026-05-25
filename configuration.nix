@@ -352,10 +352,6 @@
   };
   services.resolved.enable = true;
 
-  services.xbanish = {
-    enable = true;
-  };
-
   services.clipmenu = {
     enable = true;
   };
