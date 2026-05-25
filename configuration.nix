@@ -84,6 +84,7 @@
       enable = true;
       powerOnBoot = true;
     };
+    graphics.enable = true;
   };
 
   virtualisation = {
@@ -94,10 +95,21 @@
   };
 
   programs = {
-    dconf = {
+    foot = {
       enable = true;
+
+      settings = {
+        main = {
+          font = "Inconsolata:pixelsize=14:antialias=true:autohint=true";
+        };
+
+        colors = {
+          background = "000000";
+          foreground = "ffffff";
+        };
+      };
     };
-    slock = {
+    dconf = {
       enable = true;
     };
     neovim = {
@@ -128,28 +140,10 @@
           fcitx5-with-addons = super.kdePackages.fcitx5-with-addons;
         };
 
-        dwm = super.dwm.overrideAttrs (oldAttrs: rec {
-          patches = [
-            dwm-patches/01-shiftviewclients.patch
-            dwm-patches/02-statuscolors.patch
-            dwm-patches/03-pertag.patch
-            dwm-patches/04-fullscreen.patch
-          ];
-
-          configFile = super.writeText "config.h" (builtins.readFile ./dwm-patches/config.h);
-          postPatch = "${oldAttrs.postPatch}\n cp ${configFile} config.h";
+        dwl = super.dwl.overrideAttrs (oldAttrs: rec {
+          #prePatch = "cp ${./config.h} config.h";
+          patches = [ ];
         });
-
-
-        st = super.st.overrideAttrs (oldAttrs: rec {
-          patches = [
-            st-patches/01-scrollback.diff
-          ];
-
-          configFile = super.writeText "config.h" (builtins.readFile ./st-patches/config.h);
-          postPatch = "${oldAttrs.postPatch}\n cp ${configFile} config.h";
-        });
-
       })
     ];
   };
@@ -160,16 +154,10 @@
     extraGroups = [ "audio" "wheel" "docker"];
     packages = with pkgs; [
       acpi
-      arandr
-      autocutsel
-      autorandr
       btop
       clang
-      discord
-      dmenu
       docker-compose
       dosbox-staging
-      dunst
       ffmpeg_6-full
       file
       firefox
@@ -192,19 +180,15 @@
       ripgrep
       rustup
       scrot
-      slack
-      st
       sxiv
       tcpdump
-      thunderbird
       ungoogled-chromium
       universal-ctags
       unzip
       vesktop
       wireshark
-      xsel
       yt-dlp
-      zathura
+      wdisplays
     ];
   };
 
@@ -297,46 +281,15 @@
     tmux
     psmisc
     libnotify
-    slock
     tailscale
+    wayland
+    wayland-utils
+    foot
+    dwl
   ];
 
   services.openssh = {
     enable = true;
-    settings.X11Forwarding = true;
-  };
-
-  services.xserver =  {
-    enable = true;
-    windowManager.dwm.enable = true;
-
-    xkb = {
-      layout = "us";
-      variant = "dvp";
-      options = "ctrl:nocaps";
-    };
-
-    displayManager = {
-      sessionCommands = ''
-        ${pkgs.xsetroot}/bin/xsetroot -solid black
-        ${pkgs.autocutsel}/bin/autocutsel -s PRIMARY &
-        ${pkgs.autocutsel}/bin/autocutsel -s CLIPBOARD &
-        ${pkgs.bash}/bin/bash /home/sean/workspaces/dot_files/set-dwm-status.sh &
-      '';
-      lightdm.background = "#000000";
-    };
-
-    xautolock = {
-      enable = true;
-      enableNotifier = true;
-      locker = let cmd = pkgs.writeScript "lock" ''
-        ${pkgs.dunst}/bin/dunstctl set-paused true
-        /run/wrappers/bin/slock
-        ${pkgs.dunst}/bin/dunstctl set-paused false
-      '';
-      in ''${pkgs.bash}/bin/bash -c "${cmd} & ${pkgs.coreutils}/bin/sleep 0.5 && ${pkgs.xset}/bin/xset dpms force off"'';
-      notifier = ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
-    };
   };
 
   services.avahi = {
@@ -352,14 +305,7 @@
   };
   services.resolved.enable = true;
 
-  services.clipmenu = {
-    enable = true;
-  };
-
   location.provider = "geoclue2";
-  services.redshift = {
-    enable = true;
-  };
 
   services.tlp = {
     enable = true;
@@ -397,7 +343,11 @@
 
   services.tailscale.enable = true;
 
-  security.rtkit.enable = true;
+  security = {
+    polkit.enable = true;
+    rtkit.enable = true;
+  };
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;

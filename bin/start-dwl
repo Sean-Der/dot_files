@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+export XKB_DEFAULT_LAYOUT=us
+export XKB_DEFAULT_VARIANT=dvp
+export XKB_DEFAULT_OPTIONS=ctrl:nocaps
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+dbus-run-session dwl
