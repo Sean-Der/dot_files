@@ -97,7 +97,7 @@
   programs = {
     foot = {
       enable = true;
-      theme = "iterm";
+      theme = "kitty";
 
       settings = {
         main = {
@@ -138,7 +138,7 @@
 
         dwl = super.dwl.overrideAttrs (oldAttrs: rec {
           prePatch = "cp ${./dwl-patches/config.h} config.h";
-          patches = [ ];
+          patches = (oldAttrs.patches or []) ++ [ ./dwl-patches/01-shiftview.patch ];
         });
       })
     ];
