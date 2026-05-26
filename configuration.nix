@@ -218,6 +218,33 @@
     };
 
     services = {
+      kanshi = {
+        enable = true;
+        profiles = {
+          # laptop only
+          undocked = {
+            outputs = [
+              {
+                criteria = "LVDS-1";
+                status = "enable";
+              }
+            ];
+          };
+          # external monitor connected
+          docked = {
+            outputs = [
+              {
+                criteria = "DP-2";
+                status = "enable";
+              }
+              {
+                criteria = "LVDS-1";
+                status = "disable";
+              }
+            ];
+          };
+        };
+      };
       mpd = {
         enable = true;
         musicDirectory = "/home/sean/Music";
@@ -280,6 +307,7 @@
   environment.systemPackages = with pkgs; [
     dwl
     foot
+    kanshi
     libnotify
     psmisc
     tailscale
