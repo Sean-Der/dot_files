@@ -4,8 +4,8 @@ Date: Sat, 27 Jan 2024 22:43:29 +0100
 Subject: [PATCH] cycle through tags
 
 ---
- shiftview.c  | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ shiftview.c  | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
  create mode 100644 shiftview.c
 
 diff --git a/shiftview.c b/shiftview.c
@@ -13,40 +13,25 @@ new file mode 100644
 index 0000000..fa53db0
 --- /dev/null
 +++ b/shiftview.c
-@@ -0,0 +1,34 @@
+@@ -0,0 +1,19 @@
 +// "arg->i" stores the number of tags to shift right (positive value)
 +//          or left (negative value)
 +void
 +shiftview(const Arg *arg)
 +{
 +	Arg a;
-+	Client *c;
-+	bool visible = false;
 +	int i = arg->i;
-+	int count = 0;
 +	int nextseltags, curseltags = selmon->tagset[selmon->seltags];
 +
-+	do {
-+		if (i > 0) // left circular shift
-+            nextseltags = (curseltags << i) | (curseltags >> (TAGCOUNT - i));
-+        else // right circular shift
-+			nextseltags = curseltags >> (-i) | (curseltags << (TAGCOUNT + i));
++	if (i > 0) // left circular shift
++		nextseltags = (curseltags << i) | (curseltags >> (LENGTH(tags) - i));
++	else // right circular shift
++		nextseltags = curseltags >> (-i) | (curseltags << (LENGTH(tags) + i));
 +
-+        // Check if the tag is visible
-+        wl_list_for_each(c, &clients, link) {
-+            if (c->mon == selmon && nextseltags & c->tags) {
-+                visible = true;
-+                break;
-+            }
-+        }
-+
-+		i += arg->i;
-+    } while (!visible && ++count <= TAGCOUNT);
-+
-+    if (count <= TAGCOUNT) {
-+        a.i = nextseltags;
-+        view(&a);
-+    }
++	if (nextseltags & TAGMASK) {
++		a.i = nextseltags;
++		view(&a);
++	}
 +}
 -- 
 2.52.0

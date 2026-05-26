@@ -138,7 +138,11 @@
 
         dwl = super.dwl.overrideAttrs (oldAttrs: rec {
           prePatch = "cp ${./dwl-patches/config.h} config.h";
-          patches = (oldAttrs.patches or []) ++ [ ./dwl-patches/01-shiftview.patch ];
+          patches = (oldAttrs.patches or []) ++ [
+            ./dwl-patches/01-shiftview.patch
+            ./dwl-patches/02-bar.patch
+          ];
+          buildInputs = (oldAttrs.buildInputs or []) ++ [ pkgs.fcft pkgs.pixman pkgs.libdrm ];
         });
       })
     ];
