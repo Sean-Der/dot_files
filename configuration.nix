@@ -156,9 +156,13 @@
       acpi
       btop
       clang
+      claude-code
       docker-compose
       dosbox-staging
-      ffmpeg_6-full
+      ffmpeg_7-full
+      gh
+      golangci-lint
+      jq
       file
       firefox
       flatpak-builder
@@ -185,7 +189,7 @@
       ungoogled-chromium
       universal-ctags
       unzip
-      vesktop
+      webcord
       wireshark
       yt-dlp
       wdisplays
@@ -218,33 +222,6 @@
     };
 
     services = {
-      kanshi = {
-        enable = true;
-        profiles = {
-          # laptop only
-          undocked = {
-            outputs = [
-              {
-                criteria = "LVDS-1";
-                status = "enable";
-              }
-            ];
-          };
-          # external monitor connected
-          docked = {
-            outputs = [
-              {
-                criteria = "DP-2";
-                status = "enable";
-              }
-              {
-                criteria = "LVDS-1";
-                status = "disable";
-              }
-            ];
-          };
-        };
-      };
       mpd = {
         enable = true;
         musicDirectory = "/home/sean/Music";
@@ -263,6 +240,7 @@
     };
 
     programs = {
+
       neovim = {
         enable = true;
         package = pkgs.neovim-unwrapped;
@@ -307,9 +285,9 @@
   environment.systemPackages = with pkgs; [
     dwl
     foot
-    kanshi
     libnotify
     psmisc
+    swayidle
     tailscale
     tmux
     wayland

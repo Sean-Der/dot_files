@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#
+# pion-open-items — all open items (issues + PRs) for every github.com/pion
+# repo, as JSON, repos sorted by total open items (busiest first):
+#   [{repo, total, items: [{number, type, title, url}, ...]}, ...]
+#
+# Requires: gh (authenticated) and jq.
+
+set -euo pipefail
+ORG="pion"
+
+gh api "orgs/$ORG/repos" --paginate \
+  -q '.[] | select(.archived | not) | select(.has_issues)
+      | select(.open_issues_count > 0) | .name' |
+while read -r name; do
+  # The issues endpoint returns PRs too; a .pull_request field marks a PR.
+  gh api "repos/$ORG/$name/issues?state=open&per_page=100" --paginate \
+    -q '.[] | {number, title, url: .html_url,
+        type: (if .pull_request then "pr" else "issue" end)}' |
+  jq -s --arg repo "$ORG/$name" '{repo: $repo, total: length, items: .}'
+done |
+jq -s 'sort_by(-.total)'

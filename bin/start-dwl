@@ -4,4 +4,11 @@ export XKB_DEFAULT_LAYOUT=us
 export XKB_DEFAULT_VARIANT=dvp
 export XKB_DEFAULT_OPTIONS=ctrl:nocaps
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
-dbus-run-session dwl -s kanshi
+
+# Status bar status generator
+(while true; do
+  acpiout=$(LC_ALL=C acpi -b)
+  batt=$(echo $acpiout| awk '{print $4}' | sed '$s/,$//')
+  echo "⚡ ${batt} | $(date +%R)"
+  sleep 60
+done) | dbus-run-session dwl
