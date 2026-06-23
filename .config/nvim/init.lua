@@ -23,160 +23,120 @@ vim.keymap.set('t', '<C-g>', '<C-\\><C-n>')
 -- Don't yank on paste
 vim.keymap.set("x", "p", "P", { silent = true })
 
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local out = vim.fn.system {'git', 'clone', '--filter=blob:none', '--branch=stable', 'https://github.com/folke/lazy.nvim.git', lazypath}
-  if vim.v.shell_error ~= 0 then
-    error('Error cloning lazy.nvim:\n' .. out)
-  end
-end ---@diagnostic disable-next-line: undefined-field
-vim.opt.rtp:prepend(lazypath)
+vim.pack.add({
+	"https://github.com/tpope/vim-sleuth",
+	"https://github.com/lewis6991/gitsigns.nvim",
+	"https://github.com/ibhagwan/fzf-lua",
 
-require('lazy').setup({
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-  { 'lewis6991/gitsigns.nvim',
-    config = function()
-      local signs = {
-          add          = { text = '+' },
-          change       = { text = '~' },
-          delete       = { text = '-' },
-          topdelete    = { text = '-' },
-          changedelete = { text = '~' },
-          untracked    = { text = '┆' },
-        }
-      require('gitsigns').setup({signs = signs, signs_staged = signs})
-    end
-  },
-  { 'ibhagwan/fzf-lua',  -- Search
-    config = function()
-      require('fzf-lua').setup({ keymap = { builtin = { true, ['<C-g>'] = 'hide' } } })
+	"https://github.com/neovim/nvim-lspconfig",
+        "https://github.com/hrsh7th/cmp-nvim-lsp",
+        "https://github.com/hrsh7th/cmp-buffer",
+        "https://github.com/hrsh7th/cmp-path",
+        "https://github.com/hrsh7th/cmp-cmdline",
+        "https://github.com/hrsh7th/nvim-cmp",
+        "https://github.com/j-hui/fidget.nvim",
 
-      local fzf = require 'fzf-lua'
-      vim.keymap.set('n', '<leader>g', fzf.live_grep)
-      vim.keymap.set('n', '<leader>o', fzf.files)
-      vim.keymap.set('n', '<leader>s', fzf.grep_cword)
-      vim.keymap.set('n', '<leader>m', fzf.oldfiles)
-      vim.keymap.set('n', '<leader>r', fzf.registers)
-    end
-  },
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
-      "hrsh7th/nvim-cmp",
-      "j-hui/fidget.nvim",
+	"https://github.com/stevearc/conform.nvim",
+
+	"https://github.com/folke/trouble.nvim.git",
+})
+
+local signs = {
+    add          = { text = '+' },
+    change       = { text = '~' },
+    delete       = { text = '-' },
+    topdelete    = { text = '-' },
+    changedelete = { text = '~' },
+    untracked    = { text = '┆' },
+  }
+require('gitsigns').setup({signs = signs, signs_staged = signs})
+
+local fzf = require 'fzf-lua'
+fzf.setup({ keymap = { builtin = { true, ['<C-g>'] = 'hide' } } })
+vim.keymap.set('n', '<leader>g', fzf.live_grep)
+vim.keymap.set('n', '<leader>o', fzf.files)
+vim.keymap.set('n', '<leader>s', fzf.grep_cword)
+vim.keymap.set('n', '<leader>m', fzf.oldfiles)
+vim.keymap.set('n', '<leader>r', fzf.registers)
+
+-- Disable LSP syntax hightlight
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		client.server_capabilities.semanticTokensProvider = nil
+	end,
+});
+
+vim.lsp.config('gopls', {
+  capabilities = vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(), require("cmp_nvim_lsp").default_capabilities()),
+  settings = {
+    gopls = {
+      analyses = {
+        shadowed = true,
+        unusedparams = true,
+      },
+      staticcheck = true,
+      gofumpt = true,
     },
-    config = function()
-      local cmp_lsp = require("cmp_nvim_lsp")
-      local capabilities = vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(), cmp_lsp.default_capabilities())
-
-      vim.lsp.config('gopls', {
-        capabilities = capabilities,
-        settings = {
-          gopls = {
-            analyses = {
-              shadowed = true,
-              unusedparams = true,
-            },
-            staticcheck = true,
-            gofumpt = true,
-          },
-        },
-      })
-      vim.lsp.enable('gopls')
-
-      require("fidget").setup({})
-      local cmp = require('cmp')
-      local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
-      cmp.setup({
-        completion = {
-          autocomplete = false,
-        },
-        sources = {
-          { name = 'path' },
-          { name = 'nvim_lsp' },
-          { name = 'buffer',  keyword_length = 2 },
-        },
-        mapping = cmp.mapping.preset.insert({
-          ['<C-n>'] = function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            else
-              cmp.mapping.complete()(fallback)
-              cmp.select_next_item({ count = 0 })
-            end
-          end,
-          ['<C-p>'] = function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            else
-              cmp.mapping.complete()(fallback)
-              cmp.select_prev_item({ count = 0 })
-            end
-          end,
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        }),
-      })
-    end
   },
-  { 'mfussenegger/nvim-lint',
-    lazy = true,
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-        local lint = require('lint')
-        lint.linters_by_ft = {
-            go = { 'golangcilint' },
-        }
+})
+vim.lsp.enable('gopls')
 
-        local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
-        vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
-            group = lint_augroup,
-            callback = function()
-                lint.try_lint()
-            end,
-        })
+require("fidget").setup({})
+local cmp = require('cmp')
+cmp.setup({
+  completion = {
+    autocomplete = false,
+  },
+  sources = {
+    { name = 'path' },
+    { name = 'nvim_lsp' },
+    { name = 'buffer',  keyword_length = 2 },
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-n>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        cmp.mapping.complete()(fallback)
+        cmp.select_next_item({ count = 0 })
+      end
     end,
-  },
-  { 'stevearc/conform.nvim',
-    config = function()
-      require('conform').setup({
-        formatters_by_ft = {
-          go = { "goimports", "gofmt" },
-          python = { "ruff" , "isort"},
-          ['*'] = { 'trim_whitespace' },
-        },
-      })
+    ['<C-p>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        cmp.mapping.complete()(fallback)
+        cmp.select_prev_item({ count = 0 })
+      end
+    end,
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  }),
+})
 
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        pattern = "*",
-        callback = function(args)
-          require("conform").format({ bufnr = args.buf })
-        end,
-      })
-    end
+require('conform').setup({
+  formatters_by_ft = {
+    go = { "goimports", "gofmt" },
+    python = { "ruff" , "isort"},
+    ['*'] = { 'trim_whitespace' },
   },
-  { 'folke/trouble.nvim',
-    cmd = "Trouble",
-    keys = {
-      {
-        "<leader>d",
-        "<cmd>Trouble diagnostics toggle<cr>",
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    require("conform").format({ bufnr = args.buf })
+  end,
+})
+
+require("trouble").setup({
+  modes = {
+    diagnostics = {
+      auto_open = true,
+      auto_close = true,
+      filter = {
+        buf = 0,
       },
     },
-    opts = {
-      modes = {
-        diagnostics = { auto_close = true },
-      },
-    }
-  },
-  { "iamcco/markdown-preview.nvim",
-    ft = { "markdown" },
-    config = function()
-      vim.fn["mkdp#util#install"]()
-    end,
   },
 })
