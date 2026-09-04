@@ -1,0 +1,219 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "${DVD_BUILD_ENV:-}" != "1" ]; then
+    exec nix \
+        --extra-experimental-features "nix-command flakes" \
+        shell \
+        nixpkgs#ffmpeg \
+        nixpkgs#dvdauthor \
+        nixpkgs#cdrkit \
+        nixpkgs#dvdplusrwtools \
+        --command env DVD_BUILD_ENV=1 bash "$0" "$@"
+fi
+
+usage() {
+    cat >&2 <<EOF
+Usage: $0 <video-file>
+
+Optional environment variables:
+
+  DVD_DEVICE=/dev/sr0   DVD writer device
+  BURN_SPEED=4          Requested burn speed
+  KEEP_ISO=1            Keep ISO after burning
+  SKIP_BURN=0           Set to 1 to create ISO without burning
+EOF
+    exit 1
+}
+
+if [ "$#" -ne 1 ]; then
+    usage
+fi
+
+if [ ! -f "$1" ]; then
+    echo "Error: file not found: $1" >&2
+    exit 1
+fi
+
+INPUT="$(realpath "$1")"
+INPUT_DIR="$(dirname "$INPUT")"
+INPUT_FILE="$(basename "$INPUT")"
+NAME="${INPUT_FILE%.*}"
+
+OUTPUT="$INPUT_DIR/${NAME}.iso"
+DVD_DEVICE="${DVD_DEVICE:-/dev/sr0}"
+BURN_SPEED="${BURN_SPEED:-4}"
+KEEP_ISO="${KEEP_ISO:-1}"
+SKIP_BURN="${SKIP_BURN:-0}"
+
+WORK="$(mktemp -d)"
+trap 'rm -rf "$WORK"' EXIT
+
+DVD_ROOT="$WORK/dvd"
+MPEG_FILE="$WORK/movie.mpg"
+XML_FILE="$WORK/dvd.xml"
+
+mkdir -p "$DVD_ROOT"
+
+echo "==> Input:      $INPUT"
+echo "==> ISO output: $OUTPUT"
+echo "==> DVD device: $DVD_DEVICE"
+echo
+
+echo "==> Encoding NTSC DVD-compatible video..."
+
+ffmpeg \
+    -hide_banner \
+    -y \
+    -i "$INPUT" \
+    -map 0:v:0 \
+    -map 0:a:0? \
+    -vf "scale=720:480:force_original_aspect_ratio=decrease,pad=720:480:(ow-iw)/2:(oh-ih)/2,setsar=32/27" \
+    -target film-dvd \
+    -aspect 16:9 \
+    -c:a ac3 \
+    -b:a 448k \
+    -ar 48000 \
+    "$MPEG_FILE"
+
+echo
+echo "==> Checking encoded stream..."
+
+ffprobe \
+    -v error \
+    -show_entries \
+        stream=index,codec_name,codec_type,width,height,r_frame_rate,sample_rate,channels \
+    -of default=noprint_wrappers=1 \
+    "$MPEG_FILE"
+
+cat >"$XML_FILE" <<EOF
+<dvdauthor dest="$DVD_ROOT">
+  <vmgm>
+    <fpc>jump menu 1;</fpc>
+
+    <menus>
+      <video format="ntsc" aspect="16:9"/>
+
+      <pgc entry="title">
+        <pre>jump titleset 1 menu;</pre>
+      </pgc>
+    </menus>
+  </vmgm>
+
+  <titleset>
+    <menus>
+      <video format="ntsc" aspect="16:9"/>
+
+      <pgc entry="root">
+        <pre>jump title 1;</pre>
+      </pgc>
+    </menus>
+
+    <titles>
+      <video format="ntsc" aspect="16:9"/>
+      <audio format="ac3" lang="en"/>
+
+      <pgc>
+        <vob file="$MPEG_FILE" chapters="0"/>
+        <post>jump chapter 1;</post>
+      </pgc>
+    </titles>
+  </titleset>
+</dvdauthor>
+EOF
+
+echo
+echo "==> Authoring autoplaying, looping DVD..."
+
+VIDEO_FORMAT=NTSC dvdauthor -x "$XML_FILE"
+
+echo
+echo "==> Checking authored DVD files..."
+
+REQUIRED_FILES=(
+    "$DVD_ROOT/VIDEO_TS/VIDEO_TS.IFO"
+    "$DVD_ROOT/VIDEO_TS/VIDEO_TS.BUP"
+    "$DVD_ROOT/VIDEO_TS/VTS_01_0.IFO"
+    "$DVD_ROOT/VIDEO_TS/VTS_01_0.BUP"
+    "$DVD_ROOT/VIDEO_TS/VTS_01_1.VOB"
+)
+
+for file in "${REQUIRED_FILES[@]}"; do
+    if [ ! -s "$file" ]; then
+        echo "Error: missing or empty DVD file:" >&2
+        echo "  $file" >&2
+        exit 1
+    fi
+done
+
+echo
+echo "==> Creating DVD-Video ISO..."
+
+rm -f "$OUTPUT"
+
+genisoimage \
+    -dvd-video \
+    -udf \
+    -volid KIOSK_DVD \
+    -o "$OUTPUT" \
+    "$DVD_ROOT"
+
+if [ ! -s "$OUTPUT" ]; then
+    echo "Error: ISO creation failed." >&2
+    exit 1
+fi
+
+echo
+echo "==> Verifying ISO contents..."
+
+ISO_CONTENTS="$(isoinfo -i "$OUTPUT" -f)"
+
+printf '%s\n' "$ISO_CONTENTS"
+
+for required_path in \
+    "/VIDEO_TS/VIDEO_TS.IFO;1" \
+    "/VIDEO_TS/VTS_01_0.IFO;1" \
+    "/VIDEO_TS/VTS_01_1.VOB;1"
+do
+    if ! grep -Fq "$required_path" <<<"$ISO_CONTENTS"; then
+        echo "Error: ISO is missing $required_path" >&2
+        exit 1
+    fi
+done
+
+echo
+echo "==> ISO created successfully:"
+echo "    $OUTPUT"
+
+if [ "$SKIP_BURN" = "1" ]; then
+    echo
+    echo "==> SKIP_BURN=1; disc was not burned."
+    exit 0
+fi
+
+if [ ! -e "$DVD_DEVICE" ]; then
+    echo "Error: DVD device does not exist: $DVD_DEVICE" >&2
+    echo "The ISO was retained at: $OUTPUT" >&2
+    exit 1
+fi
+
+echo
+echo "==> Burning DVD at requested ${BURN_SPEED}x speed..."
+
+growisofs \
+    -dvd-compat \
+    -speed="$BURN_SPEED" \
+    -Z "$DVD_DEVICE=$OUTPUT"
+
+sync
+
+echo
+echo "==> Burn completed successfully."
+
+if [ "$KEEP_ISO" = "0" ]; then
+    rm -f "$OUTPUT"
+    echo "==> Deleted ISO."
+else
+    echo "==> ISO retained at:"
+    echo "    $OUTPUT"
+fi
