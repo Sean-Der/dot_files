@@ -2,29 +2,15 @@
 {
   imports =
     [
-      /etc/nixos/hardware-configuration.nix
-       <home-manager/nixos>
+      ./hardware-configuration.nix
     ];
 
   system.stateVersion = "26.05";
 
-  boot = {
-    loader.grub = {
-      device = "/dev/sda";
-      enable = true;
-    };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-    kernelParams = [ "mitigations=off"];
-    initrd = {
-      systemd.services.resume-config = {
-        description = "Set the resume device";
-        wantedBy = [ "initrd.target" ];
-        serviceConfig.Type = "oneshot";
-        script = "echo 8:2 > /sys/power/resume";
-      };
-    };
-  };
-
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;
@@ -137,10 +123,10 @@
         };
 
         dwl = super.dwl.overrideAttrs (oldAttrs: rec {
-          prePatch = "cp ${./dwl-patches/config.h} config.h";
+          prePatch = "cp ${../dwl-patches/config.h} config.h";
           patches = (oldAttrs.patches or []) ++ [
-            ./dwl-patches/01-shiftview.patch
-            ./dwl-patches/02-bar.patch
+            ../dwl-patches/01-shiftview.patch
+            ../dwl-patches/02-bar.patch
           ];
           buildInputs = (oldAttrs.buildInputs or []) ++ [ pkgs.fcft pkgs.pixman pkgs.libdrm ];
         });
@@ -210,13 +196,13 @@
       };
       file = {
         ".config/ncmpcpp" = {
-          source = ./.config/ncmpcpp;
+          source = ../.config/ncmpcpp;
         };
         ".config/dosbox" = {
-          source = ./.config/dosbox;
+          source = ../.config/dosbox;
         };
         ".inputrc" = {
-          source = ./.inputrc;
+          source = ../.inputrc;
         };
       };
     };
@@ -244,7 +230,7 @@
       neovim = {
         enable = true;
         package = pkgs.neovim-unwrapped;
-        initLua = lib.fileContents .config/nvim/init.lua;
+        initLua = lib.fileContents ../.config/nvim/init.lua;
       };
 
       bash = {
@@ -314,25 +300,7 @@
 
   location.provider = "geoclue2";
 
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
-      CPU_MIN_PERF_ON_AC = 0;
-      CPU_MAX_PERF_ON_AC = 100;
-      CPU_MIN_PERF_ON_BAT = 0;
-      CPU_MAX_PERF_ON_BAT = 20;
-
-      START_CHARGE_THRESH_BAT0 = 20; # 20 and bellow it starts to charge
-      STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
-
-     };
-   };
+  services.tlp.enable = true;
 
   xdg.portal = {
     config.common.default = "*";
