@@ -140,29 +140,25 @@
     extraGroups = [ "audio" "wheel" "docker"];
     packages = with pkgs; [
       acpi
-      btop
+      codex
       clang
-      claude-code
       docker-compose
       dosbox-staging
+      fastfetch
       ffmpeg_7-full
-      gh
-      golangci-lint
-      jq
       file
-      firefox
       flatpak-builder
       gcc
       gdb
+      gh
       git
-      gemini-cli
       gnumake
       go
-      mage
-      mpc
+      golangci-lint
+      htop
+      jq
       mpv
       ncmpcpp
-      fastfetch
       neomutt
       nodejs
       pavucontrol
@@ -175,10 +171,10 @@
       ungoogled-chromium
       universal-ctags
       unzip
+      wdisplays
       webcord
       wireshark
       yt-dlp
-      wdisplays
     ];
   };
 
@@ -195,6 +191,9 @@
         PATH = "${config.users.users.sean.home}/.cargo/bin:${config.users.users.sean.home}/go/bin:${config.users.users.sean.home}/bin:$PATH";
       };
       file = {
+        "bin" = {
+          source = ../bin;
+        };
         ".config/ncmpcpp" = {
           source = ../.config/ncmpcpp;
         };
@@ -203,6 +202,9 @@
         };
         ".inputrc" = {
           source = ../.inputrc;
+        };
+        ".config/nvim/colors" = {
+          source = ../.config/nvim/colors;
         };
       };
     };
@@ -225,7 +227,20 @@
       };
     };
 
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "text/html" = [ "chromium-browser.desktop" ];
+        "x-scheme-handler/http" = [ "chromium-browser.desktop" ];
+        "x-scheme-handler/https" = [ "chromium-browser.desktop" ];
+      };
+    };
+
     programs = {
+      fzf = {
+        enable = true;
+        enableBashIntegration = true;
+      };
 
       neovim = {
         enable = true;
@@ -244,9 +259,6 @@
           l           = "ls -lh";
           showLargest = "du -a | sort -n -r | less";
         };
-        initExtra = ''
-          source ~/.fzf.bash
-        '';
       };
 
       git = {
@@ -279,6 +291,7 @@
     wayland
     wayland-utils
     wmenu
+    xdg-utils
   ];
 
   services.openssh = {
