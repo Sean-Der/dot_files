@@ -205,6 +205,18 @@
         ".config/dosbox" = {
           source = ../.config/dosbox;
         };
+        ".config/kanshi/config" = {
+          text = ''
+            profile docked {
+              output eDP-1 disable
+              output "Dell Inc. DELL P2421DC 844VS03" enable mode preferred position 0,0 scale 1
+            }
+
+            profile undocked {
+              output eDP-1 enable mode preferred position 0,0 scale 1
+            }
+          '';
+        };
         ".inputrc" = {
           source = ../.inputrc;
         };
@@ -289,6 +301,7 @@
     brightnessctl
     dwl
     foot
+    kanshi
     libnotify
     psmisc
     swayidle
