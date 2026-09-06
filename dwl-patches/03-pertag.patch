@@ -1,0 +1,169 @@
+From 65ea99519bbf7a52f48932aea7385f81f8b30867 Mon Sep 17 00:00:00 2001
+From: wochap <gean.marroquin@gmail.com>
+Date: Wed, 31 Jul 2024 08:27:26 -0500
+Subject: [PATCH] makes layout, mfact and nmaster individual for every tag
+
+Adapted for dwl 0.8 with the bar patch applied.
+---
+ dwl.c | 78 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 74 insertions(+), 4 deletions(-)
+
+diff --git a/dwl.c b/dwl.c
+index 7b2abf5..c38b960 100644
+--- a/dwl.c
++++ b/dwl.c
+@@ -108,6 +108,7 @@ typedef struct {
+ 	const Arg arg;
+ } Button;
+ 
++typedef struct Pertag Pertag;
+ typedef struct Monitor Monitor;
+ typedef struct {
+ 	/* Must keep this field first */
+@@ -219,6 +220,7 @@ struct Monitor {
+ 	struct wlr_box w; /* window area, layout-relative */
+ 	struct wl_list layers[4]; /* LayerSurface.link */
+ 	const Layout *lt[2];
++	Pertag *pertag;
+ 	unsigned int seltags;
+ 	unsigned int sellt;
+ 	uint32_t tagset[2];
+@@ -500,6 +502,14 @@ static struct wlr_xwayland *xwayland;
+ /* attempt to encapsulate suck into one file */
+ #include "client.h"
+ 
++struct Pertag {
++	unsigned int curtag, prevtag; /* current and previous tag */
++	int nmasters[LENGTH(tags) + 1]; /* number of windows in master area */
++	float mfacts[LENGTH(tags) + 1]; /* mfacts per tag */
++	unsigned int sellts[LENGTH(tags) + 1]; /* selected layouts */
++	const Layout *ltidxs[LENGTH(tags) + 1][2]; /* layouts per tag */
++};
++
+ /* function implementations */
+ void
+ applybounds(Client *c, struct wlr_box *bbox)
+@@ -909,6 +919,7 @@ cleanupmon(struct wl_listener *listener, void *data)
+ 	closemon(m);
+ 	wlr_scene_node_destroy(&m->fullscreen_bg->node);
+ 	wlr_scene_node_destroy(&m->scene_buffer->node);
++	free(m->pertag);
+ 	free(m);
+ }
+ 
+@@ -1234,6 +1245,16 @@ createmon(struct wl_listener *listener, void *data)
+ 		}
+ 	}
+ 
++	m->pertag = ecalloc(1, sizeof(*m->pertag));
++	m->pertag->curtag = m->pertag->prevtag = 1;
++	for (i = 0; i <= LENGTH(tags); i++) {
++		m->pertag->nmasters[i] = m->nmaster;
++		m->pertag->mfacts[i] = m->mfact;
++		m->pertag->ltidxs[i][0] = m->lt[0];
++		m->pertag->ltidxs[i][1] = m->lt[1];
++		m->pertag->sellts[i] = m->sellt;
++	}
++
+ 	/* The mode is a tuple of (width, height, refresh rate), and each
+ 	 * monitor supports only a specific set of modes. We just pick the
+ 	 * monitor's preferred mode; a more sophisticated compositor would let
+@@ -1812,7 +1833,8 @@ incnmaster(const Arg *arg)
+ {
+ 	if (!arg || !selmon)
+ 		return;
+-	selmon->nmaster = MAX(selmon->nmaster + arg->i, 0);
++	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag]
++		= MAX(selmon->nmaster + arg->i, 0);
+ 	arrange(selmon);
+ }
+ 
+@@ -2569,9 +2591,10 @@ setlayout(const Arg *arg)
+ 	if (!selmon)
+ 		return;
+ 	if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt])
+-		selmon->sellt ^= 1;
++		selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag] ^= 1;
+ 	if (arg && arg->v)
+-		selmon->lt[selmon->sellt] = (Layout *)arg->v;
++		selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt]
++			= (Layout *)arg->v;
+ 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof(selmon->ltsymbol));
+ 	arrange(selmon);
+ 	drawbar(selmon);
+@@ -2588,7 +2611,7 @@ setmfact(const Arg *arg)
+ 	f = arg->f < 1.0f ? arg->f + selmon->mfact : arg->f - 1.0f;
+ 	if (f < 0.1 || f > 0.9)
+ 		return;
+-	selmon->mfact = f;
++	selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag] = f;
+ 	arrange(selmon);
+ }
+ 
+@@ -3014,9 +3037,26 @@ void
+ toggleview(const Arg *arg)
+ {
+ 	uint32_t newtagset;
++	size_t i;
+ 	if (!(newtagset = selmon ? selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK) : 0))
+ 		return;
+ 
++	if (newtagset == TAGMASK) {
++		selmon->pertag->prevtag = selmon->pertag->curtag;
++		selmon->pertag->curtag = 0;
++	} else if (selmon->pertag->curtag == 0
++			|| !(newtagset & 1U << (selmon->pertag->curtag - 1))) {
++		selmon->pertag->prevtag = selmon->pertag->curtag;
++		for (i = 0; !(newtagset & 1U << i); i++);
++		selmon->pertag->curtag = i + 1;
++	}
++
++	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
++	selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag];
++	selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag];
++	selmon->lt[0] = selmon->pertag->ltidxs[selmon->pertag->curtag][0];
++	selmon->lt[1] = selmon->pertag->ltidxs[selmon->pertag->curtag][1];
++
+ 	selmon->tagset[selmon->seltags] = newtagset;
+ 	focusclient(focustop(selmon), 1);
+ 	arrange(selmon);
+@@ -3245,11 +3285,34 @@ urgent(struct wl_listener *listener, void *data)
+ void
+ view(const Arg *arg)
+ {
+-	if (!selmon || (arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
++	size_t i;
++	unsigned int tmptag;
++	uint32_t newtagset = arg->ui & TAGMASK;
++
++	if (!selmon || newtagset == selmon->tagset[selmon->seltags])
+ 		return;
+ 	selmon->seltags ^= 1; /* toggle sel tagset */
+-	if (arg->ui & TAGMASK)
+-		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
++	if (newtagset) {
++		selmon->tagset[selmon->seltags] = newtagset;
++		selmon->pertag->prevtag = selmon->pertag->curtag;
++		if (newtagset == TAGMASK) {
++			selmon->pertag->curtag = 0;
++		} else {
++			for (i = 0; !(newtagset & 1U << i); i++);
++			selmon->pertag->curtag = i + 1;
++		}
++	} else {
++		tmptag = selmon->pertag->prevtag;
++		selmon->pertag->prevtag = selmon->pertag->curtag;
++		selmon->pertag->curtag = tmptag;
++	}
++
++	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
++	selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag];
++	selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag];
++	selmon->lt[0] = selmon->pertag->ltidxs[selmon->pertag->curtag][0];
++	selmon->lt[1] = selmon->pertag->ltidxs[selmon->pertag->curtag][1];
++
+ 	focusclient(focustop(selmon), 1);
+ 	arrange(selmon);
+ 	drawbars();
+-- 
+2.51.0

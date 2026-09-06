@@ -121,8 +121,11 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 /* commands */
 static const char *termcmd[] = { "foot", NULL };
 static const char *menucmd[] = { "wmenu-run", "-N", "#000000", "-n", "#ffffff", "-S", "#006501", "-s", "#ffffff", NULL };
-static const char *upvol[]       = { "pactl",   "set-sink-volume", "0",      "+5%",      NULL };
-static const char *downvol[]     = { "pactl",   "set-sink-volume", "0",      "-5%",      NULL };
+static const char *mutevol[]     = { "wpctl", "set-mute",   "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
+static const char *upvol[]       = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+",    NULL };
+static const char *downvol[]     = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-",    NULL };
+static const char *brightnessup[]   = { "brightnessctl", "-q", "-n", "s", "+5%", NULL };
+static const char *brightnessdown[] = { "brightnessctl", "-q", "-n", "s", "5%-", NULL };
 static const char *prevsong[]    = { "mpc", "prev", NULL };
 static const char *nextsong[]    = { "mpc", "next", NULL };
 
@@ -163,8 +166,11 @@ static const Key keys[] = {
 	TAGKEYS(          XKB_KEY_2, XKB_KEY_at,                            1),
 	TAGKEYS(          XKB_KEY_3, XKB_KEY_numbersign,                    2),
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_q,           quit,             {0} },
+	{ 0,                         XKB_KEY_XF86AudioMute,        spawn,  {.v = mutevol} },
 	{ 0,                         XKB_KEY_XF86AudioLowerVolume, spawn,  {.v = downvol} },
 	{ 0,                         XKB_KEY_XF86AudioRaiseVolume, spawn,  {.v = upvol} },
+	{ 0,                         XKB_KEY_XF86MonBrightnessDown, spawn, {.v = brightnessdown} },
+	{ 0,                         XKB_KEY_XF86MonBrightnessUp,   spawn, {.v = brightnessup} },
 
 	/* Ctrl-Alt-Backspace and Ctrl-Alt-Fx used to be handled by X server */
 	{ WLR_MODIFIER_CTRL|WLR_MODIFIER_ALT,XKB_KEY_Terminate_Server, quit, {0} },

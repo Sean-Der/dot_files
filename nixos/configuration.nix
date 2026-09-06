@@ -88,6 +88,10 @@
       settings = {
         main = {
           font = "Inconsolata:pixelsize=14:antialias=true:autohint=true";
+          selection-target = "both";
+        };
+        mouse-bindings = {
+          primary-paste = "BTN_MIDDLE";
         };
       };
     };
@@ -127,6 +131,7 @@
           patches = (oldAttrs.patches or []) ++ [
             ../dwl-patches/01-shiftview.patch
             ../dwl-patches/02-bar.patch
+            ../dwl-patches/03-pertag.patch
           ];
           buildInputs = (oldAttrs.buildInputs or []) ++ [ pkgs.fcft pkgs.pixman pkgs.libdrm ];
         });
@@ -139,6 +144,7 @@
     isNormalUser = true;
     extraGroups = [ "audio" "wheel" "docker"];
     packages = with pkgs; [
+      aerc
       acpi
       codex
       clang
@@ -154,12 +160,11 @@
       git
       gnumake
       go
-      golangci-lint
+      gopls
       htop
       jq
       mpv
       ncmpcpp
-      neomutt
       nodejs
       pavucontrol
       pulsemixer
@@ -281,6 +286,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    brightnessctl
     dwl
     foot
     libnotify
