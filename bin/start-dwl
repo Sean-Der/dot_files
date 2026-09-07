@@ -11,4 +11,4 @@ export XDG_RUNTIME_DIR=/run/user/$(id -u)
   batt=$(echo $acpiout| awk '{print $4}' | sed '$s/,$//')
   echo "⚡ ${batt} | $(date +%R)"
   sleep 60
-done) | dbus-run-session dwl -s kanshi
+done) | dbus-run-session dwl -s "kanshi & swayidle timeout 30 'wlopm --off \*' resume 'wlopm --on \*'"

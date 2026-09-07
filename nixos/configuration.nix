@@ -161,6 +161,7 @@
       gnumake
       go
       gopls
+      gotools
       htop
       jq
       mpv
@@ -309,6 +310,7 @@
     tmux
     wayland
     wayland-utils
+    wlopm
     wmenu
     xdg-utils
   ];

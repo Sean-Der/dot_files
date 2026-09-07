@@ -121,7 +121,7 @@ cmp.setup({
 
 require("conform").setup({
 	formatters_by_ft = {
-		go = { "goimports", "gofmt" },
+		go = { "goimports" },
 		python = { "ruff", "isort" },
 		["*"] = { "trim_whitespace" },
 	},
