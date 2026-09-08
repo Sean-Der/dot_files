@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+selection=$(cliphist list | wmenu -i -l 20 -p "clipboard: " -N "#000000" -n "#ffffff" -S "#006501" -s "#ffffff")
+[ -z "$selection" ] || printf '%s\n' "$selection" | cliphist decode | wl-copy

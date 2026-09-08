@@ -5,10 +5,17 @@ export XKB_DEFAULT_VARIANT=dvp
 export XKB_DEFAULT_OPTIONS=ctrl:nocaps
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
 
+dwl_startup="
+kanshi &
+swayidle timeout 900 'wlopm --off \*' resume 'wlopm --on \*' &
+wl-paste --watch cliphist store &
+wl-paste --primary --watch cliphist store
+"
+
 # Status bar status generator
 (while true; do
   acpiout=$(LC_ALL=C acpi -b)
   batt=$(echo $acpiout| awk '{print $4}' | sed '$s/,$//')
   echo "⚡ ${batt} | $(date +%R)"
   sleep 60
-done) | dbus-run-session dwl -s "kanshi & swayidle timeout 30 'wlopm --off \*' resume 'wlopm --on \*'"
+done) | dbus-run-session dwl -s "$dwl_startup"

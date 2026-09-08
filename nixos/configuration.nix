@@ -300,6 +300,7 @@
 
   environment.systemPackages = with pkgs; [
     brightnessctl
+    cliphist
     dwl
     foot
     kanshi
@@ -310,6 +311,7 @@
     tmux
     wayland
     wayland-utils
+    wl-clipboard
     wlopm
     wmenu
     xdg-utils
