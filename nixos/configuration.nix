@@ -19,6 +19,7 @@
   };
 
   services.logind.settings.Login.HandleLidSwitch = "ignore";
+  systemd.tmpfiles.rules = [ "w /sys/class/leds/tpacpi::*/brightness - - - - 0" ];
 
   networking = {
     hostName = "SeanLaptop";

@@ -36,6 +36,7 @@ vim.pack.add({
 	"https://github.com/hrsh7th/nvim-cmp",
 	"https://github.com/j-hui/fidget.nvim",
 
+	"https://github.com/mfussenegger/nvim-lint",
 	"https://github.com/stevearc/conform.nvim",
 
 	"https://github.com/folke/trouble.nvim.git",
@@ -117,6 +118,14 @@ cmp.setup({
 		end,
 		["<CR>"] = cmp.mapping.confirm({ select = true }),
 	}),
+})
+
+local lint = require("lint")
+lint.linters_by_ft = { go = { "golangcilint" } }
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+	callback = function()
+		lint.try_lint()
+	end,
 })
 
 require("conform").setup({
